@@ -1,6 +1,5 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Image } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
-import { Head } from '@redwoodjs/web'
 
 type NavigationLayoutProps = {
   children?: React.ReactNode
@@ -9,10 +8,15 @@ type NavigationLayoutProps = {
 const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   return (
     <>
-      <Box w="100%" p="2%" ml="40%">
-        <Heading as="h1" size="4xl">
-          Privacy advisor
-        </Heading>
+      <Box w="100%" p="2%" h="200px">
+        <Box ml="2%" w="20%">
+          <Image src="../../data/CIS_logo_transparentBG_black_small.png" />
+        </Box>
+        <Box>
+          <Heading as="h1" size="4xl" ml="40%" w="80%">
+            Privacy advisor
+          </Heading>
+        </Box>
       </Box>
       <main>{children}</main>
     </>
