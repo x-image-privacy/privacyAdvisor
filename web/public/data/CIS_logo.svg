@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="3742.6667"
+   height="776"
+   viewBox="0 0 3742.6667 776"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath18">
+      <path
+         d="M 0,1.42188 H 28070 V 5811.4219 H 0 Z"
+         id="path16" />
+    </clipPath>
+  </defs>
+  <g
+     id="g8"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,776)">
+    <g
+       id="g10"
+       transform="scale(0.1)">
+      <g
+         id="g12">
+        <g
+           id="g14"
+           clip-path="url(#clipPath18)">
+          <path
+             d="m 0,10.0117 h 28064 v 5801.41 H 0 Z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path20" />
+          <g
+             id="g22"
+             transform="scale(10)">
+            <text
+               xml:space="preserve"
+               transform="matrix(1,0,0,-0.98306184,897.603,354.63)"
+               style="font-variant:normal;font-weight:normal;font-size:208.097px;font-family:'Lucida Grande';-inkscape-font-specification:LucidaSansUnicode;writing-mode:lr-tb;fill:#2959a8;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               id="text28"><tspan
+                 x="0 106.45805 222.31599 351.70905 429.53226 514.56824 630.42578 696.01428 772.72784 900.39166"
+                 y="0"
+                 id="tspan24">centre for</tspan><tspan
+                 x="0 60.114285 189.50732 267.33054 383.18848 443.30237 503.41629 563.53058 693.47101 809.32898 938.72156 1016.5452 1082.1333 1188.359 1304.2169 1433.6095 1539.8354 1599.9495 1729.3424"
+                 y="249.71571"
+                 id="tspan26">intelligent sensing</tspan></text>
+            <text
+               xml:space="preserve"
+               transform="matrix(1,0,0,-1,43.2078,112.826)"
+               style="font-variant:normal;font-weight:normal;font-size:503.562px;font-family:'Lucida Grande';-inkscape-font-specification:LucidaSansUnicode;writing-mode:lr-tb;fill:#2959a8;fill-opacity:1;fill-rule:nonzero;stroke:none"
+               id="text32"><tspan
+                 x="0 348.57111 493.50751"
+                 y="0"
+                 id="tspan30">CIS</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

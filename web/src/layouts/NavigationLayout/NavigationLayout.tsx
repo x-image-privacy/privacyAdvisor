@@ -1,5 +1,8 @@
-import { Box, Image } from '@chakra-ui/react'
-import { Heading } from '@chakra-ui/react'
+import { Box, Image, Heading, Flex, Spacer, Center } from '@chakra-ui/react'
+
+import QMLogo from 'src/components/Logos/QMLogo'
+
+const LOGO_HEIGHT = '60px'
 
 type NavigationLayoutProps = {
   children?: React.ReactNode
@@ -9,14 +12,20 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   return (
     <>
       <Box w="100%" p="2%" h="200px">
-        <Box ml="2%" w="20%">
-          <Image src="../../data/CIS_logo_transparentBG_black_small.png" />
-        </Box>
-        <Box>
-          <Heading as="h1" size="4xl" ml="40%" w="80%">
+        <Flex minWidth="max-content" alignItems="center">
+          <Box>
+            <Image h={LOGO_HEIGHT} src="/data/CIS_logo.svg" />
+          </Box>
+          <Spacer />
+          <Box h={LOGO_HEIGHT}>
+            <QMLogo fill="#000000" />
+          </Box>
+        </Flex>
+        <Center>
+          <Heading as="h1" size="4xl">
             Privacy advisor
           </Heading>
-        </Box>
+        </Center>
       </Box>
       <main>{children}</main>
     </>
