@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
-    "@chakra-ui/react": "^1",
-    "@emotion/react": "^11",
+    "@chakra-ui/react": "^1.0.0",
+    "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11",
     "@redwoodjs/forms": "4.4.3",
     "@redwoodjs/router": "4.4.3",
