@@ -1,6 +1,7 @@
 import { render } from '@redwoodjs/testing/web'
+import nPointQuestion from './nPointQuestion'
 
-import IsImagePrivateQuestion from './IsImagePrivateQuestion'
+import IsImagePrivateQuestion from './nPointQuestion'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -12,3 +13,5 @@ describe('IsImagePrivateQuestion', () => {
     }).not.toThrow()
   })
 })
+
+export default nPointQuestion

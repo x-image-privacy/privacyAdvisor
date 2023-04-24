@@ -13,7 +13,7 @@
 
 import type { ComponentMeta } from '@storybook/react'
 
-import IsImagePrivateQuestion from './IsImagePrivateQuestion'
+import IsImagePrivateQuestion from './nPointQuestion'
 
 export const generated = () => {
   return <IsImagePrivateQuestion />
