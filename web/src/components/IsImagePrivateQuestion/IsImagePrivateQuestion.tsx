@@ -1,13 +1,21 @@
-import { Box, Flex, Radio, RadioGroup, Spacer, Stack } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Radio,
+  RadioGroup,
+  Spacer,
+  Stack,
+  Text,
+} from '@chakra-ui/react'
 
 const IsImagePrivateQuestion = () => {
   const [value, setValue] = React.useState()
   return (
-    <Box w="220px">
-      <p>Is this image private?</p>
+    <Box w="100%" p="2%">
+      <Text>Is this image private?</Text>
       <Flex minWidth="max-content" alignItems="center">
         <Box>
-          <p>No</p>
+          <Text>No</Text>
         </Box>
         <Spacer />
         <Box>
@@ -23,7 +31,7 @@ const IsImagePrivateQuestion = () => {
         </Box>
         <Spacer />
         <Box>
-          <p>Yes</p>
+          <Text>Yes</Text>
         </Box>
       </Flex>
     </Box>
