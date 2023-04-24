@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react'
 const GroupAPage = () => {
   return (
     <>
-      <Box w="250px">
+      <Box w="300px" p="2%">
         <IsImagePrivateQuestion />
       </Box>
     </>

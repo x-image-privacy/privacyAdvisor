@@ -12,7 +12,7 @@ const IsImagePrivateQuestion = () => {
   const [value, setValue] = React.useState()
   return (
     <Box w="100%" p="2%">
-      <Text>Is this image private?</Text>
+      <Text mb="10px">Is this image private?</Text>
       <Flex minWidth="max-content" alignItems="center">
         <Box>
           <Text>No</Text>
