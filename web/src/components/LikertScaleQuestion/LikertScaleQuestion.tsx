@@ -1,20 +1,19 @@
-import {
-  Box,
-  Flex,
-  Radio,
-  RadioGroup,
-  Spacer,
-  Stack,
-  Text,
-} from '@chakra-ui/react'
+import { Flex, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react'
 
-const nPointQuestion = () => {
+type Props = {
+  n: number
+  question: String
+  leftHand: String
+  rightHand: String
+}
+
+const LikertScaleQuestion = ({ n, question, leftHand, rightHand }: Props) => {
   const [value, setValue] = React.useState()
   return (
     <Stack minWidth="max-content" alignItems="center">
-      <Text>Is this image private?</Text>
+      <Text>{question}</Text>
       <Flex alignItems="center" gap={2}>
-        <Text>No</Text>
+        <Text>{leftHand}</Text>
         <RadioGroup onChange={setValue} value={value}>
           <Stack direction="row">
             <Radio value="1" />
@@ -24,10 +23,10 @@ const nPointQuestion = () => {
             <Radio value="5" />
           </Stack>
         </RadioGroup>
-        <Text>Yes</Text>
+        <Text>{rightHand}</Text>
       </Flex>
     </Stack>
   )
 }
 
-export default nPointQuestion
+export default LikertScaleQuestion

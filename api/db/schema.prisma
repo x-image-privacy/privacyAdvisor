@@ -9,23 +9,23 @@ generator client {
 }
 
 model User {
-  userId    Int       @id @default(autoincrement())
-  group     String
-  createAt  DateTime  @default(now())
-  submitAt  DateTime
+  id          Int       @id @default(autoincrement())
+  group       String
+  createdAt   DateTime  @default(now())
+  submittedAt DateTime
 }
 
 model Image {
-  imageId       Int      @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   imageLocation String
   dataLocation  String
 }
 
 model Answer {
-  answerId  Int       @id @default(autoincrement())
-  userId    Int       
-  imageId   Int 
-  answer    String
-  startAt   DateTime  @default(now())
-  submitAt  DateTime
+  id          Int       @id @default(autoincrement())
+  user        User       
+  image       Image 
+  answer      String
+  createdAt   DateTime  @default(now())
+  submittedAt DateTime
 }

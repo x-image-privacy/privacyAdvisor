@@ -1,11 +1,16 @@
 import { Box } from '@chakra-ui/react'
-import NPointQuestion from 'src/components/nPointQuestion/nPointQuestion'
+import LikertScaleQuestion from 'src/components/LikertScaleQuestion/LikertScaleQuestion'
 
 const GroupAPage = () => {
   return (
     <>
       <Box w="300px" p="2%">
-        <NPointQuestion />
+        <LikertScaleQuestion
+          n={5}
+          question="Is this image private?"
+          leftHand="No"
+          rightHand="Yes"
+        />
       </Box>
     </>
   )

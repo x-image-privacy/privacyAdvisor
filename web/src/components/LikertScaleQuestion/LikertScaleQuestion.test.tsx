@@ -1,7 +1,7 @@
 import { render } from '@redwoodjs/testing/web'
-import nPointQuestion from './nPointQuestion'
+import nPointQuestion from './LikertScaleQuestion'
 
-import IsImagePrivateQuestion from './nPointQuestion'
+import IsImagePrivateQuestion from './LikertScaleQuestion'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
