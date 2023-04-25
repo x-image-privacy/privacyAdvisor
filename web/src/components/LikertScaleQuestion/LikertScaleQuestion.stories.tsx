@@ -11,15 +11,39 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { ComponentMeta } from '@storybook/react'
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { within } from '@storybook/testing-library'
 
 import IsImagePrivateQuestion from './LikertScaleQuestion'
 
 export const generated = () => {
-  return <IsImagePrivateQuestion />
+  return (
+    <IsImagePrivateQuestion
+      n={5}
+      question="Is this image private?"
+      leftHand="No"
+      rightHand="Yes"
+    />
+  )
 }
 
 export default {
   title: 'Components/IsImagePrivateQuestion',
   component: IsImagePrivateQuestion,
 } as ComponentMeta<typeof IsImagePrivateQuestion>
+
+const Template: ComponentStory<typeof IsImagePrivateQuestion> = (args) => (
+  <IsImagePrivateQuestion {...args} />
+)
+
+export const FivePoint = Template.bind({})
+FivePoint.args = {
+  n: 5,
+  question: 'Is this image private?',
+  leftHand: 'No',
+  rightHand: 'Yes',
+}
+
+FivePoint.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement)
+}

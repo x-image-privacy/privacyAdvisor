@@ -21,19 +21,36 @@ describe('IsImagePrivateQuestion', () => {
   })
 
   it('renders text successfully', () => {
-    expect(() => {
-      render(
-        <IsImagePrivateQuestion
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-        />
-      )
-      expect(screen.getByText('Is this image private?')).toBeInTheDocument()
-      expect(screen.getByText('Yes')).toBeInTheDocument()
-      expect(screen.getByText('No')).toBeInTheDocument()
-    })
+    render(
+      <IsImagePrivateQuestion
+        n={5}
+        question="Is this image private?"
+        leftHand="No"
+        rightHand="Yes"
+      />
+    )
+    expect(screen.getByTestId('left')).toHaveTextContent('No')
+    expect(screen.getByTestId('right')).toHaveTextContent('Yes')
+    expect(screen.getByTestId('question')).toHaveTextContent(
+      'Is this image private?'
+    )
+  })
+
+  it('renders radio successfully', () => {
+    render(
+      <IsImagePrivateQuestion
+        n={5}
+        question="Is this image private?"
+        leftHand="No"
+        rightHand="Yes"
+      />
+    )
+
+    expect(screen.getByTestId('radio1')).toBeInTheDocument()
+    expect(screen.getByTestId('radio2')).toBeInTheDocument()
+    expect(screen.getByTestId('radio3')).toBeInTheDocument()
+    expect(screen.getByTestId('radio4')).toBeInTheDocument()
+    expect(screen.getByTestId('radio5')).toBeInTheDocument()
   })
 })
 

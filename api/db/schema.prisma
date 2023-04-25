@@ -13,19 +13,24 @@ model User {
   group       String
   createdAt   DateTime  @default(now())
   submittedAt DateTime
+  answer      Answer[]
 }
 
 model Image {
   id            Int      @id @default(autoincrement())
   imageLocation String
   dataLocation  String
+  answer        Answer[]
+
 }
 
 model Answer {
   id          Int       @id @default(autoincrement())
-  user        User       
-  image       Image 
-  answer      String
+  user        User      @relation(fields: [userId], references: [id])    
+  userId      Int  
+  image       Image     @relation(fields: [imageId], references: [id])  
+  imageId     Int
+  answer      Json?
   createdAt   DateTime  @default(now())
   submittedAt DateTime
 }
