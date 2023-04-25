@@ -1,5 +1,6 @@
-import { Box, Container, Divider, Stack, StackDivider } from '@chakra-ui/react'
+import { Container, Stack, StackDivider } from '@chakra-ui/react'
 import LikertScaleQuestion from 'src/components/LikertScaleQuestion/LikertScaleQuestion'
+import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 
 const GroupAPage = () => {
   return (
@@ -10,23 +11,19 @@ const GroupAPage = () => {
         justifyContent="start"
         divider={<StackDivider borderColor="pink.100" />}
       >
-        {/* <Box w="100px" p="2%"> */}
         <LikertScaleQuestion
           n={5}
           question="Is this image private?"
           leftHand="No"
           rightHand="Yes"
         />
-        {/* </Box> */}
 
-        {/* <Box w="100px" p="2%"> */}
-        <LikertScaleQuestion
+        <LikertScaleQuestionField
           n={5}
           question="Is this image private?"
           leftHand="No"
           rightHand="Yes"
         />
-        {/* </Box> */}
       </Stack>
     </Container>
   )

@@ -1,7 +1,7 @@
 import { render, screen } from '@redwoodjs/testing/web'
 import nPointQuestion from './LikertScaleQuestion'
 
-import IsImagePrivateQuestion from './LikertScaleQuestion'
+import LikertScaleQuestion from './LikertScaleQuestion'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -10,7 +10,7 @@ describe('IsImagePrivateQuestion', () => {
   it('renders successfully', () => {
     expect(() => {
       render(
-        <IsImagePrivateQuestion
+        <LikertScaleQuestion
           n={5}
           question="Is this image private?"
           leftHand="No"
@@ -22,7 +22,7 @@ describe('IsImagePrivateQuestion', () => {
 
   it('renders text successfully', () => {
     render(
-      <IsImagePrivateQuestion
+      <LikertScaleQuestion
         n={5}
         question="Is this image private?"
         leftHand="No"
@@ -38,7 +38,7 @@ describe('IsImagePrivateQuestion', () => {
 
   it('renders radio successfully', () => {
     render(
-      <IsImagePrivateQuestion
+      <LikertScaleQuestion
         n={5}
         question="Is this image private?"
         leftHand="No"

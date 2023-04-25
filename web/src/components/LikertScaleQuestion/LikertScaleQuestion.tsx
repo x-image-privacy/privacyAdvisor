@@ -1,13 +1,18 @@
 import { Flex, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react'
 
-type Props = {
+export type LikertScaleQuestionProps = {
   n: 5 | 7
   question: String
   leftHand: String
   rightHand: String
 }
 
-const LikertScaleQuestion = ({ n, question, leftHand, rightHand }: Props) => {
+const LikertScaleQuestion = ({
+  n,
+  question,
+  leftHand,
+  rightHand,
+}: LikertScaleQuestionProps) => {
   const [value, setValue] = React.useState()
 
   // Array of [1, 2, ..., n]
