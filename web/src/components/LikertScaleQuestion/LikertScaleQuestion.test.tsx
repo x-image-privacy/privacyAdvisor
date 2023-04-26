@@ -15,6 +15,10 @@ describe('IsImagePrivateQuestion', () => {
           question="Is this image private?"
           leftHand="No"
           rightHand="Yes"
+          onChange={function (nextValue: string): void {
+            throw new Error('Function not implemented.')
+          }}
+          value={''}
         />
       )
     }).not.toThrow()
@@ -27,6 +31,10 @@ describe('IsImagePrivateQuestion', () => {
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
+        onChange={function (nextValue: string): void {
+          throw new Error('Function not implemented.')
+        }}
+        value={''}
       />
     )
     expect(screen.getByTestId('left')).toHaveTextContent('No')
@@ -43,6 +51,10 @@ describe('IsImagePrivateQuestion', () => {
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
+        onChange={function (nextValue: string): void {
+          throw new Error('Function not implemented.')
+        }}
+        value={''}
       />
     )
 

@@ -22,6 +22,7 @@ const OpenEndedQuestion = ({
         size="lg"
         onChange={onChange}
         value={value}
+        data-testid="input"
       />
     </Stack>
   )

@@ -1,4 +1,4 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen } from '@redwoodjs/testing/web'
 
 import OpenEndedQuestion from './OpenEndedQuestion'
 
@@ -8,7 +8,32 @@ import OpenEndedQuestion from './OpenEndedQuestion'
 describe('OpenEndedQuestion', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<OpenEndedQuestion />)
+      render(
+        <OpenEndedQuestion
+          question="Which elements do you consider as public in this image?"
+          placeholder="Hello"
+          onChange={function (
+            event: React.ChangeEvent<HTMLInputElement>
+          ): void {
+            throw new Error('Function not implemented.')
+          }}
+          value={''}
+        />
+      )
     }).not.toThrow()
+  })
+
+  it('renders successfully', () => {
+    render(
+      <OpenEndedQuestion
+        question="Test"
+        placeholder="Hello"
+        onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+          throw new Error('Function not implemented.')
+        }}
+        value={''}
+      />
+    )
+    expect(screen.getByTestId('question')).toHaveTextContent('Test')
   })
 })
