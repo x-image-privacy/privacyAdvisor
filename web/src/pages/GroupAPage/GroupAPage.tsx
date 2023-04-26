@@ -13,6 +13,7 @@ const GroupAPage = () => {
       >
         <Form onSubmit={(data) => console.log(data)}>
           <LikertScaleQuestionField
+            name="Q1"
             n={5}
             question="Is this image private?"
             leftHand="No"

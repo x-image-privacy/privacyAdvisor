@@ -6,14 +6,15 @@ interface LikertScaleQuestionFieldProps
   extends Omit<LikertScaleQuestionProps, 'onChange' | 'value'> {
   validation?: RegisterOptions
   errorClassName?: string
+  name: string
 }
 
 const LikertScaleQuestionField = (props: LikertScaleQuestionFieldProps) => {
-  const { validation, errorClassName, ...propsRest } = props
+  const { validation, errorClassName, name, ...propsRest } = props
 
   return (
     <Controller
-      name="likertScaleQuestion"
+      name={name}
       rules={validation}
       render={({ field: { onChange, value } }) => (
         <LikertScaleQuestion {...propsRest} onChange={onChange} value={value} />
