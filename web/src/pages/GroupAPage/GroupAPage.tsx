@@ -6,13 +6,13 @@ import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEn
 const GroupAPage = () => {
   return (
     <Container maxW="4xl">
-      <Stack
-        direction="row"
-        spacing={4}
-        justifyContent="start"
-        divider={<StackDivider borderColor="pink.100" />}
-      >
-        <Form onSubmit={(data) => console.log(data)}>
+      <Form onSubmit={(data) => console.log(data)}>
+        <Stack
+          direction="row"
+          spacing={4}
+          justifyContent="start"
+          divider={<StackDivider borderColor="pink.100" />}
+        >
           <LikertScaleQuestionField
             name="Q1"
             n={5}
@@ -21,13 +21,18 @@ const GroupAPage = () => {
             rightHand="Yes"
           />
           <OpenEndedQuestionField
-            question="Hello"
+            question="Which elements do you consider as public in this image?"
             name="Q2"
-            placeholder="here"
+            placeholder="Answer here..."
+          />
+          <OpenEndedQuestionField
+            question="Which elements feel you uncomfortable disclosing in this image?"
+            name="Q3"
+            placeholder="Answer here..."
           />
           <Submit>Save</Submit>
-        </Form>
-      </Stack>
+        </Stack>
+      </Form>
     </Container>
   )
 }
