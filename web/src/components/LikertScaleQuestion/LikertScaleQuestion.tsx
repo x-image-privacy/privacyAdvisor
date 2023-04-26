@@ -2,9 +2,10 @@ import { Flex, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react'
 
 export type LikertScaleQuestionProps = {
   n: 5 | 7
-  question: String
-  leftHand: String
-  rightHand: String
+  question: string
+  leftHand: string
+  rightHand: string
+  onChange: [undefined, React.Dispatch<(prevState: undefined) => undefined>]
 }
 
 const LikertScaleQuestion = ({
@@ -12,6 +13,7 @@ const LikertScaleQuestion = ({
   question,
   leftHand,
   rightHand,
+  onChange,
 }: LikertScaleQuestionProps) => {
   const [value, setValue] = React.useState()
 
@@ -23,7 +25,10 @@ const LikertScaleQuestion = ({
       <Text data-testid="question">{question}</Text>
       <Flex alignItems="center" gap={2}>
         <Text data-testid="left">{leftHand}</Text>
-        <RadioGroup onChange={setValue} value={value}>
+        <RadioGroup
+          onChange={(e) => setValue(e.target as HTMLInputElement).value}
+          value={value}
+        >
           <Stack direction="row">
             {/* https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react 
             create a n scale radio component*/}

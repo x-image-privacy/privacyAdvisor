@@ -16,7 +16,14 @@ import type { ComponentMeta } from '@storybook/react'
 import LikertScaleQuestionField from './LikertScaleQuestionField'
 
 export const generated = () => {
-  return <LikertScaleQuestionField />
+  return (
+    <LikertScaleQuestionField
+      n={5}
+      question="Is this image private?"
+      leftHand="No"
+      rightHand="Yes"
+    />
+  )
 }
 
 export default {

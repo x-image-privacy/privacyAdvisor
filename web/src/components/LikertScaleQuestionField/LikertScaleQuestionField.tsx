@@ -16,9 +16,9 @@ const LikertScaleQuestionField = (props: LikertScaleQuestionFieldProps) => {
   //     name: 'likertScaleQuestion',
   //   })
 
-  const onSubmit = (data) => {
-    console.log(data)
-  }
+  // const onSubmit = (data) => {
+  //   console.log(data)
+  // }
 
   const methods = useForm()
 
@@ -28,13 +28,14 @@ const LikertScaleQuestionField = (props: LikertScaleQuestionFieldProps) => {
       name="likertScaleQuestion"
       rules={validation}
       defaultValue={[]}
-      render={({}) => (
+      render={(field: { onChange; value }) => (
         <LikertScaleQuestion
           {...propsRest}
-          n={props.n}
-          leftHand={props.leftHand}
-          rightHand={props.rightHand}
-          question={props.question}
+          onChange={onchange}
+          // n={props.n}
+          // leftHand={props.leftHand}
+          // rightHand={props.rightHand}
+          // question={props.question}
         />
       )}
     />

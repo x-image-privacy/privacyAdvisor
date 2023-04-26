@@ -11,14 +11,14 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
-import { within } from '@storybook/testing-library'
+import type { ComponentMeta, ComponentStory, StoryObj } from '@storybook/react'
+import { userEvent, within } from '@storybook/testing-library'
 
-import IsImagePrivateQuestion from './LikertScaleQuestion'
+import LikertScaleQuestion from './LikertScaleQuestion'
 
 export const generated = () => {
   return (
-    <IsImagePrivateQuestion
+    <LikertScaleQuestion
       n={5}
       question="Is this image private?"
       leftHand="No"
@@ -28,22 +28,41 @@ export const generated = () => {
 }
 
 export default {
-  title: 'Components/IsImagePrivateQuestion',
-  component: IsImagePrivateQuestion,
-} as ComponentMeta<typeof IsImagePrivateQuestion>
+  title: 'Components/LikertScaleQuestion',
+  component: LikertScaleQuestion,
+} as ComponentMeta<typeof LikertScaleQuestion>
 
-const Template: ComponentStory<typeof IsImagePrivateQuestion> = (args) => (
-  <IsImagePrivateQuestion {...args} />
+const Template: ComponentStory<typeof LikertScaleQuestion> = (args) => (
+  <LikertScaleQuestion {...args} />
 )
 
-export const FivePoint = Template.bind({})
-FivePoint.args = {
-  n: 5,
-  question: 'Is this image private?',
-  leftHand: 'No',
-  rightHand: 'Yes',
+// export const FivePoint = Template.bind({})
+// FivePoint.args = {
+//   n: 5,
+//   question: 'Is this image private?',
+//   leftHand: 'No',
+//   rightHand: 'Yes',
+// }
+
+type Story = StoryObj<typeof LikertScaleQuestion>
+export const Primary: Story = {
+  args: {
+    n: 5,
+    question: 'Is this image private?',
+    leftHand: 'No',
+    rightHand: 'Yes',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const radio1 = canvas.getByTestId('radio1')
+  },
 }
 
-FivePoint.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement)
-}
+// FivePoint.play = async ({ canvasElement }) => {
+//   const canvas = within(canvasElement)
+
+// const radio1 = canvas.getByTestId('radio1')
+
+// await userEvent.click(radio1)
+// }

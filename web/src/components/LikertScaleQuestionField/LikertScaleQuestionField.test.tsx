@@ -8,7 +8,14 @@ import LikertScaleQuestionField from './LikertScaleQuestionField'
 describe('LikertScaleQuestionField', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<LikertScaleQuestionField />)
+      render(
+        <LikertScaleQuestionField
+          n={5}
+          question="Is this image private?"
+          leftHand="No"
+          rightHand="Yes"
+        />
+      )
     }).not.toThrow()
   })
 })
