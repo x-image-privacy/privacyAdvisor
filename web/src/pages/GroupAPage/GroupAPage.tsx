@@ -1,6 +1,7 @@
 import { Container, Stack, StackDivider } from '@chakra-ui/react'
 import { Form, Submit } from '@redwoodjs/forms'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
+import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
 
 const GroupAPage = () => {
   return (
@@ -18,6 +19,11 @@ const GroupAPage = () => {
             question="Is this image private?"
             leftHand="No"
             rightHand="Yes"
+          />
+          <OpenEndedQuestionField
+            question="Hello"
+            name="Q2"
+            placeholder="here"
           />
           <Submit>Save</Submit>
         </Form>

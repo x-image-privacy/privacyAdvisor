@@ -1,4 +1,4 @@
-import { Controller, RegisterOptions, useForm } from '@redwoodjs/forms'
+import { Controller, RegisterOptions } from '@redwoodjs/forms'
 import LikertScaleQuestion from '../LikertScaleQuestion/LikertScaleQuestion'
 import type { LikertScaleQuestionProps } from '../LikertScaleQuestion/LikertScaleQuestion'
 
