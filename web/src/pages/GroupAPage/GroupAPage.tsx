@@ -1,5 +1,5 @@
 import { Container, Stack, StackDivider } from '@chakra-ui/react'
-import LikertScaleQuestion from 'src/components/LikertScaleQuestion/LikertScaleQuestion'
+import { Form, Submit } from '@redwoodjs/forms'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 
 const GroupAPage = () => {
@@ -11,19 +11,15 @@ const GroupAPage = () => {
         justifyContent="start"
         divider={<StackDivider borderColor="pink.100" />}
       >
-        <LikertScaleQuestion
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-        />
-
-        <LikertScaleQuestionField
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-        />
+        <Form onSubmit={(data) => console.log(data)}>
+          <LikertScaleQuestionField
+            n={5}
+            question="Is this image private?"
+            leftHand="No"
+            rightHand="Yes"
+          />
+          <Submit>Save</Submit>
+        </Form>
       </Stack>
     </Container>
   )

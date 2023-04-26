@@ -2,7 +2,8 @@ import { Controller, RegisterOptions, useForm } from '@redwoodjs/forms'
 import LikertScaleQuestion from '../LikertScaleQuestion/LikertScaleQuestion'
 import type { LikertScaleQuestionProps } from '../LikertScaleQuestion/LikertScaleQuestion'
 
-interface LikertScaleQuestionFieldProps extends LikertScaleQuestionProps {
+interface LikertScaleQuestionFieldProps
+  extends Omit<LikertScaleQuestionProps, 'onChange' | 'value'> {
   validation?: RegisterOptions
   errorClassName?: string
 }
@@ -10,33 +11,12 @@ interface LikertScaleQuestionFieldProps extends LikertScaleQuestionProps {
 const LikertScaleQuestionField = (props: LikertScaleQuestionFieldProps) => {
   const { validation, errorClassName, ...propsRest } = props
 
-  // const { className: componentClassName, style: componentStyle } =
-  //   useErrorStyles({
-  //     errorClassName: errorClassName,
-  //     name: 'likertScaleQuestion',
-  //   })
-
-  // const onSubmit = (data) => {
-  //   console.log(data)
-  // }
-
-  const methods = useForm()
-
   return (
     <Controller
-      control={methods.control}
       name="likertScaleQuestion"
       rules={validation}
-      defaultValue={[]}
-      render={(field: { onChange; value }) => (
-        <LikertScaleQuestion
-          {...propsRest}
-          onChange={onchange}
-          // n={props.n}
-          // leftHand={props.leftHand}
-          // rightHand={props.rightHand}
-          // question={props.question}
-        />
+      render={({ field: { onChange, value } }) => (
+        <LikertScaleQuestion {...propsRest} onChange={onChange} value={value} />
       )}
     />
   )

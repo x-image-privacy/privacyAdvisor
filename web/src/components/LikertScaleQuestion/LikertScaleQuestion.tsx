@@ -5,7 +5,8 @@ export type LikertScaleQuestionProps = {
   question: string
   leftHand: string
   rightHand: string
-  onChange: [undefined, React.Dispatch<(prevState: undefined) => undefined>]
+  onChange: (nextValue: string) => void
+  value: string
 }
 
 const LikertScaleQuestion = ({
@@ -14,9 +15,8 @@ const LikertScaleQuestion = ({
   leftHand,
   rightHand,
   onChange,
+  value,
 }: LikertScaleQuestionProps) => {
-  const [value, setValue] = React.useState()
-
   // Array of [1, 2, ..., n]
   // https://stackoverflow.com/questions/3746725/how-to-create-an-array-containing-1-n
   const scale = Array.from({ length: n }, (_, i) => i + 1)
@@ -25,10 +25,7 @@ const LikertScaleQuestion = ({
       <Text data-testid="question">{question}</Text>
       <Flex alignItems="center" gap={2}>
         <Text data-testid="left">{leftHand}</Text>
-        <RadioGroup
-          onChange={(e) => setValue(e.target as HTMLInputElement).value}
-          value={value}
-        >
+        <RadioGroup onChange={onChange} value={value}>
           <Stack direction="row">
             {/* https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react 
             create a n scale radio component*/}
