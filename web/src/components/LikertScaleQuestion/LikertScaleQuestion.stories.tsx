@@ -1,28 +1,20 @@
-// When you've added props to your component,
-// pass Storybook's `args` through this story to control it from the addons panel:
-//
-// ```tsx
-// import type { ComponentStory } from '@storybook/react'
-//
-// export const generated: ComponentStory<typeof IsImagePrivateQuestion> = (args) => {
-//   return <IsImagePrivateQuestion {...args} />
-// }
-// ```
-//
-// See https://storybook.js.org/docs/react/writing-stories/args.
-
-import type { ComponentMeta, ComponentStory, StoryObj } from '@storybook/react'
-import { userEvent, within } from '@storybook/testing-library'
-
+import React from 'react'
 import LikertScaleQuestion from './LikertScaleQuestion'
+import { within, userEvent } from '@storybook/testing-library'
+import type { ComponentMeta } from '@storybook/react'
+
+export default {
+  title: 'Components/LikertScaleQuestion',
+  component: LikertScaleQuestion,
+} as ComponentMeta<typeof LikertScaleQuestion>
 
 export const generated = () => {
   return (
     <LikertScaleQuestion
       n={5}
-      question="Is this image private?"
-      leftHand="No"
-      rightHand="Yes"
+      question={'Question'}
+      leftHand={'Yes'}
+      rightHand={'No'}
       onChange={function (nextValue: string): void {
         throw new Error('Function not implemented.')
       }}
@@ -31,34 +23,14 @@ export const generated = () => {
   )
 }
 
-export default {
-  title: 'Components/LikertScaleQuestion',
-  component: LikertScaleQuestion,
-} as ComponentMeta<typeof LikertScaleQuestion>
+const Template = (args) => <LikertScaleQuestion {...args} />
 
-const meta: ComponentStory<typeof LikertScaleQuestion> = (args) => (
-  <LikertScaleQuestion {...args} />
-)
+export const NPointQuestion = Template.bind({})
 
-type Story = StoryObj<typeof LikertScaleQuestion>
+export const DisplayQuestion = Template.bind({})
 
-export const Primary: Story = {
-  args: {
-    n: 5,
-    question: 'Is this image private?',
-    leftHand: 'No',
-    rightHand: 'Yes',
-  },
-  play: async ({ canvasElement }) => {
-    // const canvas = within(canvasElement)
-    // const radio1 = canvas.getByTestId('radio1')
-  },
+DisplayQuestion.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement)
+  const radio1 = await canvas.getByTestId('radio1')
+  await userEvent.click(radio1)
 }
-
-// FivePoint.play = async ({ canvasElement }) => {
-//   const canvas = within(canvasElement)
-
-// const radio1 = canvas.getByTestId('radio1')
-
-// await userEvent.click(radio1)
-// }

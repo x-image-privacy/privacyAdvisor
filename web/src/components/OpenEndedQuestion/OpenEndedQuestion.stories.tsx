@@ -16,7 +16,16 @@ import type { ComponentMeta } from '@storybook/react'
 import OpenEndedQuestion from './OpenEndedQuestion'
 
 export const generated = () => {
-  return <OpenEndedQuestion />
+  return (
+    <OpenEndedQuestion
+      question={''}
+      onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+        throw new Error('Function not implemented.')
+      }}
+      placeholder={''}
+      value={''}
+    />
+  )
 }
 
 export default {
