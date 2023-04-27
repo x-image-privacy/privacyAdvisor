@@ -1,3 +1,4 @@
+import { Form } from '@redwoodjs/forms'
 import { render } from '@redwoodjs/testing/web'
 
 import LikertScaleQuestionField from './LikertScaleQuestionField'
@@ -9,14 +10,16 @@ describe('LikertScaleQuestionField', () => {
   it('renders successfully', () => {
     expect(() => {
       render(
-        <LikertScaleQuestionField
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-          name={''}
-        />
+        <Form>
+          <LikertScaleQuestionField
+            n={5}
+            question="Is this image private?"
+            leftHand="No"
+            rightHand="Yes"
+            name={''}
+          />
+        </Form>
       )
-    })
+    }).not.toThrow()
   })
 })

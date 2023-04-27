@@ -45,9 +45,12 @@ describe('IsImagePrivateQuestion', () => {
   })
 
   it('renders radio successfully', () => {
+    const N = 5
+    const scale = Array.from({ length: N }, (_, i) => i + 1)
+
     render(
       <LikertScaleQuestion
-        n={5}
+        n={N}
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
@@ -58,11 +61,9 @@ describe('IsImagePrivateQuestion', () => {
       />
     )
 
-    expect(screen.getByTestId('radio1')).toBeInTheDocument()
-    expect(screen.getByTestId('radio2')).toBeInTheDocument()
-    expect(screen.getByTestId('radio3')).toBeInTheDocument()
-    expect(screen.getByTestId('radio4')).toBeInTheDocument()
-    expect(screen.getByTestId('radio5')).toBeInTheDocument()
+    scale.map((item, _) => {
+      expect(screen.getByTestId(`radio${item}`)).toBeInTheDocument()
+    })
   })
 
   it('renders square successfully', () => {
