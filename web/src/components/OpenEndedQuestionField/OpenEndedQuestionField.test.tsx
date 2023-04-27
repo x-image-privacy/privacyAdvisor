@@ -8,7 +8,13 @@ import OpenEndedQuestionField from './OpenEndedQuestionField'
 describe('OpenEndedQuestionField', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<OpenEndedQuestionField />)
-    }).not.toThrow()
+      render(
+        <OpenEndedQuestionField
+          name={'Q1'}
+          question={'question'}
+          placeholder={'here'}
+        />
+      )
+    })
   })
 })

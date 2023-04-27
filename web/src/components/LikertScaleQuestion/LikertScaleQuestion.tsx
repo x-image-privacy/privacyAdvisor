@@ -23,7 +23,7 @@ const LikertScaleQuestion = ({
   return (
     <Stack alignItems="center">
       <Stack direction="row">
-        <Square size="20px" bg="gainsboro" />
+        <Square size="20px" bg="gainsboro" data-testid="square" />
         <Text data-testid="question">{question}</Text>
       </Stack>
       <Flex alignItems="center" gap={2}>
@@ -33,7 +33,9 @@ const LikertScaleQuestion = ({
             {/* https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react 
             create a n scale radio component*/}
             {scale.map((item, _) => {
-              return <Radio data-testid={`radio${item}`} value={item} />
+              return (
+                <Radio data-testid={`radio${item}`} value={item} key={item} />
+              )
             })}
           </Stack>
         </RadioGroup>

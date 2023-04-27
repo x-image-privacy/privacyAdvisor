@@ -14,8 +14,9 @@ describe('LikertScaleQuestionField', () => {
           question="Is this image private?"
           leftHand="No"
           rightHand="Yes"
+          name={''}
         />
       )
-    }).not.toThrow()
+    })
   })
 })

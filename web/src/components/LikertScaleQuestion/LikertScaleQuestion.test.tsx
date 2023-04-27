@@ -64,6 +64,22 @@ describe('IsImagePrivateQuestion', () => {
     expect(screen.getByTestId('radio4')).toBeInTheDocument()
     expect(screen.getByTestId('radio5')).toBeInTheDocument()
   })
+
+  it('renders square successfully', () => {
+    render(
+      <LikertScaleQuestion
+        n={5}
+        question="Is this image private?"
+        leftHand="No"
+        rightHand="Yes"
+        onChange={function (nextValue: string): void {
+          throw new Error('Function not implemented.')
+        }}
+        value={''}
+      />
+    )
+    expect(screen.getByTestId('square')).toBeInTheDocument()
+  })
 })
 
 export default nPointQuestion
