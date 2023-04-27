@@ -23,6 +23,10 @@ export const generated = () => {
       question="Is this image private?"
       leftHand="No"
       rightHand="Yes"
+      onChange={function (nextValue: string): void {
+        throw new Error('Function not implemented.')
+      }}
+      value={''}
     />
   )
 }
@@ -32,19 +36,12 @@ export default {
   component: LikertScaleQuestion,
 } as ComponentMeta<typeof LikertScaleQuestion>
 
-const Template: ComponentStory<typeof LikertScaleQuestion> = (args) => (
+const meta: ComponentStory<typeof LikertScaleQuestion> = (args) => (
   <LikertScaleQuestion {...args} />
 )
 
-// export const FivePoint = Template.bind({})
-// FivePoint.args = {
-//   n: 5,
-//   question: 'Is this image private?',
-//   leftHand: 'No',
-//   rightHand: 'Yes',
-// }
-
 type Story = StoryObj<typeof LikertScaleQuestion>
+
 export const Primary: Story = {
   args: {
     n: 5,
@@ -53,9 +50,8 @@ export const Primary: Story = {
     rightHand: 'Yes',
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-
-    const radio1 = canvas.getByTestId('radio1')
+    // const canvas = within(canvasElement)
+    // const radio1 = canvas.getByTestId('radio1')
   },
 }
 

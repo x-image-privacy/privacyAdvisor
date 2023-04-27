@@ -30,7 +30,7 @@ model Answer {
   userId      Int  
   image       Image     @relation(fields: [imageId], references: [id])  
   imageId     Int
-  answer      Json?
+  answer      String
   createdAt   DateTime  @default(now())
   submittedAt DateTime
 }

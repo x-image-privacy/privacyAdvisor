@@ -17,7 +17,7 @@ const OpenEndedQuestion = ({
   return (
     <Stack alignItems="center">
       <Stack direction="row">
-        <Square size="20px" bg="gainsboro" />
+        <Square size="20px" bg="gainsboro" data-testid="square" />
         <Text data-testid="question">{question}</Text>
       </Stack>
       <Input

@@ -23,7 +23,7 @@ describe('OpenEndedQuestion', () => {
     }).not.toThrow()
   })
 
-  it('renders successfully', () => {
+  it('renders text successfully', () => {
     render(
       <OpenEndedQuestion
         question="Test"
@@ -35,5 +35,33 @@ describe('OpenEndedQuestion', () => {
       />
     )
     expect(screen.getByTestId('question')).toHaveTextContent('Test')
+  })
+
+  it('renders input successfully', () => {
+    render(
+      <OpenEndedQuestion
+        question="Test"
+        placeholder="Hello"
+        onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+          throw new Error('Function not implemented.')
+        }}
+        value={''}
+      />
+    )
+    expect(screen.getByTestId('input')).toBeInTheDocument()
+  })
+
+  it('renders square successfully', () => {
+    render(
+      <OpenEndedQuestion
+        question="Test"
+        placeholder="Hello"
+        onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+          throw new Error('Function not implemented.')
+        }}
+        value={''}
+      />
+    )
+    expect(screen.getByTestId('square')).toBeInTheDocument()
   })
 })
