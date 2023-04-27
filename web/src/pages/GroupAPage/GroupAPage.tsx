@@ -5,7 +5,7 @@ import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEn
 
 const GroupAPage = () => {
   return (
-    <Container maxW="4xl">
+    <Container maxW="6xl">
       <Stack direction="column" gap={8} alignItems="center">
         <Text data-testid="instruction">
           You are shown a picture and please answer some questions
@@ -16,7 +16,7 @@ const GroupAPage = () => {
             direction="row"
             spacing={4}
             justifyContent="start"
-            divider={<StackDivider borderColor="pink.100" />}
+            divider={<StackDivider borderColor="gainsboro" />}
           >
             <LikertScaleQuestionField
               name="Q1"
@@ -35,7 +35,9 @@ const GroupAPage = () => {
               name="Q3"
               placeholder="Answer here..."
             />
-            <Submit>Save</Submit>
+            <Submit className="button" color="gainsboro">
+              Save
+            </Submit>
           </Stack>
         </Form>
       </Stack>

@@ -1,4 +1,4 @@
-import { Stack, Text, Input } from '@chakra-ui/react'
+import { Stack, Text, Input, Square } from '@chakra-ui/react'
 import { ChangeEventHandler } from 'react'
 
 export type OpenEndedQuestionProps = {
@@ -16,7 +16,10 @@ const OpenEndedQuestion = ({
 }: OpenEndedQuestionProps) => {
   return (
     <Stack alignItems="center">
-      <Text data-testid="question">{question}</Text>
+      <Stack direction="row">
+        <Square size="20px" bg="gainsboro" />
+        <Text data-testid="question">{question}</Text>
+      </Stack>
       <Input
         placeholder={placeholder}
         size="lg"
