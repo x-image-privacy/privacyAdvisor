@@ -15,6 +15,10 @@ const HomePage = () => {
         A link to the group A page:
         <Link to={routes.groupA()}>Group a</Link>
       </p>
+      <p>
+        A link to the group B page:
+        <Link to={routes.groupB()}>Group b</Link>
+      </p>
     </>
   )
 }
