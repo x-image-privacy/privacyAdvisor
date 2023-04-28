@@ -1,6 +1,5 @@
 import { Container, Image, Stack, StackDivider, Text } from '@chakra-ui/react'
 import { Form, Submit } from '@redwoodjs/forms'
-import { colors } from 'src/App'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
 
@@ -17,7 +16,7 @@ const GroupAPage = () => {
             direction="row"
             spacing={4}
             justifyContent="start"
-            divider={<StackDivider borderColor={colors.brand.gray} />}
+            divider={<StackDivider borderColor="grayIcon" />}
           >
             <LikertScaleQuestionField
               name="Q1"
@@ -36,7 +35,7 @@ const GroupAPage = () => {
               name="Q3"
               placeholder="Answer here..."
             />
-            <Submit className="button" color={colors.brand.gray}>
+            <Submit className="button" color="grayIcon">
               Save
             </Submit>
           </Stack>
