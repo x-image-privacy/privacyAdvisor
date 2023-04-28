@@ -11,6 +11,10 @@ const HomePage = () => {
         My default route is named <code>home</code>, link to me with `
         <Link to={routes.home()}>Home</Link>`
       </p>
+      <p>
+        A link to the group A page:
+        <Link to={routes.groupA()}>Group a</Link>
+      </p>
     </>
   )
 }

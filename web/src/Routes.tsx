@@ -13,9 +13,9 @@ import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
 const Routes = () => {
   return (
     <Router>
-      <Route path="/group-a" page={GroupAPage} name="groupA" />
       <Set wrap={NavigationLayout}>
         <Route path="/" page={HomePage} name="home" />
+        <Route path="/group-a" page={GroupAPage} name="groupA" />
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>

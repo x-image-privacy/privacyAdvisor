@@ -11,7 +11,12 @@ import Routes from 'src/Routes'
 
 import './index.css'
 
-const extendedTheme = extendTheme(theme)
+export const colors = {
+  brand: {
+    gray: 'gainsboro',
+  },
+}
+const extendedTheme = extendTheme({ colors })
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
