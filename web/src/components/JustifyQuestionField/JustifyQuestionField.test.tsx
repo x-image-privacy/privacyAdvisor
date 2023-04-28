@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import ScaleOpenEndedQuestion from './ScaleOpenEndedQuestion'
+import JustifyQuestionField from './JustifyQuestionField'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe('ScaleOpenEndedQuestion', () => {
+describe('JustifyQuestionField', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<ScaleOpenEndedQuestion />)
+      render(<JustifyQuestionField name="" placeholder="" />)
     }).not.toThrow()
   })
 })

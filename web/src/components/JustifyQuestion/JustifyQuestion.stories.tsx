@@ -4,8 +4,8 @@
 // ```tsx
 // import type { ComponentStory } from '@storybook/react'
 //
-// export const generated: ComponentStory<typeof ScaleOpenEndedQuestion> = (args) => {
-//   return <ScaleOpenEndedQuestion {...args} />
+// export const generated: ComponentStory<typeof JustifyQuestion> = (args) => {
+//   return <JustifyQuestion {...args} />
 // }
 // ```
 //
@@ -13,13 +13,13 @@
 
 import type { ComponentMeta } from '@storybook/react'
 
-import ScaleOpenEndedQuestion from './ScaleOpenEndedQuestion'
+import JustifyQuestion from './JustifyQuestion'
 
 export const generated = () => {
-  return <ScaleOpenEndedQuestion />
+  return <JustifyQuestion />
 }
 
 export default {
-  title: 'Components/ScaleOpenEndedQuestion',
-  component: ScaleOpenEndedQuestion,
-} as ComponentMeta<typeof ScaleOpenEndedQuestion>
+  title: 'Components/JustifyQuestion',
+  component: JustifyQuestion,
+} as ComponentMeta<typeof JustifyQuestion>
