@@ -1,5 +1,6 @@
 import { Container, Image, Stack, StackDivider, Text } from '@chakra-ui/react'
 import { Form, Submit } from '@redwoodjs/forms'
+import { colors } from 'src/App'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
 
@@ -10,13 +11,13 @@ const GroupAPage = () => {
         <Text data-testid="instruction">
           You are shown a picture and please answer some questions
         </Text>
-        <Image src="../../../data/image1.jpg" />
+        <Image src="/data/image1.jpg" />
         <Form onSubmit={(data) => console.log(data)}>
           <Stack
             direction="row"
             spacing={4}
             justifyContent="start"
-            divider={<StackDivider borderColor="gainsboro" />}
+            divider={<StackDivider borderColor={colors.brand.gray} />}
           >
             <LikertScaleQuestionField
               name="Q1"
@@ -31,11 +32,11 @@ const GroupAPage = () => {
               placeholder="Answer here..."
             />
             <OpenEndedQuestionField
-              question="Which elements feel you uncomfortable disclosing in this image?"
+              question="Which elements would you feel uncomfortable disclosing in this image?"
               name="Q3"
               placeholder="Answer here..."
             />
-            <Submit className="button" color="gainsboro">
+            <Submit className="button" color={colors.brand.gray}>
               Save
             </Submit>
           </Stack>

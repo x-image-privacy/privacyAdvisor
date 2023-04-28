@@ -1,34 +1,27 @@
-// When you've added props to your component,
-// pass Storybook's `args` through this story to control it from the addons panel:
-//
-// ```tsx
-// import type { ComponentStory } from '@storybook/react'
-//
-// export const generated: ComponentStory<typeof OpenEndedQuestion> = (args) => {
-//   return <OpenEndedQuestion {...args} />
-// }
-// ```
-//
-// See https://storybook.js.org/docs/react/writing-stories/args.
-
 import type { ComponentMeta } from '@storybook/react'
 
-import OpenEndedQuestion from './OpenEndedQuestion'
-
-export const generated = () => {
-  return (
-    <OpenEndedQuestion
-      question={''}
-      onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
-        throw new Error('Function not implemented.')
-      }}
-      placeholder={''}
-      value={''}
-    />
-  )
-}
+import OpenEndedQuestion, { OpenEndedQuestionProps } from './OpenEndedQuestion'
 
 export default {
   title: 'Components/OpenEndedQuestion',
   component: OpenEndedQuestion,
 } as ComponentMeta<typeof OpenEndedQuestion>
+
+export const generated = () => {
+  return (
+    <OpenEndedQuestion
+      question="Hello"
+      onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+        throw new Error('Function not implemented.')
+      }}
+      placeholder="Here"
+      value=""
+    />
+  )
+}
+
+const Template = (args: JSX.IntrinsicAttributes & OpenEndedQuestionProps) => (
+  <OpenEndedQuestion {...args} />
+)
+
+export const openEndedQuestion = Template.bind({})

@@ -18,7 +18,7 @@ describe('IsImagePrivateQuestion', () => {
           onChange={function (nextValue: string): void {
             throw new Error('Function not implemented.')
           }}
-          value={''}
+          value=""
         />
       )
     }).not.toThrow()
@@ -34,7 +34,7 @@ describe('IsImagePrivateQuestion', () => {
         onChange={function (nextValue: string): void {
           throw new Error('Function not implemented.')
         }}
-        value={''}
+        value=""
       />
     )
     expect(screen.getByTestId('left')).toHaveTextContent('No')
@@ -57,11 +57,11 @@ describe('IsImagePrivateQuestion', () => {
         onChange={function (nextValue: string): void {
           throw new Error('Function not implemented.')
         }}
-        value={''}
+        value=""
       />
     )
 
-    scale.map((item, _) => {
+    scale.forEach((item) => {
       expect(screen.getByTestId(`radio${item}`)).toBeInTheDocument()
     })
   })
@@ -76,7 +76,7 @@ describe('IsImagePrivateQuestion', () => {
         onChange={function (nextValue: string): void {
           throw new Error('Function not implemented.')
         }}
-        value={''}
+        value=""
       />
     )
     expect(screen.getByTestId('square')).toBeInTheDocument()

@@ -1,3 +1,4 @@
+import { Form } from '@redwoodjs/forms'
 import { render } from '@redwoodjs/testing/web'
 
 import OpenEndedQuestionField from './OpenEndedQuestionField'
@@ -9,12 +10,14 @@ describe('OpenEndedQuestionField', () => {
   it('renders successfully', () => {
     expect(() => {
       render(
-        <OpenEndedQuestionField
-          name={'Q1'}
-          question={'question'}
-          placeholder={'here'}
-        />
+        <Form>
+          <OpenEndedQuestionField
+            name="Q1"
+            question="question"
+            placeholder="here"
+          />
+        </Form>
       )
-    })
+    }).not.toThrow()
   })
 })
