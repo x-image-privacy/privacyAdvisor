@@ -2,6 +2,11 @@ import { Container, Image, Stack, StackDivider, Text } from '@chakra-ui/react'
 import { Form, Submit } from '@redwoodjs/forms'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
+import {
+  IS_PRIVATE_QUESTION_GROUP_A,
+  PRIVATE_ELEMENTS_QUESTION_GROUP_A,
+  PUBLIC_ELEMENTS_QUESTION_GROUP_A,
+} from 'web/config/constants'
 
 const GroupAPage = () => {
   return (
@@ -19,7 +24,7 @@ const GroupAPage = () => {
             divider={<StackDivider borderColor="grayIcon" />}
           >
             <LikertScaleQuestionField
-              name="Q1"
+              name={IS_PRIVATE_QUESTION_GROUP_A}
               n={5}
               question="Is this image private?"
               leftHand="No"
@@ -27,12 +32,12 @@ const GroupAPage = () => {
             />
             <OpenEndedQuestionField
               question="Which elements do you consider as public in this image?"
-              name="Q2"
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
               placeholder="Answer here..."
             />
             <OpenEndedQuestionField
               question="Which elements would you feel uncomfortable disclosing in this image?"
-              name="Q3"
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
               placeholder="Answer here..."
             />
             <Submit className="button" color="grayIcon">
