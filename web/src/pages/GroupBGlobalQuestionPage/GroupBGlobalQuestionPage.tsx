@@ -12,9 +12,8 @@ const GroupBGlobalQuestionPage = () => {
     <Container maxW="6xl">
       <Stack direction="column" gap={8} alignItems="center">
         <Text data-testid="instruction">
-          You are shown a picture and please answer some questions
+          Please answer this question on the interface
         </Text>
-        <Image src="/data/image1.jpg" />
         <Form onSubmit={(data) => console.log(data)}>
           <Stack
             direction="row"
@@ -26,7 +25,7 @@ const GroupBGlobalQuestionPage = () => {
               <LikertScaleQuestionField
                 name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
                 n={5}
-                question="Is this image private?"
+                question="Is this visualisation efficient to help you form an opinion?"
                 leftHand="No"
                 rightHand="Yes"
               />
