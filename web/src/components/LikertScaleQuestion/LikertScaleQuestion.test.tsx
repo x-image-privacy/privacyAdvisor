@@ -1,4 +1,4 @@
-import { render, screen } from '@redwoodjs/testing/web'
+import { render, screen, fireEvent } from '@redwoodjs/testing/web'
 import nPointQuestion from './LikertScaleQuestion'
 
 import LikertScaleQuestion from './LikertScaleQuestion'
@@ -80,6 +80,24 @@ describe('IsImagePrivateQuestion', () => {
       />
     )
     expect(screen.getByTestId('square')).toBeInTheDocument()
+  })
+
+  it('check radio successfully', () => {
+    render(
+      <LikertScaleQuestion
+        n={5}
+        question="Is this image private?"
+        leftHand="No"
+        rightHand="Yes"
+        onChange={function (nextValue: string): void {
+          throw new Error('Function not implemented.')
+        }}
+        value=""
+      />
+    )
+    const labelRadio: HTMLInputElement = screen.getByTestId('radio1')
+    fireEvent.click(labelRadio)
+    expect(labelRadio.checked).toEqual(true)
   })
 })
 
