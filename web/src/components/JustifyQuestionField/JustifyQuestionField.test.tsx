@@ -1,3 +1,4 @@
+import { Form } from '@redwoodjs/forms'
 import { render } from '@redwoodjs/testing/web'
 
 import JustifyQuestionField from './JustifyQuestionField'
@@ -8,7 +9,11 @@ import JustifyQuestionField from './JustifyQuestionField'
 describe('JustifyQuestionField', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<JustifyQuestionField name="" placeholder="" />)
+      render(
+        <Form>
+          <JustifyQuestionField name="" placeholder="" />
+        </Form>
+      )
     }).not.toThrow()
   })
 })

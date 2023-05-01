@@ -1,4 +1,4 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen } from '@redwoodjs/testing/web'
 
 import JustifyQuestion from './JustifyQuestion'
 
@@ -8,7 +8,30 @@ import JustifyQuestion from './JustifyQuestion'
 describe('JustifyQuestion', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<JustifyQuestion />)
+      render(
+        <JustifyQuestion
+          placeholder={''}
+          onChange={function (
+            event: React.ChangeEvent<HTMLInputElement>
+          ): void {
+            throw new Error('Function not implemented.')
+          }}
+          value={''}
+        />
+      )
     }).not.toThrow()
+  })
+
+  it('renders square successfully', () => {
+    render(
+      <JustifyQuestion
+        placeholder={''}
+        onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+          throw new Error('Function not implemented.')
+        }}
+        value={''}
+      />
+    )
+    expect(screen.getByTestId('input')).toBeInTheDocument()
   })
 })
