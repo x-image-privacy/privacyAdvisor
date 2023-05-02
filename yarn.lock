@@ -8976,9 +8976,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@x-image-privacy/wordcloud@github:x-image-privacy/word-cloud#15-configure-package":
+"@x-image-privacy/wordcloud@github:x-image-privacy/word-cloud#main":
   version: 0.0.0
-  resolution: "@x-image-privacy/wordcloud@https://github.com/x-image-privacy/word-cloud.git#commit=d9e3a1baf9e81e0937dd06c59848abb591b1b856"
+  resolution: "@x-image-privacy/wordcloud@https://github.com/x-image-privacy/word-cloud.git#commit=8bf77039e1e8b0a414ee1c428b362ce6c0d5b570"
   dependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -25704,7 +25704,7 @@ __metadata:
     "@redwoodjs/forms": 4.4.3
     "@redwoodjs/router": 4.4.3
     "@redwoodjs/web": 4.4.3
-    "@x-image-privacy/wordcloud": "github:x-image-privacy/word-cloud#15-configure-package"
+    "@x-image-privacy/wordcloud": "github:x-image-privacy/word-cloud#main"
     framer-motion: ^6
     prop-types: 15.8.1
     react: 17.0.2

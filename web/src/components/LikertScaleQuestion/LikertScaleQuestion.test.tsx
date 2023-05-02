@@ -1,3 +1,4 @@
+import { Controller } from '@redwoodjs/forms'
 import { render, screen, fireEvent } from '@redwoodjs/testing/web'
 import nPointQuestion from './LikertScaleQuestion'
 
@@ -89,14 +90,13 @@ describe('IsImagePrivateQuestion', () => {
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
-        onChange={function (nextValue: string): void {
-          throw new Error('Function not implemented.')
-        }}
+        onChange={(e) => console.log(e)}
         value=""
       />
     )
+
     const labelRadio: HTMLInputElement = screen.getByTestId('radio1')
-    fireEvent.click(labelRadio)
+    fireEvent.click(labelRadio, { target: { checked: true } })
     expect(labelRadio.checked).toEqual(true)
   })
 })
