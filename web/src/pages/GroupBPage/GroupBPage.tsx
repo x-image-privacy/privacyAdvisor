@@ -2,11 +2,18 @@ import { Container, Image, Stack, StackDivider, Text } from '@chakra-ui/react'
 import { Form, Submit } from '@redwoodjs/forms'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
+import Routes from 'src/Routes'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
   PRIVATE_ELEMENTS_QUESTION_GROUP_B,
   PUBLIC_ELEMENTS_QUESTION_GROUP_B,
 } from 'web/config/constants'
+
+// const submit = (data: any) => {
+//   console.log(data)
+
+//   Routes.groupBGlobalQuestion()
+// }
 
 const GroupBPage = () => {
   return (
