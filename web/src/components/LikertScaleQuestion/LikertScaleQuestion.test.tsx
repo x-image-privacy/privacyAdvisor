@@ -1,4 +1,3 @@
-import { Controller } from '@redwoodjs/forms'
 import { render, screen, fireEvent } from '@redwoodjs/testing/web'
 import nPointQuestion from './LikertScaleQuestion'
 
@@ -84,9 +83,12 @@ describe('IsImagePrivateQuestion', () => {
   })
 
   it('check radio successfully', () => {
+    const N = 7
+    const scale = Array.from({ length: N }, (_, i) => i + 1)
+
     render(
       <LikertScaleQuestion
-        n={5}
+        n={7}
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
@@ -95,9 +97,11 @@ describe('IsImagePrivateQuestion', () => {
       />
     )
 
-    const labelRadio: HTMLInputElement = screen.getByTestId('radio1')
-    fireEvent.click(labelRadio, { target: { checked: true } })
-    expect(labelRadio.checked).toEqual(true)
+    scale.forEach((item) => {
+      const labelRadio: HTMLInputElement = screen.getByTestId(`radio${item}`)
+      fireEvent.click(labelRadio, { target: { checked: true } })
+      expect(labelRadio.checked).toEqual(true)
+    })
   })
 })
 
