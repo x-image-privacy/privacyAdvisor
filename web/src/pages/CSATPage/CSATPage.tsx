@@ -12,23 +12,28 @@ const CsatPage = () => {
           Please answer this question on the interface
         </Text>
         <Form onSubmit={(data) => console.log(data)}>
-          <Stack direction="column" spacing={4}>
+          <Stack direction="column" gap={8} alignItems="start">
             <LikertScaleQuestionField
               name={CSAT_RANK_QUESTION}
               n={5}
               question="How satisfied are you with the interface?"
-              leftHand="yes"
-              rightHand="no"
+              text={[
+                'Very satisfied',
+                'Satisfied',
+                'Neutral',
+                'Dissatisfied',
+                'Very dissatisfied',
+              ]}
             />
             <OpenEndedQuestionField
               question="What is the biggest value you get from using this interface?"
               name={CSAT_OPEN_QUESTION}
               placeholder="Justify here..."
             />
+            <Submit className="button" color="grayIcon">
+              Save
+            </Submit>
           </Stack>
-          <Submit className="button" color="grayIcon">
-            Save
-          </Submit>
         </Form>
       </Stack>
     </Container>
