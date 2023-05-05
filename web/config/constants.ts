@@ -10,3 +10,5 @@ export const JUSTIFY_VISUALISATION_GROUP_B = 'justify_visualisation_group_b'
 
 export const GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B =
   'global_likert_scale_question_group_b'
+export const CSAT_RANK_QUESTION = 'csat_rank_question'
+export const CSAT_OPEN_QUESTION = 'csat_open_question'
