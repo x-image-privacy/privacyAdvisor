@@ -8,7 +8,6 @@ export type LikertScaleQuestionProps = {
   text?: string[]
   onChange: (nextValue: string) => void
   value: string
-  direction?: string
 }
 
 const LikertScaleQuestion = ({
