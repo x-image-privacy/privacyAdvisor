@@ -19,6 +19,7 @@ const Routes = () => {
         <Route path="/group-b" page={GroupBPage} name="groupB" />
         <Route path="/group-b-global-question" page={GroupBGlobalQuestionPage} name="groupBGlobalQuestion" />
         <Route path="/csat" page={CSATPage} name="csat" />
+        <Route path="/nps" page={NPSPage} name="nps" />
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>

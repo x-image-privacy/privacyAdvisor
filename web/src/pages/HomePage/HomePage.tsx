@@ -27,6 +27,10 @@ const HomePage = () => {
         A link to the CSAT page:
         <Link to={routes.csat()}>CSAT question</Link>
       </p>
+      <p>
+        A link to the NPS page:
+        <Link to={routes.nps()}>NPS question</Link>
+      </p>
     </>
   )
 }
