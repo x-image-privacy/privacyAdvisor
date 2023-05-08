@@ -13,6 +13,7 @@ import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/ueq" page={UEQPage} name="ueq" />
       <Set wrap={NavigationLayout}>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/group-a" page={GroupAPage} name="groupA" />
