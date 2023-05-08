@@ -14,7 +14,8 @@ const UeqQuestion = ({
 }: UEQQuestionProps) => {
   // Array of [1, 2, ..., n]
   // https://stackoverflow.com/questions/3746725/how-to-create-an-array-containing-1-n
-  const scale = Array.from({ length: 8 }, (_, i) => i + 1)
+  const n = 7
+  const scale = Array.from({ length: n }, (_, i) => i + 1)
   return (
     <Stack alignItems="center">
       <Flex alignItems="center" gap={2}>
