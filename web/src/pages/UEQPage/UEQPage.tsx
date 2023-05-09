@@ -1,5 +1,5 @@
-import { Container, Flex, Square, Stack, Text } from '@chakra-ui/react'
-import { Form } from '@redwoodjs/forms'
+import { Box, Container, Flex, Square, Stack, Text } from '@chakra-ui/react'
+import { Form, Submit } from '@redwoodjs/forms'
 import {
   UEQ_QUESTION_1,
   UEQ_QUESTION_2,
@@ -21,9 +21,9 @@ const UeqPage = () => {
           <Stack gap={4} alignItems="start">
             <Stack direction="row">
               <Square size="20px" bg="grayIcon" />
-              <Text>Choose the correct </Text>
+              <Text>You find the interface:</Text>
             </Stack>
-            <Stack direction="column" gap={4} alignContent="center">
+            <Stack spacing="15px" align="stretch">
               <UeqQuestionField
                 name={UEQ_QUESTION_1}
                 leftHand="Obstructive"
@@ -65,6 +65,9 @@ const UeqPage = () => {
                 rightHand="Leading edge"
               />
             </Stack>
+            <Submit className="button" color="grayIcon">
+              Save
+            </Submit>
           </Stack>
         </Form>
       </Stack>

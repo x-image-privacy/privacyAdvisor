@@ -17,19 +17,19 @@ const UeqQuestion = ({
   const n = 7
   const scale = Array.from({ length: n }, (_, i) => i + 1)
   return (
-    <Stack alignItems="center">
-      <Flex alignItems="center" gap={2}>
-        <Text>{leftHand}</Text>
-        <RadioGroup onChange={onChange} value={value}>
+    <Flex alignItems="center" gap={2}>
+      <Text>{leftHand}</Text>
+      <RadioGroup onChange={onChange} value={value}>
+        <Stack direction="row">
           {scale.map((item, _) => {
             return (
               <Radio data-testid={`radio${item}`} value={item} key={item} />
             )
           })}
-        </RadioGroup>
-        <Text>{rightHand}</Text>
-      </Flex>
-    </Stack>
+        </Stack>
+      </RadioGroup>
+      <Text>{rightHand}</Text>
+    </Flex>
   )
 }
 
