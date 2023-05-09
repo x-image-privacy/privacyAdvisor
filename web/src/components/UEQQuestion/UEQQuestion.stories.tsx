@@ -12,14 +12,28 @@
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
 import type { ComponentMeta } from '@storybook/react'
-
-import UeqQuestion from './UeqQuestion'
+import UeqQuestion, { UEQQuestionProps } from './UEQQuestion'
 
 export const generated = () => {
-  return <UeqQuestion />
+  return (
+    <UeqQuestion
+      onChange={function (nextValue: string): void {
+        throw new Error('Function not implemented.')
+      }}
+      leftHand="left"
+      rightHand="right"
+      value=""
+    />
+  )
 }
 
 export default {
   title: 'Components/UeqQuestion',
   component: UeqQuestion,
 } as ComponentMeta<typeof UeqQuestion>
+
+const Template = (args: JSX.IntrinsicAttributes & UEQQuestionProps) => (
+  <UeqQuestion {...args} />
+)
+
+export const ueqQuestion = Template.bind({})

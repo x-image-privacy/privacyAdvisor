@@ -18,7 +18,7 @@ const UeqQuestion = ({
   const scale = Array.from({ length: n }, (_, i) => i + 1)
   return (
     <Flex alignItems="center" gap={2}>
-      <Text>{leftHand}</Text>
+      <Text data-testid="left">{leftHand}</Text>
       <RadioGroup onChange={onChange} value={value}>
         <Stack direction="row">
           {scale.map((item, _) => {
@@ -28,7 +28,7 @@ const UeqQuestion = ({
           })}
         </Stack>
       </RadioGroup>
-      <Text>{rightHand}</Text>
+      <Text data-testid="right">{rightHand}</Text>
     </Flex>
   )
 }
