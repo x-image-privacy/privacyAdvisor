@@ -10,7 +10,8 @@ export const generated = () => {
       question="Is this image private?"
       leftHand="No"
       rightHand="Yes"
-      name={''}
+      name=''
+      direction='row'
     />
   )
 }

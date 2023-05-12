@@ -29,6 +29,7 @@ const GroupAPage = () => {
               question="Is this image private?"
               leftHand="No"
               rightHand="Yes"
+              direction='row'
             />
             <OpenEndedQuestionField
               question="Which elements do you consider as public in this image?"

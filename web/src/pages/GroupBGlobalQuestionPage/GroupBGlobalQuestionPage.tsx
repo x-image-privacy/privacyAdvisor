@@ -1,4 +1,4 @@
-import { Container, Image, Stack, StackDivider, Text } from '@chakra-ui/react'
+import { Container, Stack, StackDivider, Text } from '@chakra-ui/react'
 import { Form, Submit } from '@redwoodjs/forms'
 import {
   GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B,
@@ -28,11 +28,11 @@ const GroupBGlobalQuestionPage = () => {
                 question="Is this visualisation efficient to help you form an opinion?"
                 leftHand="No"
                 rightHand="Yes"
+                direction='row'
               />
               <JustifyQuestionField
                 placeholder="Justify here..."
-                name={JUSTIFY_VISUALISATION_GROUP_B}
-              />
+                name={JUSTIFY_VISUALISATION_GROUP_B}/>
             </Stack>
             <Submit className="button" color="grayIcon">
               Save

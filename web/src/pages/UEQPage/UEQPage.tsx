@@ -10,7 +10,7 @@ import {
   UEQ_QUESTION_7,
   UEQ_QUESTION_8,
 } from 'web/config/constants'
-import UeqQuestionField from 'src/components/UEQQuestionField/UEQQuestionField'
+import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 
 const UeqPage = () => {
   return (
@@ -24,45 +24,60 @@ const UeqPage = () => {
               <Text>You find the interface:</Text>
             </Stack>
             <Stack spacing="15px" align="stretch">
-              <UeqQuestionField
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_1}
                 leftHand="Obstructive"
-                rightHand="Supportive"
-              />
-              <UeqQuestionField
+                rightHand="Supportive" 
+                direction='row' 
+                n={7}/>
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_2}
                 leftHand="Complicated"
                 rightHand="Easy"
+                direction='row' 
+                n={7}
               />
-              <UeqQuestionField
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_3}
                 leftHand="Inefficient"
                 rightHand="Efficient"
+                direction='row' 
+                n={7}
               />
-              <UeqQuestionField
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_4}
                 leftHand="Confusing"
                 rightHand="Clear"
+                direction='row' 
+                n={7}
               />
-              <UeqQuestionField
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_5}
                 leftHand="Boring"
                 rightHand="Exciting"
+                direction='row' 
+                n={7}
               />
-              <UeqQuestionField
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_6}
                 leftHand="Not interesting"
                 rightHand="Interesting"
+                direction='row' 
+                n={7}
               />
-              <UeqQuestionField
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_7}
                 leftHand="Conventional"
                 rightHand="Inventive"
+                direction='row' 
+                n={7}
               />
-              <UeqQuestionField
+              <LikertScaleQuestionField
                 name={UEQ_QUESTION_8}
                 leftHand="Usual"
                 rightHand="Leading edge"
+                direction='row' 
+                n={7}
               />
             </Stack>
             <Submit className="button" color="grayIcon">

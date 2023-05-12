@@ -24,6 +24,7 @@ const CsatPage = () => {
                 'Dissatisfied',
                 'Very dissatisfied',
               ]}
+              direction="column"
             />
             <OpenEndedQuestionField
               question="What is the biggest value you get from using this interface?"

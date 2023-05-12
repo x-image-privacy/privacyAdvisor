@@ -1,7 +1,13 @@
+import { Input } from '@chakra-ui/react'
 import { Controller, RegisterOptions } from '@redwoodjs/forms'
-import JustifyQuestion, {
-  JustifyQuestionProps,
-} from '../JustifyQuestion/JustifyQuestion'
+import { ChangeEventHandler } from 'react'
+
+
+export type JustifyQuestionProps = {
+  placeholder: string
+  onChange: ChangeEventHandler<HTMLInputElement>
+  value: string
+}
 
 interface JustifyQuestionFieldProps
   extends Omit<JustifyQuestionProps, 'onChange' | 'value'> {
@@ -9,6 +15,7 @@ interface JustifyQuestionFieldProps
   errorClassName?: string
   name: string
 }
+
 const JustifyQuestionField = (props: JustifyQuestionFieldProps) => {
   const { validation, errorClassName, name, ...propsRest } = props
   return (
@@ -16,7 +23,12 @@ const JustifyQuestionField = (props: JustifyQuestionFieldProps) => {
       name={name}
       rules={validation}
       render={({ field: { onChange, value } }) => (
-        <JustifyQuestion {...propsRest} onChange={onChange} value={value} />
+        <Input
+        {...propsRest}
+
+        onChange={(e) => onChange(e.target.value)}
+        value={value}
+      />
       )}
     />
   )
