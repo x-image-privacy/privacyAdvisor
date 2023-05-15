@@ -1,14 +1,16 @@
-import type {ImageSurveyQuery} from 'types/graphql'
+import type {
+  FindImageSurveyQuery,
+  FindImageSurveyQueryVariables,
+} from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 
 export const QUERY = gql`
-  query ImageSurveyQuery($id: Int!) {
-    imageSurvey: image(id: $id) {
+  query FindImageSurveyQuery($id: Int!) {
+    imageSurvey: post(id: $id) {
       id
-      imageLocation
-      dataLocation
-      answer
+      group
+      createdAt
     }
   }
 `
@@ -19,12 +21,12 @@ export const Empty = () => <div>Empty</div>
 
 export const Failure = ({
   error,
-}: CellFailureProps) => (
+}: CellFailureProps<FindImageSurveyQueryVariables>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = ({
   imageSurvey,
-}: CellSuccessProps<ImageSurveyQuery>) => {
-  return (<LikertScaleQuestionField name='test' direction='row' n={5} />)
+}: CellSuccessProps<FindImageSurveyQuery, FindImageSurveyQueryVariables>) => {
+  return(<LikertScaleQuestionField name='test' direction='column' n={5}/>)
 }

@@ -1,6 +1,5 @@
 import { Container, Image, Stack, StackDivider, Text } from '@chakra-ui/react'
 import { Form, Submit } from '@redwoodjs/forms'
-import ImageSurveyCell from 'src/components/ImageSurveyCell/ImageSurveyCell'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
 import {
@@ -9,12 +8,12 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
+import ImageSurveyCell from 'src/components/ImageSurveyCell'
+
 
 const GroupAPage = () => {
-  return(
-    <ImageSurveyCell/>
-    )
-
+  const id = 1
+  return(<ImageSurveyCell id={id}/>)
   // return (
   //   <Container maxW="6xl">
   //     <Stack direction="column" gap={8} alignItems="center">
