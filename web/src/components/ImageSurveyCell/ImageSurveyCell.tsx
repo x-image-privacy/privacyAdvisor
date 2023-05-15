@@ -7,10 +7,10 @@ import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQue
 
 export const QUERY = gql`
   query FindImageSurveyQuery($id: Int!) {
-    imageSurvey: post(id: $id) {
+    imageSurvey: privateRank(id: $id) {
       id
-      group
-      createdAt
+      userId
+      rank
     }
   }
 `
@@ -28,5 +28,6 @@ export const Failure = ({
 export const Success = ({
   imageSurvey,
 }: CellSuccessProps<FindImageSurveyQuery, FindImageSurveyQueryVariables>) => {
-  return(<LikertScaleQuestionField name='test' direction='column' n={5}/>)
+      return <LikertScaleQuestionField name='test' direction='column' n={5}/>
+
 }

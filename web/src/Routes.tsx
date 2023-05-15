@@ -15,6 +15,12 @@ import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
 const Routes = () => {
   return (
     <Router>
+      <Set wrap={ScaffoldLayout} title="PrivateRanks" titleTo="privateRanks" buttonLabel="New PrivateRank" buttonTo="newPrivateRank">
+        <Route path="/private-ranks/new" page={PrivateRankNewPrivateRankPage} name="newPrivateRank" />
+        <Route path="/private-ranks/{id:Int}/edit" page={PrivateRankEditPrivateRankPage} name="editPrivateRank" />
+        <Route path="/private-ranks/{id:Int}" page={PrivateRankPrivateRankPage} name="privateRank" />
+        <Route path="/private-ranks" page={PrivateRankPrivateRanksPage} name="privateRanks" />
+      </Set>
       <Set wrap={ScaffoldLayout} title="Posts" titleTo="posts" buttonLabel="New Post" buttonTo="newPost">
         <Route path="/posts/new" page={PostNewPostPage} name="newPost" />
         <Route path="/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />

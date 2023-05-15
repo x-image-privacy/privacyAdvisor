@@ -12,8 +12,7 @@ import ImageSurveyCell from 'src/components/ImageSurveyCell'
 
 
 const GroupAPage = () => {
-  const id = 1
-  return(<ImageSurveyCell id={id}/>)
+  return(<ImageSurveyCell id={0}/>)
   // return (
   //   <Container maxW="6xl">
   //     <Stack direction="column" gap={8} alignItems="center">
