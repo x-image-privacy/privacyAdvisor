@@ -12,7 +12,11 @@ import ImageSurveyCell from 'src/components/ImageSurveyCell'
 
 
 const GroupAPage = () => {
-  return(<ImageSurveyCell id={0}/>)
+  return(
+    <Form onSubmit={(data) => console.log(data)}>
+      <ImageSurveyCell id={2}/>
+      </Form>
+  )
   // return (
   //   <Container maxW="6xl">
   //     <Stack direction="column" gap={8} alignItems="center">
