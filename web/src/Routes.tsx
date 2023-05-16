@@ -15,17 +15,29 @@ import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
 const Routes = () => {
   return (
     <Router>
+      <Set wrap={ScaffoldLayout} title="Images" titleTo="images" buttonLabel="New Image" buttonTo="newImage">
+        <Route path="/images/new" page={ImageNewImagePage} name="newImage" />
+        <Route path="/images/{id:Int}/edit" page={ImageEditImagePage} name="editImage" />
+        <Route path="/images/{id:Int}" page={ImageImagePage} name="image" />
+        <Route path="/images" page={ImageImagesPage} name="images" />
+      </Set>
+      <Set wrap={ScaffoldLayout} title="Answers" titleTo="answers" buttonLabel="New Answer" buttonTo="newAnswer">
+        <Route path="/answers/new" page={AnswerNewAnswerPage} name="newAnswer" />
+        <Route path="/answers/{id:Int}/edit" page={AnswerEditAnswerPage} name="editAnswer" />
+        <Route path="/answers/{id:Int}" page={AnswerAnswerPage} name="answer" />
+        <Route path="/answers" page={AnswerAnswersPage} name="answers" />
+      </Set>
+      <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="newUser">
+        <Route path="/users/new" page={UserNewUserPage} name="newUser" />
+        <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />
+        <Route path="/users/{id:Int}" page={UserUserPage} name="user" />
+        <Route path="/users" page={UserUsersPage} name="users" />
+      </Set>
       <Set wrap={ScaffoldLayout} title="PrivateRanks" titleTo="privateRanks" buttonLabel="New PrivateRank" buttonTo="newPrivateRank">
         <Route path="/private-ranks/new" page={PrivateRankNewPrivateRankPage} name="newPrivateRank" />
         <Route path="/private-ranks/{id:Int}/edit" page={PrivateRankEditPrivateRankPage} name="editPrivateRank" />
         <Route path="/private-ranks/{id:Int}" page={PrivateRankPrivateRankPage} name="privateRank" />
         <Route path="/private-ranks" page={PrivateRankPrivateRanksPage} name="privateRanks" />
-      </Set>
-      <Set wrap={ScaffoldLayout} title="Posts" titleTo="posts" buttonLabel="New Post" buttonTo="newPost">
-        <Route path="/posts/new" page={PostNewPostPage} name="newPost" />
-        <Route path="/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />
-        <Route path="/posts/{id:Int}" page={PostPostPage} name="post" />
-        <Route path="/posts" page={PostPostsPage} name="posts" />
       </Set>
       <Set wrap={NavigationLayout}>
         <Route path="/" page={HomePage} name="home" />
