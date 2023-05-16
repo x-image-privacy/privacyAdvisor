@@ -1,9 +1,10 @@
+import { useMutation } from '@redwoodjs/web'
 import type { ImageSurveyQuery } from 'types/graphql'
 import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import { Stack, StackDivider } from '@chakra-ui/react'
 import { IS_PRIVATE_QUESTION_GROUP_A, PRIVATE_ELEMENTS_QUESTION_GROUP_A, PUBLIC_ELEMENTS_QUESTION_GROUP_A } from 'web/config/constants'
-import { Submit } from '@redwoodjs/forms'
+import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
 export const QUERY = gql`
@@ -18,7 +19,22 @@ export const QUERY = gql`
   }
 `
 
-export interface PlainImageSurveyValues {
+import {
+  CreatePlainImageSurveyMutation, CreatePlainImageSurveyMutationVariables, 
+} from 'types/graphql'
+
+const CREATE_PLAIN_IMAGE_SURVEY = gql`
+  mutation CreatePlainImageSurveyMutation($input: CreatePlainImageSurveyInput!) {
+    createPlainImageSurvey(input: $input) {
+      id
+      userId
+      privateRank
+      publicElem
+      privateElem
+    }
+  }`
+
+interface PlainImageSurveyValues {
   IS_PRIVATE_QUESTION_GROUP_A: number
   PUBLIC_ELEMENTS_QUESTION_GROUP_A: string
   PRIVATE_ELEMENTS_QUESTION_GROUP_A: string
@@ -37,8 +53,28 @@ export const Failure = ({
 export const Success = ({
   imageSurvey,
 }: CellSuccessProps<ImageSurveyQuery>) => {
+
+  const [create] = useMutation<
+  CreatePlainImageSurveyMutation,
+  CreatePlainImageSurveyMutationVariables
+  >(CREATE_PLAIN_IMAGE_SURVEY)
+  
+  const onSubmit: SubmitHandler<PlainImageSurveyValues> = (data) => {
+    create(
+      { variables: {
+        input: {
+          userId: 1, // TODO: get user id
+          privateRank: data.IS_PRIVATE_QUESTION_GROUP_A,
+          privateElem: data.PRIVATE_ELEMENTS_QUESTION_GROUP_A,
+          publicElem: data.PUBLIC_ELEMENTS_QUESTION_GROUP_A,
+        }
+        }
+      }
+    )
+  }
       return (
-        <Stack
+        <Form onSubmit={onSubmit} config={{mode: 'onBlur'}}>
+          <Stack
             direction="row"
             spacing={4}
             justifyContent="start"
@@ -71,6 +107,8 @@ export const Success = ({
               Next
             </Submit>
           </Stack>
+          </Form>
+
 
       )
 
