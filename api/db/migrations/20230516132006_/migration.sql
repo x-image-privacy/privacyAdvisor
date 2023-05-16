@@ -26,9 +26,11 @@ CREATE TABLE "Answer" (
 );
 
 -- CreateTable
-CREATE TABLE "PrivateRank" (
+CREATE TABLE "PlainImageSurvey" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "userId" INTEGER NOT NULL,
-    "rank" INTEGER NOT NULL,
-    CONSTRAINT "PrivateRank_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "privateRank" INTEGER NOT NULL,
+    "publicElem" TEXT NOT NULL,
+    "privateElem" TEXT NOT NULL,
+    CONSTRAINT "PlainImageSurvey_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );

@@ -15,6 +15,12 @@ import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
 const Routes = () => {
   return (
     <Router>
+      <Set wrap={ScaffoldLayout} title="PlainImageSurveys" titleTo="plainImageSurveys" buttonLabel="New PlainImageSurvey" buttonTo="newPlainImageSurvey">
+        <Route path="/plain-image-surveys/new" page={PlainImageSurveyNewPlainImageSurveyPage} name="newPlainImageSurvey" />
+        <Route path="/plain-image-surveys/{id:Int}/edit" page={PlainImageSurveyEditPlainImageSurveyPage} name="editPlainImageSurvey" />
+        <Route path="/plain-image-surveys/{id:Int}" page={PlainImageSurveyPlainImageSurveyPage} name="plainImageSurvey" />
+        <Route path="/plain-image-surveys" page={PlainImageSurveyPlainImageSurveysPage} name="plainImageSurveys" />
+      </Set>
       <Set wrap={ScaffoldLayout} title="Images" titleTo="images" buttonLabel="New Image" buttonTo="newImage">
         <Route path="/images/new" page={ImageNewImagePage} name="newImage" />
         <Route path="/images/{id:Int}/edit" page={ImageEditImagePage} name="editImage" />

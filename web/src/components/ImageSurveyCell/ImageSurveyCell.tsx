@@ -1,5 +1,5 @@
 import type { ImageSurveyQuery } from 'types/graphql'
-import { CellSuccessProps, CellFailureProps, MetaTags } from '@redwoodjs/web'
+import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import { Stack, StackDivider } from '@chakra-ui/react'
 import { IS_PRIVATE_QUESTION_GROUP_A, PRIVATE_ELEMENTS_QUESTION_GROUP_A, PUBLIC_ELEMENTS_QUESTION_GROUP_A } from 'web/config/constants'
@@ -8,13 +8,21 @@ import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionF
 
 export const QUERY = gql`
   query ImageSurveyQuery($id: Int!) {
-    imageSurvey: privateRank(id: $id) {
+    imageSurvey: plainImageSurvey(id: $id) {
       id
       userId
-      rank
+      privateRank
+      publicElem
+      privateElem
     }
   }
 `
+
+export interface PlainImageSurveyValues {
+  IS_PRIVATE_QUESTION_GROUP_A: number
+  PUBLIC_ELEMENTS_QUESTION_GROUP_A: string
+  PRIVATE_ELEMENTS_QUESTION_GROUP_A: string
+}
 
 export const Loading = () => <div>Loading...</div>
 
@@ -43,19 +51,24 @@ export const Success = ({
               leftHand="No"
               rightHand="Yes"
               direction='row'
+              validation={{required: true}}
             />
             <OpenEndedQuestionField
               question="Which elements do you consider as public in this image?"
               name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
               placeholder="Answer here..."
+              validation={{required: true}}
+
             />
             <OpenEndedQuestionField
               question="Which elements would you feel uncomfortable disclosing in this image?"
               name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
               placeholder="Answer here..."
+              validation={{required: true}}
+
             />
             <Submit className="button" color="grayIcon">
-              Save
+              Next
             </Submit>
           </Stack>
 
