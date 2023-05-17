@@ -1,4 +1,5 @@
 import type { Prisma, PlainImageSurvey } from '@prisma/client'
+
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.PlainImageSurveyCreateArgs>({

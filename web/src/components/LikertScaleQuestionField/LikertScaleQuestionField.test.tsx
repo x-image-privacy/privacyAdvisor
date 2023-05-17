@@ -17,7 +17,7 @@ describe('LikertScaleQuestionField', () => {
             leftHand="No"
             rightHand="Yes"
             name=""
-            direction='row'
+            direction="row"
           />
         </Form>
       )

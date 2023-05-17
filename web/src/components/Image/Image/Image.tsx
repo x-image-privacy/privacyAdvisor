@@ -1,10 +1,10 @@
+import type { DeleteImageMutationVariables, FindImageById } from 'types/graphql'
+
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import {} from 'src/lib/formatters'
-
-import type { DeleteImageMutationVariables, FindImageById } from 'types/graphql'
 
 const DELETE_IMAGE_MUTATION = gql`
   mutation DeleteImageMutation($id: Int!) {

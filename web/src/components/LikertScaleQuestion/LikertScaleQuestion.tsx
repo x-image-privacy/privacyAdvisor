@@ -8,7 +8,7 @@ export type LikertScaleQuestionProps = {
   text?: string[]
   onChange: (nextValue: string) => void
   value: string
-  direction: 'row' | 'column'
+  direction?: 'row' | 'column'
 }
 
 const LikertScaleQuestion = ({
@@ -19,39 +19,39 @@ const LikertScaleQuestion = ({
   text,
   onChange,
   value,
-  direction,
+  direction = 'row',
 }: LikertScaleQuestionProps) => {
   // Array of [1, 2, ..., n]
   // https://stackoverflow.com/questions/3746725/how-to-create-an-array-containing-1-n
   const scale = Array.from({ length: n }, (_, i) => i + 1)
   return (
     <Stack alignItems="center">
-      { question &&
-      <Stack direction="row">
-        <Square size="20px" bg="grayIcon" data-testid="square" />
-        <Text data-testid="question">{question}</Text>
-      </Stack>
-      }
+      {question && (
+        <Stack direction="row">
+          <Square size="20px" bg="grayIcon" data-testid="square" />
+          <Text data-testid="question">{question}</Text>
+        </Stack>
+      )}
       <Flex alignItems="center" gap={2}>
         {leftHand && <Text data-testid="left">{leftHand}</Text>}
         <RadioGroup onChange={onChange} value={value}>
-
           {text ? (
             <Stack direction={direction}>
-              {/* https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react 
+              {/* https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react
             create a n scale radio component*/}
               {scale.map((item, _) => {
                 return (
                   <Radio data-testid={`radio${item}`} value={item} key={item}>
                     {text[item - 1]}
-                  </Radio>                )
+                  </Radio>
+                )
               })}
             </Stack>
           ) : (
             <Stack direction={direction}>
               {scale.map((item, _) => {
                 return (
-                  <Radio data-testid={`radio${item}`} value={item} key={item}/>
+                  <Radio data-testid={`radio${item}`} value={item} key={item} />
                 )
               })}
             </Stack>

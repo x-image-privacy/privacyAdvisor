@@ -1,4 +1,5 @@
 import { Controller, RegisterOptions } from '@redwoodjs/forms'
+
 import OpenEndedQuestion, {
   OpenEndedQuestionProps,
 } from '../OpenEndedQuestion/OpenEndedQuestion'
@@ -11,7 +12,7 @@ interface OpenEndedQuestionFieldProps
 }
 
 const OpenEndedQuestionField = (props: OpenEndedQuestionFieldProps) => {
-  const { validation, errorClassName, name, ...propsRest } = props
+  const { validation, name, ...propsRest } = props
 
   return (
     <Controller

@@ -1,10 +1,10 @@
+import type { CreatePrivateRankInput } from 'types/graphql'
+
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import PrivateRankForm from 'src/components/PrivateRank/PrivateRankForm'
-
-import type { CreatePrivateRankInput } from 'types/graphql'
 
 const CREATE_PRIVATE_RANK_MUTATION = gql`
   mutation CreatePrivateRankMutation($input: CreatePrivateRankInput!) {

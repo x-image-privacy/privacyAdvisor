@@ -10,6 +10,7 @@
 import { Router, Route, Set } from '@redwoodjs/router'
 
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
+
 import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
 
 const Routes = () => {

@@ -1,15 +1,13 @@
+import type { CreatePlainImageSurveyInput } from 'types/graphql'
+
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import PlainImageSurveyForm from 'src/components/PlainImageSurvey/PlainImageSurveyForm'
 
-import type { CreatePlainImageSurveyInput } from 'types/graphql'
-
 const CREATE_PLAIN_IMAGE_SURVEY_MUTATION = gql`
-  mutation CreatePlainImageSurveyMutation(
-    $input: CreatePlainImageSurveyInput!
-  ) {
+  mutation createPlainImageSurvey($input: CreatePlainImageSurveyInput!) {
     createPlainImageSurvey(input: $input) {
       id
     }

@@ -11,7 +11,7 @@ export const generated = () => {
   return (
     <OpenEndedQuestion
       question="Hello"
-      onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+      onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
         throw new Error('Function not implemented.')
       }}
       placeholder="Here"

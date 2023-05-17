@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@redwoodjs/testing/web'
-import nPointQuestion from './LikertScaleQuestion'
 
+import nPointQuestion from './LikertScaleQuestion'
 import LikertScaleQuestion from './LikertScaleQuestion'
 
 //   Improve this test with help from the Redwood Testing Doc:
@@ -15,7 +15,7 @@ describe('IsImagePrivateQuestion', () => {
           question="Is this image private?"
           leftHand="No"
           rightHand="Yes"
-          onChange={function (nextValue: string): void {
+          onChange={function (_: string): void {
             throw new Error('Function not implemented.')
           }}
           value=""
@@ -31,7 +31,7 @@ describe('IsImagePrivateQuestion', () => {
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
-        onChange={function (nextValue: string): void {
+        onChange={function (_: string): void {
           throw new Error('Function not implemented.')
         }}
         value=""
@@ -54,7 +54,7 @@ describe('IsImagePrivateQuestion', () => {
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
-        onChange={function (nextValue: string): void {
+        onChange={function (_: string): void {
           throw new Error('Function not implemented.')
         }}
         value=""
@@ -73,7 +73,7 @@ describe('IsImagePrivateQuestion', () => {
         question="Is this image private?"
         leftHand="No"
         rightHand="Yes"
-        onChange={function (nextValue: string): void {
+        onChange={function (_: string): void {
           throw new Error('Function not implemented.')
         }}
         value=""

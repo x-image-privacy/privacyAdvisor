@@ -1,4 +1,5 @@
 import { Controller, RegisterOptions } from '@redwoodjs/forms'
+
 import LikertScaleQuestion from '../LikertScaleQuestion/LikertScaleQuestion'
 import type { LikertScaleQuestionProps } from '../LikertScaleQuestion/LikertScaleQuestion'
 
@@ -10,7 +11,7 @@ interface LikertScaleQuestionFieldProps
 }
 
 const LikertScaleQuestionField = (props: LikertScaleQuestionFieldProps) => {
-  const { validation, errorClassName, name, ...propsRest } = props
+  const { validation, name, ...propsRest } = props
 
   return (
     <Controller

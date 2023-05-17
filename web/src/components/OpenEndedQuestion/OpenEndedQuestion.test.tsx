@@ -12,9 +12,7 @@ describe('OpenEndedQuestion', () => {
         <OpenEndedQuestion
           question="Which elements do you consider as public in this image?"
           placeholder="Hello"
-          onChange={function (
-            event: React.ChangeEvent<HTMLInputElement>
-          ): void {
+          onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
             throw new Error('Function not implemented.')
           }}
           value={''}
@@ -28,7 +26,7 @@ describe('OpenEndedQuestion', () => {
       <OpenEndedQuestion
         question="Test"
         placeholder="Hello"
-        onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+        onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
           throw new Error('Function not implemented.')
         }}
         value={''}
@@ -42,7 +40,7 @@ describe('OpenEndedQuestion', () => {
       <OpenEndedQuestion
         question="Test"
         placeholder="Hello"
-        onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+        onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
           throw new Error('Function not implemented.')
         }}
         value={''}
@@ -56,7 +54,7 @@ describe('OpenEndedQuestion', () => {
       <OpenEndedQuestion
         question="Test"
         placeholder="Hello"
-        onChange={function (event: React.ChangeEvent<HTMLInputElement>): void {
+        onChange={function (_: React.ChangeEvent<HTMLInputElement>): void {
           throw new Error('Function not implemented.')
         }}
         value={''}

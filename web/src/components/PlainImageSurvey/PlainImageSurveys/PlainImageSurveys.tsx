@@ -1,14 +1,14 @@
+import type {
+  DeletePlainImageSurveyMutationVariables,
+  FindPlainImageSurveys,
+} from 'types/graphql'
+
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/PlainImageSurvey/PlainImageSurveysCell'
 import { truncate } from 'src/lib/formatters'
-
-import type {
-  DeletePlainImageSurveyMutationVariables,
-  FindPlainImageSurveys,
-} from 'types/graphql'
 
 const DELETE_PLAIN_IMAGE_SURVEY_MUTATION = gql`
   mutation DeletePlainImageSurveyMutation($id: Int!) {

@@ -1,7 +1,8 @@
-import { Input } from '@chakra-ui/react'
-import { Controller, RegisterOptions } from '@redwoodjs/forms'
 import { ChangeEventHandler } from 'react'
 
+import { Input } from '@chakra-ui/react'
+
+import { Controller, RegisterOptions } from '@redwoodjs/forms'
 
 export type JustifyQuestionProps = {
   placeholder: string
@@ -17,18 +18,17 @@ interface JustifyQuestionFieldProps
 }
 
 const JustifyQuestionField = (props: JustifyQuestionFieldProps) => {
-  const { validation, errorClassName, name, ...propsRest } = props
+  const { validation, name, ...propsRest } = props
   return (
     <Controller
       name={name}
       rules={validation}
       render={({ field: { onChange, value } }) => (
         <Input
-        {...propsRest}
-
-        onChange={(e) => onChange(e.target.value)}
-        value={value}
-      />
+          {...propsRest}
+          onChange={(e) => onChange(e.target.value)}
+          value={value}
+        />
       )}
     />
   )

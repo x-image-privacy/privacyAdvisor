@@ -1,7 +1,8 @@
+import type { ComponentMeta } from '@storybook/react'
+
 import LikertScaleQuestion, {
   LikertScaleQuestionProps,
 } from './LikertScaleQuestion'
-import type { ComponentMeta } from '@storybook/react'
 
 export default {
   title: 'Components/LikertScaleQuestion',
@@ -15,11 +16,11 @@ export const generatedFivePointScale = () => {
       question="Question"
       leftHand="Yes"
       rightHand="No"
-      direction='row'
-      onChange={function (nextValue: string): void {
+      direction="row"
+      onChange={function (_: string): void {
         throw new Error('Function not implemented.')
       }}
-      value=''
+      value=""
     />
   )
 }
@@ -34,13 +35,13 @@ export const generatedSevenPointScale = () => {
     <LikertScaleQuestion
       n={7}
       question="Question"
-      direction='row'
+      direction="row"
       leftHand="Yes"
       rightHand="No"
-      onChange={function (nextValue: string): void {
+      onChange={function (_: string): void {
         throw new Error('Function not implemented.')
       }}
-      value=''
+      value=""
     />
   )
 }
