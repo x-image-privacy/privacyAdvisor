@@ -1,5 +1,4 @@
-import { Box, Container, Flex, Square, Stack, Text } from '@chakra-ui/react'
-import { Form, Submit } from '@redwoodjs/forms'
+import { Container, Square, Stack, Text } from '@chakra-ui/react'
 import {
   UEQ_QUESTION_1,
   UEQ_QUESTION_2,
@@ -10,6 +9,9 @@ import {
   UEQ_QUESTION_7,
   UEQ_QUESTION_8,
 } from 'web/config/constants'
+
+import { Form, Submit } from '@redwoodjs/forms'
+
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 
 const UeqPage = () => {
@@ -27,56 +29,57 @@ const UeqPage = () => {
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_1}
                 leftHand="Obstructive"
-                rightHand="Supportive" 
-                direction='row' 
-                n={7}/>
+                rightHand="Supportive"
+                direction="row"
+                n={7}
+              />
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_2}
                 leftHand="Complicated"
                 rightHand="Easy"
-                direction='row' 
+                direction="row"
                 n={7}
               />
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_3}
                 leftHand="Inefficient"
                 rightHand="Efficient"
-                direction='row' 
+                direction="row"
                 n={7}
               />
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_4}
                 leftHand="Confusing"
                 rightHand="Clear"
-                direction='row' 
+                direction="row"
                 n={7}
               />
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_5}
                 leftHand="Boring"
                 rightHand="Exciting"
-                direction='row' 
+                direction="row"
                 n={7}
               />
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_6}
                 leftHand="Not interesting"
                 rightHand="Interesting"
-                direction='row' 
+                direction="row"
                 n={7}
               />
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_7}
                 leftHand="Conventional"
                 rightHand="Inventive"
-                direction='row' 
+                direction="row"
                 n={7}
               />
               <LikertScaleQuestionField
                 name={UEQ_QUESTION_8}
                 leftHand="Usual"
                 rightHand="Leading edge"
-                direction='row' 
+                direction="row"
                 n={7}
               />
             </Stack>

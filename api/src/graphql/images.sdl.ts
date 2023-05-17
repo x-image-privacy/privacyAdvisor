@@ -3,7 +3,7 @@ export const schema = gql`
     id: Int!
     imageLocation: String!
     dataLocation: String!
-    answer: [Answer]!
+    ImageSurvey: [ImageSurvey]!
   }
 
   type Query {

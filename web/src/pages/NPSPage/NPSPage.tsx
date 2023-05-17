@@ -1,6 +1,8 @@
 import { Container, Stack, Text } from '@chakra-ui/react'
-import { Form, Submit } from '@redwoodjs/forms'
 import { NPS_OPEN_QUESTION, NPS_RANK_QUESTION } from 'web/config/constants'
+
+import { Form, Submit } from '@redwoodjs/forms'
+
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
 

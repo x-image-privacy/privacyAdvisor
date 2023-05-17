@@ -1,4 +1,5 @@
 import type { ComponentMeta } from '@storybook/react'
+
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
 import LikertScaleQuestionField from './LikertScaleQuestionField'
@@ -10,8 +11,8 @@ export const generated = () => {
       question="Is this image private?"
       leftHand="No"
       rightHand="Yes"
-      name=''
-      direction='row'
+      name=""
+      direction="row"
     />
   )
 }

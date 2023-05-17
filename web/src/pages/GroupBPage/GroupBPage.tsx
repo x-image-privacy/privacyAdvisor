@@ -7,7 +7,6 @@ import {
   Text,
 } from '@chakra-ui/react'
 import Wordcloud from '@x-image-privacy/wordcloud'
-import Routes from 'src/Routes'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
   PRIVATE_ELEMENTS_QUESTION_GROUP_B,
@@ -68,7 +67,7 @@ const GroupBPage = () => {
               question="Is this image private?"
               leftHand="No"
               rightHand="Yes"
-              direction='row'
+              direction="row"
             />
             <OpenEndedQuestionField
               question="Which elements do you consider as public in this image?"

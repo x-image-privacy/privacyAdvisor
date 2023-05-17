@@ -4,8 +4,8 @@ export const schema = gql`
     group: String!
     createdAt: DateTime!
     submittedAt: DateTime!
-    answer: [Answer]!
-    privateRank: [PrivateRank]!
+    imageSurvey: [ImageSurvey]!
+    customerSatisfactionSurvey: [CustomerSatisfactionSurvey]!
   }
 
   type Query {
