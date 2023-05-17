@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Container, Image, Stack, Text } from '@chakra-ui/react'
 
 import ImageSurveyCell from 'src/components/ImageSurveyCell'
+import ImageCell from 'src/components/Image/ImageCell'
 
 const GroupAPage = () => {
   // const {user} = useAuth();
@@ -21,7 +22,7 @@ const GroupAPage = () => {
           You are shown a picture and please answer some questions
         </Text>
         <Text>Current Step: {step}</Text>
-        <Image src="/data/image1.jpg" />
+        <ImageCell id={step} />
         <ImageSurveyCell
           userId={1}
           imageId={step}
