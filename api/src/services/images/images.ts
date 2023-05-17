@@ -39,7 +39,7 @@ export const deleteImage: MutationResolvers['deleteImage'] = ({ id }) => {
 }
 
 export const Image: ImageRelationResolvers = {
-  answer: (_obj, { root }) => {
-    return db.image.findUnique({ where: { id: root?.id } }).answer()
+  ImageSurvey: (_obj, { root }) => {
+    return db.image.findUnique({ where: { id: root?.id } }).ImageSurvey()
   },
 }

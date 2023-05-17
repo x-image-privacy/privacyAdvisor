@@ -41,7 +41,11 @@ const LikertScaleQuestion = ({
             create a n scale radio component*/}
               {scale.map((item, _) => {
                 return (
-                  <Radio data-testid={`radio${item}`} value={item} key={item}>
+                  <Radio
+                    data-testid={`radio${item}`}
+                    value={item.toString()}
+                    key={item}
+                  >
                     {text[item - 1]}
                   </Radio>
                 )
@@ -51,7 +55,11 @@ const LikertScaleQuestion = ({
             <Stack direction={direction}>
               {scale.map((item, _) => {
                 return (
-                  <Radio data-testid={`radio${item}`} value={item} key={item} />
+                  <Radio
+                    data-testid={`radio${item}`}
+                    value={item.toString()}
+                    key={item}
+                  />
                 )
               })}
             </Stack>

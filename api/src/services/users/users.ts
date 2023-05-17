@@ -36,10 +36,12 @@ export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
 }
 
 export const User: UserRelationResolvers = {
-  answer: (_obj, { root }) => {
-    return db.user.findUnique({ where: { id: root?.id } }).answer()
+  imageSurvey: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root?.id } }).imageSurvey()
   },
-  privateRank: (_obj, { root }) => {
-    return db.user.findUnique({ where: { id: root?.id } }).privateRank()
+  customerSatisfactionSurvey: (_obj, { root }) => {
+    return db.user
+      .findUnique({ where: { id: root?.id } })
+      .customerSatisfactionSurvey()
   },
 }

@@ -9,37 +9,72 @@ generator client {
 }
 
 model User {
-  id               Int                @id @default(autoincrement())
-  group            String
-  createdAt        DateTime           @default(now())
-  submittedAt      DateTime
-  answer           Answer[]
-  PlainImageSurvey PlainImageSurvey[]
+  id                         Int                          @id @default(autoincrement())
+  group                      String
+  createdAt                  DateTime                     @default(now())
+  submittedAt                DateTime
+  imageSurvey                ImageSurvey[]
+  customerSatisfactionSurvey CustomerSatisfactionSurvey[]
 }
 
 model Image {
-  id            Int      @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   imageLocation String
   dataLocation  String
-  answer        Answer[]
+  ImageSurvey   ImageSurvey[]
 }
 
-model Answer {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
-  image       Image    @relation(fields: [imageId], references: [id])
-  imageId     Int
-  answer      String
-  createdAt   DateTime @default(now())
-  submittedAt DateTime
+model ImageSurvey {
+  id               Int     @id @default(autoincrement())
+  user             User?   @relation(fields: [userId], references: [id])
+  userId           Int?
+  image            Image?  @relation(fields: [imageId], references: [id])
+  imageId          Int?
+  hasInterface     Boolean
+  privateRank      Int
+  publicElem       String
+  privateElem      String
+  satisfactionRank Int?
+  satisfactionElem String?
+
+  @@unique([userId, imageId, hasInterface])
 }
 
-model PlainImageSurvey {
-  id          Int    @id @default(autoincrement())
-  user        User   @relation(fields: [userId], references: [id])
-  userId      Int
-  privateRank Int
-  publicElem  String
-  privateElem String
+model NetPromoterScore {
+  id                         Int                          @id @default(autoincrement())
+  rank                       Int
+  justification              String
+  CustomerSatisfactionSurvey CustomerSatisfactionSurvey[]
+}
+
+model CustomerSatisfactionScore {
+  id                         Int                          @id @default(autoincrement())
+  rank                       Int
+  justification              String
+  CustomerSatisfactionSurvey CustomerSatisfactionSurvey[]
+}
+
+model UserExperienceQuestionaireScore {
+  id                         Int                          @id @default(autoincrement())
+  support                    Int
+  complexity                 Int
+  efficiency                 Int
+  clarity                    Int
+  motivation                 Int
+  interest                   Int
+  norm                       Int
+  originality                Int
+  CustomerSatisfactionSurvey CustomerSatisfactionSurvey[]
+}
+
+model CustomerSatisfactionSurvey {
+  id     Int                              @id @default(autoincrement())
+  user   User                             @relation(fields: [userId], references: [id])
+  userId Int
+  csat   CustomerSatisfactionScore?       @relation(fields: [csatId], references: [id])
+  csatId Int?
+  nps    NetPromoterScore?                @relation(fields: [npsId], references: [id])
+  npsId  Int?
+  ueq    UserExperienceQuestionaireScore? @relation(fields: [ueqId], references: [id])
+  ueqId  Int?
 }

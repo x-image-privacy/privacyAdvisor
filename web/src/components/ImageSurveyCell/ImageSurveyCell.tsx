@@ -1,4 +1,5 @@
-import { Stack, StackDivider } from '@chakra-ui/react'
+import { Button, Stack, StackDivider } from '@chakra-ui/react'
+import { FindImageSurveyByUserAndImageId } from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_A,
   PRIVATE_ELEMENTS_QUESTION_GROUP_A,
@@ -12,23 +13,50 @@ import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
+type ImageSurveyProps = {
+  imageId: number
+  userId: number
+  onFinished: () => void
+  onPrevious: () => void
+}
+
 export const QUERY = gql`
-  query PlainImageServey($id: Int!) {
-    answer(id: $id) {
+  query FindImageSurveyByUserAndImageId($userId: Int!, $imageId: Int!) {
+    imageSurvey: imageSurveyByUserAndImage(userId: $userId, imageId: $imageId) {
       id
-      userId
+      user {
+        id
+        group
+      }
+      image {
+        id
+      }
       privateRank
-      publicElem
       privateElem
+      publicElem
     }
   }
 `
 
-const CREATE_PLAIN_IMAGE_SURVEY = gql`
-  mutation CreateImageSurveyMutation($input: CreatePlainImageSurveyInput!) {
-    createPlainImageSurvey(input: $input) {
+const CREATE_IMAGE_SURVEY = gql`
+  mutation CreateImageSurveyMutation($input: CreateImageSurveyInput!) {
+    createImageSurvey(input: $input) {
+      id
+      privateRank
+      privateElem
+      publicElem
+    }
+  }
+`
+const UPDATE_IMAGE_SURVEY = gql`
+  mutation UpdateImageSurveyMutation(
+    $id: Int!
+    $input: UpdateImageSurveyInput!
+  ) {
+    updateImageSurvey(id: $id, input: $input) {
       id
       userId
+      imageId
       privateRank
       publicElem
       privateElem
@@ -37,36 +65,64 @@ const CREATE_PLAIN_IMAGE_SURVEY = gql`
 `
 
 interface PlainImageSurveyValues {
-  IS_PRIVATE_QUESTION_GROUP_A: number
+  IS_PRIVATE_QUESTION_GROUP_A: string
   PUBLIC_ELEMENTS_QUESTION_GROUP_A: string
   PRIVATE_ELEMENTS_QUESTION_GROUP_A: string
 }
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = () => <div>Empty</div>
+export const Empty = (props: ImageSurveyProps) => (
+  <ImageSurveyComponent {...props} />
+)
 
 export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const Success = (
+  props: CellSuccessProps<FindImageSurveyByUserAndImageId> & ImageSurveyProps
+) => <ImageSurveyComponent {...props} />
+
+const ImageSurveyComponent = ({
   imageSurvey,
-}: CellSuccessProps) => {
-  const [create] = useMutation(CREATE_PLAIN_IMAGE_SURVEY)
+  userId,
+  imageId,
+  onPrevious,
+  onFinished,
+}: FindImageSurveyByUserAndImageId & ImageSurveyProps) => {
+  const [create] = useMutation(CREATE_IMAGE_SURVEY)
+  const [update] = useMutation(UPDATE_IMAGE_SURVEY)
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = (data) => {
-    create({
-      variables: {
-        input: {
-          userId: 1, // TODO: get user id
-          privateRank: data.IS_PRIVATE_QUESTION_GROUP_A,
-          privateElem: data.PRIVATE_ELEMENTS_QUESTION_GROUP_A,
-          publicElem: data.PUBLIC_ELEMENTS_QUESTION_GROUP_A,
+    const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
+    console.log(data, privateRank, data[IS_PRIVATE_QUESTION_GROUP_A])
+    if (imageSurvey && imageSurvey.id) {
+      update({
+        variables: {
+          id: imageSurvey.id,
+          input: {
+            privateRank: privateRank,
+            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
+            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+          },
         },
-      },
-    })
+      })
+    } else {
+      create({
+        variables: {
+          input: {
+            userId,
+            imageId,
+            hasInterface: false,
+            privateRank: privateRank,
+            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
+            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+          },
+        },
+      })
+    }
+    onFinished()
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
@@ -76,6 +132,8 @@ export const Success = ({
         justifyContent="start"
         divider={<StackDivider borderColor="grayIcon" />}
       >
+        {/* // todo: overwrite the  */}
+        <Button onClick={onPrevious}>Previous</Button>
         <LikertScaleQuestionField
           name={IS_PRIVATE_QUESTION_GROUP_A}
           n={5}
@@ -83,18 +141,21 @@ export const Success = ({
           leftHand="No"
           rightHand="Yes"
           direction="row"
+          value={imageSurvey?.privateRank.toString() || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements do you consider as public in this image?"
           name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
           placeholder="Answer here..."
+          value={imageSurvey?.publicElem || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements would you feel uncomfortable disclosing in this image?"
           name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
           placeholder="Answer here..."
+          value={imageSurvey?.privateElem || ''}
           validation={{ required: true }}
         />
         <Submit className="button" color="grayIcon">

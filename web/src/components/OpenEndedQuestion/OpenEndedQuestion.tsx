@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler } from 'react'
+import { ChangeEventHandler } from 'react'
 
 import { Stack, Text, Input, Square } from '@chakra-ui/react'
 
@@ -24,9 +24,7 @@ const OpenEndedQuestion = ({
       <Input
         placeholder={placeholder}
         size="lg"
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          onChange(e.target.value)
-        }
+        onChange={onChange}
         value={value}
         data-testid="input"
       />
