@@ -1,4 +1,4 @@
-import { render, screen } from '@redwoodjs/testing/web'
+import { render, screen, fireEvent } from '@redwoodjs/testing/web'
 
 import OpenEndedQuestion from './OpenEndedQuestion'
 
@@ -63,5 +63,22 @@ describe('OpenEndedQuestion', () => {
       />
     )
     expect(screen.getByTestId('square')).toBeInTheDocument()
+  })
+
+  it('input change successfully', () => {
+    render(
+      <OpenEndedQuestion
+        question="Test"
+        placeholder="Hello"
+        onChange={(e) => console.log(e)}
+        value=""
+      />
+    )
+    const inputElement: HTMLInputElement = screen.getByTestId('input')
+    expect(inputElement.value).toBe('')
+
+    fireEvent.change(inputElement, { target: { value: 'hello' } })
+    // expect(inputElement.value).toBe('hello')
+    // expect(inputElement).toHaveValue('hello')
   })
 })

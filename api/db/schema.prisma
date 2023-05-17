@@ -9,11 +9,12 @@ generator client {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  group       String
-  createdAt   DateTime  @default(now())
-  submittedAt DateTime
-  answer      Answer[]
+  id                Int       @id @default(autoincrement())
+  group             String
+  createdAt         DateTime  @default(now())
+  submittedAt       DateTime
+  answer            Answer[]
+  PlainImageSurvey  PlainImageSurvey[]
 }
 
 model Image {
@@ -33,4 +34,13 @@ model Answer {
   answer      String
   createdAt   DateTime  @default(now())
   submittedAt DateTime
+}
+
+model PlainImageSurvey {
+  id           Int   @id @default(autoincrement())
+  user         User  @relation(fields: [userId], references: [id]) 
+  userId       Int  
+  privateRank  Int  
+  publicElem   String
+  privateElem  String
 }

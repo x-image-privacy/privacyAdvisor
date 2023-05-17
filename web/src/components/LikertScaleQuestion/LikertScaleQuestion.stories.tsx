@@ -15,10 +15,11 @@ export const generatedFivePointScale = () => {
       question="Question"
       leftHand="Yes"
       rightHand="No"
+      direction='row'
       onChange={function (nextValue: string): void {
         throw new Error('Function not implemented.')
       }}
-      value={''}
+      value=''
     />
   )
 }
@@ -33,12 +34,13 @@ export const generatedSevenPointScale = () => {
     <LikertScaleQuestion
       n={7}
       question="Question"
+      direction='row'
       leftHand="Yes"
       rightHand="No"
       onChange={function (nextValue: string): void {
         throw new Error('Function not implemented.')
       }}
-      value={''}
+      value=''
     />
   )
 }
