@@ -14,8 +14,9 @@ export const schema = gql`
   }
 
   input CreateUserInput {
-    group: String!
-    submittedAt: DateTime!
+    username: String!
+    hashedPassword: String!
+    salt: String!
   }
 
   input UpdateUserInput {

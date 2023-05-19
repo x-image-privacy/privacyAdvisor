@@ -10,9 +10,15 @@ generator client {
 
 model User {
   id                         Int                          @id @default(autoincrement())
-  group                      String
+  username                   String                       @unique @default("")
   createdAt                  DateTime                     @default(now())
-  submittedAt                DateTime
+  hashedPassword             String                       @default("")
+  salt                       String                       @default("")
+  email                      String?                      @unique
+  resetToken                 String?
+  resetTokenExpiresAt        DateTime?
+  group                      String?
+  submittedAt                DateTime?
   imageSurvey                ImageSurvey[]
   customerSatisfactionSurvey CustomerSatisfactionSurvey[]
 }
@@ -26,28 +32,28 @@ model Image {
 
 model ImageSurvey {
   id               Int     @id @default(autoincrement())
-  user             User?   @relation(fields: [userId], references: [id])
-  userId           Int?
-  image            Image?  @relation(fields: [imageId], references: [id])
-  imageId          Int?
-  hasInterface     Boolean
   privateRank      Int
   publicElem       String
   privateElem      String
   satisfactionRank Int?
   satisfactionElem String?
+  user             User?   @relation(fields: [userId], references: [id])
+  userId           Int?
+  image            Image?  @relation(fields: [imageId], references: [id])
+  imageId          Int?
+  hasInterface     Boolean
 
   @@unique([userId, imageId, hasInterface])
 }
 
-model NetPromoterScore {
+model CustomerSatisfactionScore {
   id                         Int                          @id @default(autoincrement())
   rank                       Int
   justification              String
   CustomerSatisfactionSurvey CustomerSatisfactionSurvey[]
 }
 
-model CustomerSatisfactionScore {
+model NetPromoterScore {
   id                         Int                          @id @default(autoincrement())
   rank                       Int
   justification              String
