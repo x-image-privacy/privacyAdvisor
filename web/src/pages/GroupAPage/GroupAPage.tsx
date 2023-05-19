@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Container, Image, Stack, Text } from '@chakra-ui/react'
+import { Container, Stack, Text } from '@chakra-ui/react'
 
 import ImageSurveyCell from 'src/components/ImageSurveyCell'
 import ImageCell from 'src/components/Image/ImageCell'

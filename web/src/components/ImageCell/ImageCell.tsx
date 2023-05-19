@@ -1,6 +1,6 @@
 import type { FindImageQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import { Image } from '@chakra-ui/react'
+import { Image, Text } from '@chakra-ui/react'
 
 export const QUERY = gql`
   query FindImageQuery($id: Int!) {
@@ -33,7 +33,10 @@ export const Success = ({
 const ImageComponent = ({ image }) => {
   const location = image.imageLocation
     return (
+      <>
+      <Text>Current image: {image.id}</Text>
       <Image src={location}/>
+      </>
     )
 }
  

@@ -32,7 +32,6 @@ const Routes = () => {
         <Route path="/" page={HomePage} name="home" />
         <Route path="/group-a" page={GroupAPage} name="groupA" />
         <Route path="/group-b" page={GroupBPage} name="groupB" />
-        <Route path="/group-b-global-question" page={GroupBGlobalQuestionPage} name="groupBGlobalQuestion" />
         <Route path="/csat" page={CSATPage} name="csat" />
         <Route path="/nps" page={NPSPage} name="nps" />
         <Route path="/ueq" page={UEQPage} name="ueq" />

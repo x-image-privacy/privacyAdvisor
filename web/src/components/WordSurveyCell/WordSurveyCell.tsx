@@ -1,9 +1,11 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
-import { FindImageSurveyByUserAndImageId } from 'types/graphql'
+import type { FindImageSurveyByUserAndImageId} from 'types/graphql'
 import {
-  IS_PRIVATE_QUESTION_GROUP_A,
-  PRIVATE_ELEMENTS_QUESTION_GROUP_A,
-  PUBLIC_ELEMENTS_QUESTION_GROUP_A,
+  IS_PRIVATE_QUESTION_GROUP_B,
+  PRIVATE_ELEMENTS_QUESTION_GROUP_B,
+  PUBLIC_ELEMENTS_QUESTION_GROUP_B,
+  GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B,
+  JUSTIFY_VISUALISATION_GROUP_B
 } from 'web/config/constants'
 
 import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
@@ -12,7 +14,8 @@ import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
-type ImageSurveyProps = {
+
+type WordImageSurveyProps = {
   imageId: number
   userId: number
   onFinished: () => void
@@ -33,6 +36,8 @@ export const QUERY = gql`
       privateRank
       privateElem
       publicElem
+      satisfactionRank
+      satisfactionElem
     }
   }
 `
@@ -44,6 +49,8 @@ const CREATE_IMAGE_SURVEY = gql`
       privateRank
       privateElem
       publicElem
+      satisfactionRank
+      satisfactionElem
     }
   }
 `
@@ -59,50 +66,58 @@ const UPDATE_IMAGE_SURVEY = gql`
       privateRank
       publicElem
       privateElem
+      satisfactionRank
+      satisfactionElem
     }
   }
 `
 
-interface ImageSurveyValues {
-  IS_PRIVATE_QUESTION_GROUP_A: string
-  PUBLIC_ELEMENTS_QUESTION_GROUP_A: string
-  PRIVATE_ELEMENTS_QUESTION_GROUP_A: string
+interface WordImageSurveyValues {
+  IS_PRIVATE_QUESTION_GROUP_B: string
+  PUBLIC_ELEMENTS_QUESTION_GROUP_B: string
+  PRIVATE_ELEMENTS_QUESTION_GROUP_B: string
+  GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B: string
+  JUSTIFY_VISUALISATION_GROUP_B: string
 }
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = (props: ImageSurveyProps) => (
-  <ImageSurveyComponent {...props} />
-)
+export const Empty = (props: WordImageSurveyProps) => <WordImageSurveyComponent {...props}/>
 
-export const Failure = ({ error }: CellFailureProps) => (
+export const Failure = ({
+  error,
+}: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = (
-  props: CellSuccessProps<FindImageSurveyByUserAndImageId> & ImageSurveyProps
-) => <ImageSurveyComponent {...props} />
-
-const ImageSurveyComponent = ({
-  imageSurvey,
+  props: CellSuccessProps<FindImageSurveyByUserAndImageId> & WordImageSurveyProps
+  ) => <WordImageSurveyComponent {...props}/>
+  
+const WordImageSurveyComponent = ({
+  imageSurvey, 
   userId,
-  imageId,
+  imageId, 
   onPrevious,
   onFinished,
-}: FindImageSurveyByUserAndImageId & ImageSurveyProps) => {
+}: FindImageSurveyByUserAndImageId & WordImageSurveyProps) => {
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
 
-  const onSubmit: SubmitHandler<ImageSurveyValues> = (data) => {
-    const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
+  const onSubmit: SubmitHandler<WordImageSurveyValues> = (data) => {
+    const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
+    const satisfactionRank = parseInt(data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B])
+
     if (imageSurvey && imageSurvey.id) {
       update({
         variables: {
           id: imageSurvey.id,
           input: {
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_B],
+            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_B],
+            satisfactionRank,
+            satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B]
           },
         },
       })
@@ -112,54 +127,73 @@ const ImageSurveyComponent = ({
           input: {
             userId,
             imageId,
-            hasInterface: false,
+            hasInterface: true,
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_B],
+            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_B],
+            satisfactionRank,
+            satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
           },
         },
       })
     }
     onFinished()
   }
-  return (
+  return ( 
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
       <Stack
         direction="row"
-        spacing={4}
+        spacing={5}
         justifyContent="start"
         divider={<StackDivider borderColor="grayIcon" />}
       >
         {/* // todo: overwrite the  */}
         <Button onClick={onPrevious}>Previous</Button>
         <LikertScaleQuestionField
-          name={IS_PRIVATE_QUESTION_GROUP_A}
+          name={IS_PRIVATE_QUESTION_GROUP_B}
           n={5}
           question="Is this image private?"
           leftHand="No"
           rightHand="Yes"
-          direction="row"
+          direction="row" 
           value={imageSurvey?.privateRank.toString() || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements do you consider as public in this image?"
-          name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
-          placeholder="Answer here..."
+          name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
+          placeholder="Answer here..." 
           value={imageSurvey?.publicElem || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements would you feel uncomfortable disclosing in this image?"
-          name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
-          placeholder="Answer here..."
-          value={imageSurvey?.privateElem || ''}
+          name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
+          placeholder="Answer here..." 
+          value={imageSurvey?.privateElem || ''} 
           validation={{ required: true }}
         />
+        <Stack direction="column" spacing={4} justifyContent="start">
+          <LikertScaleQuestionField
+            name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+            n={5}
+            question="Is this visualisation efficient to help you form an opinion?"
+            leftHand="No"
+            rightHand="Yes"
+            direction="row"
+            value={imageSurvey?.satisfactionRank.toString() || ''}             
+            validation={{ required: true }}  
+          />
+          <OpenEndedQuestionField
+            placeholder="Justify here..."
+            name={JUSTIFY_VISUALISATION_GROUP_B} 
+            value={imageSurvey?.satisfactionElem || ''} 
+            validation={{ required: true }}  
+          />
+        </Stack>
         <Submit className="button" color="grayIcon">
           Next
         </Submit>
       </Stack>
     </Form>
-  )
-}
+)}
