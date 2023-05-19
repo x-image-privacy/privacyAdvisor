@@ -6,8 +6,7 @@ import {
 
 import { useState } from 'react'
 import WordSurveyCell from 'src/components/WordSurveyCell/WordSurveyCell'
-
-import ImageCell from 'src/components/Image/ImageCell'
+import WordImageCell from 'src/components/WordImageCell/WordImageCell'
 
 
 const GroupBPage = () => {
@@ -27,7 +26,7 @@ const GroupBPage = () => {
           You are shown a picture with a visualisation to describe this image.
           Please answer some questions
         </Text>
-        <ImageCell id={step}/>
+        <WordImageCell id={step}/>
         <WordSurveyCell
         userId={1}
         imageId={step}

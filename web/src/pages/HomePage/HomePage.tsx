@@ -20,10 +20,6 @@ const HomePage = () => {
         <Link to={routes.groupB()}>Group b</Link>
       </p>
       <p>
-        A link to the group B global questionpage:
-        <Link to={routes.groupBGlobalQuestion()}>Group b global question</Link>
-      </p>
-      <p>
         A link to the CSAT page:
         <Link to={routes.csat()}>CSAT question</Link>
       </p>
