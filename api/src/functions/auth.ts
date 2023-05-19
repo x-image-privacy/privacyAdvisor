@@ -23,6 +23,9 @@ export const handler = async (
     // address in a toast message so the user will know it worked and where
     // to look for the email.
     handler: (user) => {
+      if (!user.email) {
+        throw Error('No email address set for user, can not send email ')
+      }
       const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
@@ -123,10 +126,6 @@ export const handler = async (
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
     handler: async ({ username, hashedPassword, salt, userAttributes }) => {
-      const alreadyTaken = await db.user.findUnique({ where: username })
-      if (alreadyTaken) {
-        throw Error('Username is already taken')
-      }
       return db.user.create({
         data: {
           username: username,

@@ -1,9 +1,11 @@
 export const schema = gql`
   type User {
     id: Int!
-    group: String!
+    username: String!
     createdAt: DateTime!
-    submittedAt: DateTime!
+    # email: String
+    group: String
+    submittedAt: DateTime
     imageSurvey: [ImageSurvey]!
     customerSatisfactionSurvey: [CustomerSatisfactionSurvey]!
   }
@@ -17,9 +19,14 @@ export const schema = gql`
     username: String!
     hashedPassword: String!
     salt: String!
+    # email: String
   }
 
   input UpdateUserInput {
+    username: String
+    hashedPassword: String
+    salt: String
+    email: String
     group: String
     submittedAt: DateTime
   }
