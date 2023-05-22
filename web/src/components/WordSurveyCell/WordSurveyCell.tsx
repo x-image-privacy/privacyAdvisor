@@ -181,7 +181,7 @@ const WordImageSurveyComponent = ({
             leftHand="No"
             rightHand="Yes"
             direction="row"
-            value={imageSurvey?.satisfactionRank.toString() || ''}             
+            value={imageSurvey?.satisfactionRank.toString() || 0}             
             validation={{ required: true }}  
           />
           <OpenEndedQuestionField
