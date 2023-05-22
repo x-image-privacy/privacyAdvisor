@@ -16,8 +16,8 @@ import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionF
 type ImageSurveyProps = {
   imageId: number
   userId: number
-  onFinished: () => void
-  onPrevious: () => void
+  onFinished?: () => void
+  onPrevious?: () => void
 }
 
 export const QUERY = gql`
@@ -65,9 +65,9 @@ const UPDATE_IMAGE_SURVEY = gql`
 `
 
 interface PlainImageSurveyValues {
-  IS_PRIVATE_QUESTION_GROUP_A: string
-  PUBLIC_ELEMENTS_QUESTION_GROUP_A: string
-  PRIVATE_ELEMENTS_QUESTION_GROUP_A: string
+  [IS_PRIVATE_QUESTION_GROUP_A]: string
+  [PUBLIC_ELEMENTS_QUESTION_GROUP_A]: string
+  [PRIVATE_ELEMENTS_QUESTION_GROUP_A]: string
 }
 
 export const Loading = () => <div>Loading...</div>
@@ -122,7 +122,7 @@ const ImageSurveyComponent = ({
         },
       })
     }
-    onFinished()
+    onFinished?.()
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
@@ -158,9 +158,7 @@ const ImageSurveyComponent = ({
           value={imageSurvey?.privateElem || ''}
           validation={{ required: true }}
         />
-        <Submit className="button" color="grayIcon">
-          Next
-        </Submit>
+        <Button type="submit">Next</Button>
       </Stack>
     </Form>
   )

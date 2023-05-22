@@ -8,7 +8,7 @@ export const loading = () => {
 }
 
 export const empty = () => {
-  return Empty ? <Empty /> : <></>
+  return Empty ? <Empty imageId={1} userId={1} /> : <></>
 }
 
 export const failure: ComponentStory<typeof Failure> = (args) => {

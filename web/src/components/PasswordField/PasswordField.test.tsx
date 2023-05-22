@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import NpsPage from './NpsPage'
+import PasswordField from './PasswordField'
 
 //   Improve this test with help from the Redwood Testing Doc:
-//   https://redwoodjs.com/docs/testing#testing-pages-layouts
+//    https://redwoodjs.com/docs/testing#testing-components
 
-describe('NpsPage', () => {
+describe('PasswordField', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<NpsPage />)
+      render(<PasswordField />)
     }).not.toThrow()
   })
 })

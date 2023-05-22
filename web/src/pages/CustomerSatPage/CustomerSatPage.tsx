@@ -1,7 +1,7 @@
-import { Container, Stack, Text } from '@chakra-ui/react'
+import { Button, Container, Stack, Text } from '@chakra-ui/react'
 import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION } from 'web/config/constants'
 
-import { Form, Submit } from '@redwoodjs/forms'
+import { Form } from '@redwoodjs/forms'
 
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
@@ -33,9 +33,7 @@ const CsatPage = () => {
               name={CSAT_OPEN_QUESTION}
               placeholder="Justify here..."
             />
-            <Submit className="button" color="grayIcon">
-              Save
-            </Submit>
+            <Button type="submit">Save</Button>
           </Stack>
         </Form>
       </Stack>

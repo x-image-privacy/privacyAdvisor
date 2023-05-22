@@ -6,7 +6,7 @@ import { Form, Submit } from '@redwoodjs/forms'
 import LikertScaleQuestionField from 'src/components/LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from 'src/components/OpenEndedQuestionField/OpenEndedQuestionField'
 
-const NpsPage = () => {
+const NetPromoterScorePage = () => {
   return (
     <Container maxW="6xl">
       <Stack direction="column" gap={8} alignItems="center">
@@ -37,4 +37,4 @@ const NpsPage = () => {
   )
 }
 
-export default NpsPage
+export default NetPromoterScorePage

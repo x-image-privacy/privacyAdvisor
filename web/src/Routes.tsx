@@ -7,15 +7,20 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Router, Route, Set } from '@redwoodjs/router'
+import { Router, Route, Set, Private } from '@redwoodjs/router'
 
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
+import { useAuth } from './auth'
 import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
 
 const Routes = () => {
   return (
-    <Router>
+    <Router useAuth={useAuth}>
+      <Route path="/signup" page={SignupPage} name="signup" />
+      <Route path="/login" page={LoginPage} name="login" />
+      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
+      <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Set wrap={ScaffoldLayout} title="Images" titleTo="images" buttonLabel="New Image" buttonTo="newImage">
         <Route path="/images/new" page={ImageNewImagePage} name="newImage" />
         <Route path="/images/{id:Int}/edit" page={ImageEditImagePage} name="editImage" />
@@ -30,12 +35,14 @@ const Routes = () => {
       </Set>
       <Set wrap={NavigationLayout}>
         <Route path="/" page={HomePage} name="home" />
-        <Route path="/group-a" page={GroupAPage} name="groupA" />
-        <Route path="/group-b" page={GroupBPage} name="groupB" />
-        <Route path="/group-b-global-question" page={GroupBGlobalQuestionPage} name="groupBGlobalQuestion" />
-        <Route path="/csat" page={CSATPage} name="csat" />
-        <Route path="/nps" page={NPSPage} name="nps" />
-        <Route path="/ueq" page={UEQPage} name="ueq" />
+        <Private unauthenticated="signup">
+          <Route path="/group-a" page={GroupAPage} name="groupA" />
+          <Route path="/group-b" page={GroupBPage} name="groupB" />
+          <Route path="/group-b-global-question" page={GroupBGlobalQuestionPage} name="groupBGlobalQuestion" />
+          <Route path="/csat" page={CustomerSatPage} name="csat" />
+          <Route path="/nps" page={NetPromoterScorePage} name="nps" />
+          <Route path="/ueq" page={UserExperienceQuestionnairePage} name="ueq" />
+        </Private>
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>
