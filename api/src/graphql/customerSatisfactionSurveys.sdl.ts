@@ -15,6 +15,7 @@ export const schema = gql`
     customerSatisfactionSurveys: [CustomerSatisfactionSurvey!]! @requireAuth
     customerSatisfactionSurvey(id: Int!): CustomerSatisfactionSurvey
       @requireAuth
+    customerSatisfactionSurveyByUserId(userId: Int!): CustomerSatisfactionSurvey @requireAuth
   }
 
   input CreateCustomerSatisfactionSurveyInput {

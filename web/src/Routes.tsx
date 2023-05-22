@@ -35,6 +35,8 @@ const Routes = () => {
         <Route path="/csat" page={CSATPage} name="csat" />
         <Route path="/nps" page={NPSPage} name="nps" />
         <Route path="/ueq" page={UEQPage} name="ueq" />
+        <Route path="/customer-satisfaction" page={CustomerSatisfactionPage} name="customerSatisfaction" />
+
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>
