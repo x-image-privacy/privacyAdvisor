@@ -1,14 +1,24 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
-import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
-import { navigate, routes } from '@redwoodjs/router'
+import {
+  Flex,
+  Image,
+  Heading,
+  Text,
+  Link,
+  Button,
+  HStack,
+  Container,
+} from '@chakra-ui/react'
+
+import { navigate, routes, Link as RedwoodLink } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import ParticipateButton from 'src/components/ParticipateButton/ParticipateButton'
 
 const ForgotPasswordPage = () => {
-  const { isAuthenticated, forgotPassword } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -16,76 +26,35 @@ const ForgotPasswordPage = () => {
     }
   }, [isAuthenticated])
 
-  const usernameRef = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    usernameRef?.current?.focus()
-  }, [])
-
-  const onSubmit = async (data: { username: string }) => {
-    const response = await forgotPassword(data.username)
-
-    if (response.error) {
-      toast.error(response.error)
-    } else {
-      // The function `forgotPassword.handler` in api/src/functions/auth.js has
-      // been invoked, let the user know how to get the link to reset their
-      // password (sent in email, perhaps?)
-      toast.success(
-        'A link to reset your password was sent to ' + response.email
-      )
-      navigate(routes.login())
-    }
-  }
-
   return (
     <>
       <MetaTags title="Forgot Password" />
 
-      <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">
-                Forgot Password
-              </h2>
-            </header>
+      <main>
+        <Flex display="flex" m={8} flexDir="column" alignItems="center" gap={6}>
+          <Image src="/assets/forgot-password.svg" w="300px" />
+          <Heading mb={4}>Forgot password</Heading>
 
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <div className="text-left">
-                    <Label
-                      name="username"
-                      className="rw-label"
-                      errorClassName="rw-label rw-label-error"
-                    >
-                      Username
-                    </Label>
-                    <TextField
-                      name="username"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
-                      ref={usernameRef}
-                      validation={{
-                        required: {
-                          value: true,
-                          message: 'Username is required',
-                        },
-                      }}
-                    />
-
-                    <FieldError name="username" className="rw-field-error" />
-                  </div>
-
-                  <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Submit</Submit>
-                  </div>
-                </Form>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Container size="lg">
+            <Flex direction="column" gap={4}>
+              <Text align="center">
+                We currently do not support resetting user passwords.
+              </Text>
+              <Text align="center">
+                In case you forgot your password, you should got to the
+                <Link href={routes.home()}>Home Page</Link> and create a new
+                user in order to complete the study. Alternatively you can click
+                the participate button bellow.
+              </Text>
+            </Flex>
+          </Container>
+          <HStack>
+            <Button as={RedwoodLink} to={routes.home()}>
+              Back
+            </Button>
+            <ParticipateButton />
+          </HStack>
+        </Flex>
       </main>
     </>
   )

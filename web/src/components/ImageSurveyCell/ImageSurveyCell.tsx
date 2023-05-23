@@ -1,5 +1,9 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
-import { FindImageSurveyByUserAndImageId } from 'types/graphql'
+import {
+  FindImageSurveyByUserAndImageId,
+  UpdateImageSurveyMutation,
+  UpdateImageSurveyMutationVariables,
+} from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_A,
   PRIVATE_ELEMENTS_QUESTION_GROUP_A,
@@ -92,7 +96,10 @@ const ImageSurveyComponent = ({
   onFinished,
 }: FindImageSurveyByUserAndImageId & ImageSurveyProps) => {
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
-  const [update] = useMutation(UPDATE_IMAGE_SURVEY)
+  const [update] = useMutation<
+    UpdateImageSurveyMutation,
+    UpdateImageSurveyMutationVariables
+  >(UPDATE_IMAGE_SURVEY)
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
