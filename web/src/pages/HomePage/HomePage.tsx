@@ -31,6 +31,10 @@ const HomePage = () => {
         A link to the UEQ page:
         <Link to={routes.ueq()}>UEQ question</Link>
       </p>
+      <p>
+        A link to the customer satisfaction page:
+        <Link to={routes.customerSatisfaction()}>customer satisfaction question</Link>
+      </p>
     </>
   )
 }

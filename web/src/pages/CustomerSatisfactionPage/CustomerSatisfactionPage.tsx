@@ -1,27 +1,29 @@
-import { Link, routes } from '@redwoodjs/router'
-import { MetaTags } from '@redwoodjs/web'
+import { Container, Stack, Text } from '@chakra-ui/react'
+import { useState } from 'react'
+
+import ImageCell from 'src/components/Image/ImageCell'
+import CsatCell from 'src/components/CsatCell/CsatCell'
+import { navigate, routes } from '@redwoodjs/router'
+
 
 const CustomerSatisfactionPage = () => {
+  const [step, setStep] = useState(1)
+  const handleNextStep = () => {
+    navigate(routes.home(), {replace: true})
+  }
   return (
-    <>
-      <MetaTags
-        title="CustomerSatisfaction"
-        description="CustomerSatisfaction page"
-      />
-
-      <h1>CustomerSatisfactionPage</h1>
-      <p>
-        Find me in{' '}
-        <code>
-          ./web/src/pages/CustomerSatisfactionPage/CustomerSatisfactionPage.tsx
-        </code>
-      </p>
-      <p>
-        My default route is named <code>customerSatisfaction</code>, link to me
-        with `
-        <Link to={routes.customerSatisfaction()}>CustomerSatisfaction</Link>`
-      </p>
-    </>
+    <Container maxW="6xl">
+    <Stack direction="column" gap={8} alignItems="center">
+      <Text data-testid="instruction">
+        You are shown a picture and please answer some questions
+      </Text>
+      <Text>Current Step: </Text>
+      <ImageCell id={step} />
+      <CsatCell
+        userId={1}
+        onFinished={handleNextStep}/>
+    </Stack>
+  </Container>
   )
 }
 
