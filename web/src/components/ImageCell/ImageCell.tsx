@@ -7,8 +7,6 @@ export const QUERY = gql`
     image: image(id: $id) {
       id
       imageLocation
-      dataLocation
-      
     }
   }
 `

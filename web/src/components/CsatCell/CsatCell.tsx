@@ -1,4 +1,4 @@
-import type { FindCsatSurveyByUserId } from 'types/graphql'
+import type { CreateCustomerSatisfactionScore, CreateCustomerSatisfactionScoreVariables, FindCsatSurveyByUserId } from 'types/graphql'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION} from 'web/config/constants'
@@ -31,7 +31,11 @@ const CREATE_CUSTOMER_SATISFACTION_SURVEY = gql`
   mutation CreateCustomerSatisfactionSurvey($input: CreateCustomerSatisfactionSurveyInput!) {
     createCustomerSatisfactionSurvey(input: $input) {
       id
-      csat
+      csat {
+        id
+        rank 
+        justification
+      }
     }
   }`
 
@@ -43,7 +47,11 @@ const UPDATE_CUSTOMER_SATISFACTION_SURVEY = gql`
     updateCustomerSatisfactionSurvey(id: $id, input: $input) {
       id
       userId
-      csat
+      csat {
+        id
+        rank 
+        justification
+      }
     }
   }
 `
@@ -95,10 +103,10 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
   const [updateCustomerSurvey] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SURVEY)
 
 
-  const [createCsat] = useMutation(CREATE_CUSTOMER_SATISFACTION_SCORE)
+  const [createCsat] = useMutation<CreateCustomerSatisfactionScore,CreateCustomerSatisfactionScoreVariables>(CREATE_CUSTOMER_SATISFACTION_SCORE)
   const [updateCsat] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SCORE)
 
-  const onSubmit: SubmitHandler<CsatValues> = (data) => {
+  const onSubmit: SubmitHandler<CsatValues> = async (data) => {
     const csatRank = parseInt(data[CSAT_RANK_QUESTION])
 
     if (csatSurvey && csatSurvey.id) {
@@ -113,7 +121,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
           }
         })
       } else {
-        createCsat({
+        const newCsat = await createCsat({
           variables: {
             input: {
               rank: csatRank,
@@ -121,18 +129,18 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
             }
           }
         })
-      }
 
-      updateCustomerSurvey({
-        variables: {
-          id: csatSurvey.id,
-          input: {
-            csat: csatSurvey.csat.id
+        updateCustomerSurvey({
+          variables: {
+            id: csatSurvey.id,
+            input: {
+              csatId: newCsat.data?.createCustomerSatisfactionScore.id
+            }
           }
-        }
-      })
+        })
+      }
     } else {
-      createCsat({
+      const newCsat = await createCsat({
         variables: {
           input: {
             rank: csatRank,
@@ -145,11 +153,13 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
         variables: {
           input: {
             userId,
-            csat: csatSurvey.csat.id,
+            csatId: newCsat.data?.createCustomerSatisfactionScore.id
           }
         }
       })
     }
+
+
     onFinished()
   }
 

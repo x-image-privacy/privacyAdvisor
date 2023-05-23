@@ -1,5 +1,5 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
-import type { FindImageSurveyByUserAndImageId} from 'types/graphql'
+import type { FindImageSurveyByUserAndImageIdWord} from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
   PRIVATE_ELEMENTS_QUESTION_GROUP_B,
@@ -23,7 +23,7 @@ type WordImageSurveyProps = {
 }
 
 export const QUERY = gql`
-  query FindImageSurveyByUserAndImageId($userId: Int!, $imageId: Int!) {
+  query FindImageSurveyByUserAndImageIdWord($userId: Int!, $imageId: Int!) {
     imageSurvey: imageSurveyByUserAndImage(userId: $userId, imageId: $imageId) {
       id
       user {
@@ -43,7 +43,7 @@ export const QUERY = gql`
 `
 
 const CREATE_IMAGE_SURVEY = gql`
-  mutation CreateImageSurveyMutation($input: CreateImageSurveyInput!) {
+  mutation CreateWordSurveyMutation($input: CreateImageSurveyInput!) {
     createImageSurvey(input: $input) {
       id
       privateRank
@@ -55,7 +55,7 @@ const CREATE_IMAGE_SURVEY = gql`
   }
 `
 const UPDATE_IMAGE_SURVEY = gql`
-  mutation UpdateImageSurveyMutation(
+  mutation UpdateWordSurveyMutation(
     $id: Int!
     $input: UpdateImageSurveyInput!
   ) {
@@ -91,7 +91,7 @@ export const Failure = ({
 )
 
 export const Success = (
-  props: CellSuccessProps<FindImageSurveyByUserAndImageId> & WordImageSurveyProps
+  props: CellSuccessProps<FindImageSurveyByUserAndImageIdWord> & WordImageSurveyProps
   ) => <WordImageSurveyComponent {...props}/>
   
 const WordImageSurveyComponent = ({
@@ -100,7 +100,7 @@ const WordImageSurveyComponent = ({
   imageId, 
   onPrevious,
   onFinished,
-}: FindImageSurveyByUserAndImageId & WordImageSurveyProps) => {
+}: FindImageSurveyByUserAndImageIdWord & WordImageSurveyProps) => {
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
 
@@ -181,7 +181,7 @@ const WordImageSurveyComponent = ({
             leftHand="No"
             rightHand="Yes"
             direction="row"
-            value={imageSurvey?.satisfactionRank.toString() || 0}             
+            value={imageSurvey?.satisfactionRank.toString() || ''}             
             validation={{ required: true }}  
           />
           <OpenEndedQuestionField
