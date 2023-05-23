@@ -1,10 +1,10 @@
-import type {FindImageQuery} from 'types/graphql'
+import type {FindWordImageQuery} from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { Flex, Image, Text } from '@chakra-ui/react'
 import Wordcloud from '@x-image-privacy/wordcloud'
 
 export const QUERY = gql`
-  query FindImageQuery($id: Int!) {
+  query FindWordImageQuery($id: Int!) {
     image: image(id: $id) {
       id
       imageLocation
@@ -25,7 +25,7 @@ export const Failure = ({
 
 export const Success = ({
   image,
-}: CellSuccessProps<FindImageQuery>) => {
+}: CellSuccessProps<FindWordImageQuery>) => {
 
   const location = image.imageLocation
   const data = image.dataLocation

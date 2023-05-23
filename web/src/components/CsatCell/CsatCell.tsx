@@ -126,7 +126,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
             input: {
               rank: csatRank,
               justification: data[CSAT_OPEN_QUESTION],
-            }
+            },
           }
         })
 
@@ -135,7 +135,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
             id: csatSurvey.id,
             input: {
               csatId: newCsat.data?.createCustomerSatisfactionScore.id
-            }
+            },
           }
         })
       }

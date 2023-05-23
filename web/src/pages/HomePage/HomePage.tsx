@@ -20,14 +20,6 @@ const HomePage = () => {
         <Link to={routes.groupB()}>Group b</Link>
       </p>
       <p>
-        A link to the CSAT page:
-        <Link to={routes.csat()}>CSAT question</Link>
-      </p>
-      <p>
-        A link to the NPS page:
-        <Link to={routes.nps()}>NPS question</Link>
-      </p>
-      <p>
         A link to the UEQ page:
         <Link to={routes.ueq()}>UEQ question</Link>
       </p>

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Container, Stack, Text } from '@chakra-ui/react'
 
 import ImageSurveyCell from 'src/components/ImageSurveyCell'
-import ImageCell from 'src/components/Image/ImageCell'
+import ImageCell from 'src/components/ImageCell/ImageCell'
 import { navigate, routes } from '@redwoodjs/router'
 
 const GroupAPage = () => {
