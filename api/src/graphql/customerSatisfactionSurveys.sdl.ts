@@ -3,8 +3,8 @@ export const schema = gql`
     id: Int!
     user: User!
     userId: Int!
-    csat: CustomerSatisfactionScore!
-    csatId: Int!
+    csat: CustomerSatisfactionScore
+    csatId: Int
     nps: NetPromoterScore
     npsId: Int
     ueq: UserExperienceQuestionaireScore
@@ -15,12 +15,13 @@ export const schema = gql`
     customerSatisfactionSurveys: [CustomerSatisfactionSurvey!]! @requireAuth
     customerSatisfactionSurvey(id: Int!): CustomerSatisfactionSurvey
       @requireAuth
-    customerSatisfactionSurveyByUserId(userId: Int!): CustomerSatisfactionSurvey @requireAuth
+    customerSatisfactionSurveyByUser(userId: Int!): CustomerSatisfactionSurvey
+      @requireAuth
   }
 
   input CreateCustomerSatisfactionSurveyInput {
     userId: Int!
-    csatId: Int!
+    csatId: Int
     npsId: Int
     ueqId: Int
   }

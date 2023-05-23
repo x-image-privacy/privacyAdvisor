@@ -77,4 +77,7 @@ model CustomerSatisfactionSurvey {
   npsId  Int?
   ueq    UserExperienceQuestionaireScore? @relation(fields: [ueqId], references: [id])
   ueqId  Int?
+
+  @@unique([userId])
+
 }

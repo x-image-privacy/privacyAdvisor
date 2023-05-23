@@ -16,12 +16,49 @@ export const QUERY = gql`
     }
   }
 `
-const CREATE_CSAT_SURVEY = gql`
-  mutation CreateCsatScoreMutation($input: CreateCustomerSatisfactionScoreInput!) {
-    createCustomerSatisfactionScore(input: $input!) {
+const CREATE_CUSTOMER_SATISFACTION_SURVEY = gql`
+  mutation CreateCustomerSatisfactionSurvey($input: CreateCustomerSatisfactionSurveyInput!) {
+    createCustomerSatisfactionSurvey(input: $input!) {
       id
+      csat
     }
   }`
+
+const UPDATE_CUSTOMER_SATISFACTION_SURVEY = gql`
+  mutation UpdateCustomerSatisfactionSurvey(
+    $id: Int!
+    $input: UpdateCustomerSatisfactionSurveyInput!
+  ) {
+    updateCustomerSatisfactionSurvey(id: $id, input: $input) {
+      id
+      userId
+      csat
+    }
+  }
+`
+
+const CREATE_CUSTOMER_SATISFACTION_SCORE = gql`
+  mutation CreateCustomerSatisfactionScore($input: CreateCustomerSatisfactionScoreInput!) {
+    createCustomerSatisfactionScore(input: $input!) {
+      id
+      rank
+      justification
+    }
+  }
+`
+
+const UPDATE_CUSTOMER_SATISFACTION_SCORE = gql`
+  mutation UpdateCustomerSatisfactionScore(
+    $id: Int!
+    $input: UpdateCustomerSatisfactionScoreInput!
+  ) {
+    updateCustomerSatisfactionScore(id: $id, input: $input) {
+      id 
+      rank 
+      justification
+    }
+  }
+`
 
 export const Loading = () => <div>Loading...</div>
 
