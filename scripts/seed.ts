@@ -1,4 +1,4 @@
-// import type { Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { db } from 'api/src/lib/db'
 
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
@@ -55,6 +55,16 @@ export default async () => {
         },
       })
     }
+
+    const imageData: Prisma.ImageCreateArgs['data'][] = Array.from(
+      Array(12)
+    ).map((_, idx) => ({
+      imageNumber: idx + 1,
+      imageLocation: `/images/img_${idx + 1}.jpg`,
+      dataLocation: `/word-data/img_${idx + 1}.json`,
+    }))
+
+    await db.image.createMany({ data: imageData })
   } catch (error) {
     console.warn('Please define your seed data.')
     console.error(error)

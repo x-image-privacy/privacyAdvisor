@@ -14,9 +14,6 @@ model User {
   createdAt                  DateTime                     @default(now())
   hashedPassword             String                       @default("")
   salt                       String                       @default("")
-  email                      String?                      @unique
-  resetToken                 String?
-  resetTokenExpiresAt        DateTime?
   group                      String?
   submittedAt                DateTime?
   imageSurvey                ImageSurvey[]

@@ -1,5 +1,4 @@
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
-import nodemailer from 'nodemailer'
 
 import { DbAuthHandler, DbAuthHandlerOptions } from '@redwoodjs/auth-dbauth-api'
 
@@ -23,23 +22,6 @@ export const handler = async (
     // address in a toast message so the user will know it worked and where
     // to look for the email.
     handler: (user) => {
-      if (!user.email) {
-        throw Error('No email address set for user, can not send email ')
-      }
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_KEY,
-        },
-      })
-      transporter.sendMail({
-        from: 'privacyAdvisorApp@gmail.com',
-        to: user.email,
-        subject: 'Reset password link',
-        text: `http://localhost:8924/reset-password?resetToken=${user.resetToken}`,
-      })
       return user
     },
 
@@ -125,7 +107,7 @@ export const handler = async (
     //
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
-    handler: async ({ username, hashedPassword, salt, userAttributes }) => {
+    handler: async ({ username, hashedPassword, salt }) => {
       return db.user.create({
         data: {
           username: username,

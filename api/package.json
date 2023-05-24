@@ -6,7 +6,6 @@
     "@redwoodjs/api": "4.4.3",
     "@redwoodjs/auth-dbauth-api": "4.4.3",
     "@redwoodjs/graphql-server": "4.4.3",
-    "nodemailer": "^6.9.2",
     "react-icons": "^4.8.0"
   }
 }
