@@ -23,3 +23,8 @@ export const UEQ_QUESTION_5 = 'ueq_question_5'
 export const UEQ_QUESTION_6 = 'ueq_question_6'
 export const UEQ_QUESTION_7 = 'ueq_question_7'
 export const UEQ_QUESTION_8 = 'ueq_question_8'
+
+export const DEMOGRAPHIC_AGE = 'demographic_age'
+export const DEMOGRAPHIC_EDUCATION = 'demographic_education'
+export const DEMOGRAPHIC_TECHNOLOGY = 'demographic_technology'
+export const DEMOGRAPHIC_PRIVACY = 'demographic_privacy'

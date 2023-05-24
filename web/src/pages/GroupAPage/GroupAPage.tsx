@@ -13,7 +13,6 @@ const GroupAPage = () => {
 
     // Change page
     if (step === 13){
-      // TODO: change user.hasInterface = true
       navigate(routes.groupB(), {replace: true})
     }
     // increment step
@@ -21,7 +20,7 @@ const GroupAPage = () => {
     
   }
   const handlePreviousStep = () => {
-    if (step > 0) {
+    if (step > 1) {
       setStep((s) => s - 1)
     }
   }

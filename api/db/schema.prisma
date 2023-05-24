@@ -15,6 +15,7 @@ model User {
   submittedAt                DateTime
   imageSurvey                ImageSurvey[]
   customerSatisfactionSurvey CustomerSatisfactionSurvey[]
+  demographic                Demographic[]
 }
 
 model Image {
@@ -80,4 +81,16 @@ model CustomerSatisfactionSurvey {
 
   @@unique([userId])
 
+}
+
+model Demographic {
+  id          Int   @id @default(autoincrement())
+  user        User  @relation(fields: [userId], references: [id])
+  userId      Int
+  age         Int
+  education   Int
+  technology  Int
+  privacy     Int
+
+  @@unique([userId])
 }

@@ -1,10 +1,10 @@
 import { Container, Stack, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 
-import ImageCell from 'src/components/ImageCell/ImageCell'
 import CsatCell from 'src/components/CsatCell/CsatCell'
 import NpsCell from 'src/components/NpsCell/NpsCell'
 import UeqCell from 'src/components/UeqCell/UeqCell'
+import DemographicCell from 'src/components/DemographicCell/DemographicCell'
 import { navigate, routes } from '@redwoodjs/router'
 
 
@@ -35,6 +35,12 @@ const CustomerSatisfactionPage = () => {
 
       {step == 3 && 
         <UeqCell 
+          userId={1}
+          onFinished={handleNextStep} />
+      }
+
+      {step == 4 &&
+        <DemographicCell 
           userId={1}
           onFinished={handleNextStep} />
       }
