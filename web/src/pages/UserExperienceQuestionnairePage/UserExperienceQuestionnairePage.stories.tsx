@@ -1,6 +1,6 @@
 import type { ComponentMeta } from '@storybook/react'
 
-import UeqPage from './UeqPage'
+import UeqPage from './UserExperienceQuestionnairePage'
 
 export const generated = () => {
   return <UeqPage />

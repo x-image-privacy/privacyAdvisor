@@ -2,10 +2,11 @@ import { useState } from 'react'
 
 import { Container, Image, Stack, Text } from '@chakra-ui/react'
 
+import { useAuth } from 'src/auth'
 import ImageSurveyCell from 'src/components/ImageSurveyCell'
 
 const GroupAPage = () => {
-  // const {user} = useAuth();
+  const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
   const handleNextStep = () => {
     // increment step
@@ -23,7 +24,7 @@ const GroupAPage = () => {
         <Text>Current Step: {step}</Text>
         <Image src="/data/image1.jpg" />
         <ImageSurveyCell
-          userId={1}
+          userId={currentUser?.id as string}
           imageId={step}
           onFinished={handleNextStep}
           onPrevious={handlePreviousStep}

@@ -13,10 +13,16 @@
 
 import type { ComponentMeta } from '@storybook/react'
 
+import { Form } from '@redwoodjs/forms'
+
 import JustifyQuestionField from './JustifyQuestionField'
 
 export const generated = () => {
-  return <JustifyQuestionField name="" placeholder="" />
+  return (
+    <Form>
+      <JustifyQuestionField name="" placeholder="" />
+    </Form>
+  )
 }
 
 export default {

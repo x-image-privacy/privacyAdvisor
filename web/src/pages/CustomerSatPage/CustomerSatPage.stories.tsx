@@ -1,6 +1,6 @@
 import type { ComponentMeta } from '@storybook/react'
 
-import CsatPage from './CsatPage'
+import CsatPage from './CustomerSatPage'
 
 export const generated = () => {
   return <CsatPage />

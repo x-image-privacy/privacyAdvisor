@@ -1,6 +1,7 @@
 export const schema = gql`
   type Image {
     id: Int!
+    imageNumber: Int!
     imageLocation: String!
     dataLocation: String!
     ImageSurvey: [ImageSurvey]!
@@ -12,11 +13,13 @@ export const schema = gql`
   }
 
   input CreateImageInput {
+    imageNumber: Int!
     imageLocation: String!
     dataLocation: String!
   }
 
   input UpdateImageInput {
+    imageNumber: Int
     imageLocation: String
     dataLocation: String
   }
