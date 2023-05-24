@@ -4,6 +4,7 @@ import { useState } from 'react'
 import ImageCell from 'src/components/ImageCell/ImageCell'
 import CsatCell from 'src/components/CsatCell/CsatCell'
 import NpsCell from 'src/components/NpsCell/NpsCell'
+import UeqCell from 'src/components/UeqCell/UeqCell'
 import { navigate, routes } from '@redwoodjs/router'
 
 
@@ -24,11 +25,19 @@ const CustomerSatisfactionPage = () => {
       {step == 1 && 
         <CsatCell
           userId={1}
-          onFinished={handleNextStep}/> }
+          onFinished={handleNextStep}/> 
+      }
       {step == 2 &&
         <NpsCell
           userId={1}
-        onFinished={handleNextStep} /> }
+        onFinished={handleNextStep} /> 
+      }
+
+      {step == 3 && 
+        <UeqCell 
+          userId={1}
+          onFinished={handleNextStep} />
+      }
 
     </Stack>
   </Container>
