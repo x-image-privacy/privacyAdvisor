@@ -33,6 +33,7 @@ export const QUERY = gql`
       image {
         id
       }
+      hasInterface
       privateRank
       privateElem
       publicElem
@@ -63,6 +64,7 @@ const UPDATE_IMAGE_SURVEY = gql`
       id
       userId
       imageId
+      hasInterface
       privateRank
       publicElem
       privateElem
@@ -108,7 +110,7 @@ const WordImageSurveyComponent = ({
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
     const satisfactionRank = parseInt(data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B])
 
-    if (imageSurvey && imageSurvey.id) {
+    if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({
         variables: {
           id: imageSurvey.id,
@@ -181,7 +183,7 @@ const WordImageSurveyComponent = ({
             leftHand="No"
             rightHand="Yes"
             direction="row"
-            value={imageSurvey?.satisfactionRank.toString() || ''}             
+            value={imageSurvey?.satisfactionRank?.toString() || ''}             
             validation={{ required: true }}  
           />
           <OpenEndedQuestionField

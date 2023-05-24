@@ -12,7 +12,7 @@ const GroupAPage = () => {
   const handleNextStep = () => {
 
     // Change page
-    if (step === 13){
+    if (step === 3){
       navigate(routes.groupB(), {replace: true})
     }
     // increment step
@@ -34,7 +34,7 @@ const GroupAPage = () => {
         <Text>Current Step: {step}</Text>
         <ImageCell id={step} />
         <ImageSurveyCell
-          userId={1}
+          userId={3}
           imageId={step}
           onFinished={handleNextStep}
           onPrevious={handlePreviousStep}

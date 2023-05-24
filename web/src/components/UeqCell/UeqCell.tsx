@@ -130,9 +130,7 @@ export const Failure = ({ error }: CellFailureProps<FindUeqSurveyByUserId>) => (
 )
 
 export const Success = (
-  props: CellSuccessProps<FindUeqSurveyByUserId>) => <UeqSurveyComponent userId={0} onFinished={function (): void {
-    throw new Error('Function not implemented.')
-  } } {...props}/>
+  props: CellSuccessProps<FindUeqSurveyByUserId> & UeqProps) => <UeqSurveyComponent {...props}/>
 
 
 const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUserId & UeqProps) => {
