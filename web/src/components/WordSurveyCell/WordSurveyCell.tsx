@@ -158,21 +158,21 @@ const WordImageSurveyComponent = ({
           leftHand="No"
           rightHand="Yes"
           direction="row" 
-          value={imageSurvey?.privateRank.toString() || ''}
+          value=''
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements do you consider as public in this image?"
           name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
           placeholder="Answer here..." 
-          value={imageSurvey?.publicElem || ''}
+          value=''
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements would you feel uncomfortable disclosing in this image?"
           name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
           placeholder="Answer here..." 
-          value={imageSurvey?.privateElem || ''} 
+          value=''
           validation={{ required: true }}
         />
         <Stack direction="column" spacing={4} justifyContent="start">
@@ -183,13 +183,13 @@ const WordImageSurveyComponent = ({
             leftHand="No"
             rightHand="Yes"
             direction="row"
-            value={imageSurvey?.satisfactionRank?.toString() || ''}             
+            value=''            
             validation={{ required: true }}  
           />
           <OpenEndedQuestionField
             placeholder="Justify here..."
             name={JUSTIFY_VISUALISATION_GROUP_B} 
-            value={imageSurvey?.satisfactionElem || ''} 
+            value=''
             validation={{ required: true }}  
           />
         </Stack>

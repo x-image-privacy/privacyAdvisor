@@ -15,7 +15,7 @@ const GroupBPage = () => {
   const handleNextStep = () => {
 
     // Change page
-    if (step === 3){
+    if (step === 6){
       navigate(routes.customerSatisfaction(), {replace: true})
     }
 
@@ -37,7 +37,7 @@ const GroupBPage = () => {
         </Text>
         <WordImageCell id={step}/>
         <WordSurveyCell
-        userId={3}
+        userId={5}
         imageId={step}
         onFinished={handleNextStep}
         onPrevious={handlePreviousStep}
