@@ -3,10 +3,6 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { Flex, Image } from '@chakra-ui/react'
 import Wordcloud from '@x-image-privacy/wordcloud'
 
-type WordImageProps = {
-  imageNumber: number
-}
-
 export const QUERY = gql`
   query FindWordImageByImageNumber($imageNumber: Int!) {
     image: imageByImageNumber(imageNumber: $imageNumber) {
