@@ -34,7 +34,7 @@ const GroupAPage = () => {
         <Text>Current Step: {step}</Text>
         <ImageCell id={step} />
         <ImageSurveyCell
-          userId={5}
+          userId={6}
           imageId={step}
           onFinished={handleNextStep}
           onPrevious={handlePreviousStep}

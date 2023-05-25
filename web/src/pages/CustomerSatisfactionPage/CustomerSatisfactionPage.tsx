@@ -24,24 +24,24 @@ const CustomerSatisfactionPage = () => {
 
       {step == 1 && 
         <CsatCell
-          userId={5}
+          userId={6}
           onFinished={handleNextStep}/> 
       }
       {step == 2 &&
         <NpsCell
-          userId={5}
+          userId={6}
         onFinished={handleNextStep} /> 
       }
 
       {step == 3 && 
         <UeqCell 
-          userId={5}
+          userId={6}
           onFinished={handleNextStep} />
       }
 
       {step == 4 &&
         <DemographicCell 
-          userId={5}
+          userId={6}
           onFinished={handleNextStep} />
       }
 

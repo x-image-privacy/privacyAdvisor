@@ -150,7 +150,8 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
     const normRank = parseInt(data[UEQ_QUESTION_7])
     const originalityRank = parseInt(data[UEQ_QUESTION_8])
 
-    if (ueqSurvey && ueqSurvey.id) {
+    if (ueqSurvey && ueqSurvey.user.id) {
+      console.log("survey exist", ueqSurvey)
       if (ueqSurvey.ueq.id) {
         updateUeq({
           variables: {
@@ -168,6 +169,7 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
           }
         })
       } else {
+        console.log("exist and create ueq")
         const newUeq = await createUeq({
           variables: {
             input: {
@@ -208,7 +210,8 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
           }
         }
       })
-
+      
+      console.log("create survey")
       createCustomerSurvey({
         variables: {
           input: {

@@ -110,9 +110,11 @@ const NpsSurveyComponent = ({
   const [updateNps] = useMutation(CREATE_NPS_SCORE)
 
   const onSubmit: SubmitHandler<NpsValues> = async (data) => {
+    console.log(npsSurvey)
     const npsRank = parseInt(data[NPS_RANK_QUESTION])
 
-    if (npsSurvey && npsSurvey.id) {
+    if (npsSurvey && npsSurvey.user.id) {
+      console.log("survey exist", npsSurvey)
       if (npsSurvey.nps.id) {
         updateNps({
           variables: {
@@ -124,6 +126,7 @@ const NpsSurveyComponent = ({
           }
         })
       } else {
+        console.log("exsit and create nps")
         const newNps = await createNps({
           variables: {
             input: {
@@ -152,6 +155,7 @@ const NpsSurveyComponent = ({
         }
       })
 
+      console.log("create survey")
       createCustomerSurvey({
         variables: {
           input: {

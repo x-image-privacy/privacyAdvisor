@@ -37,7 +37,7 @@ const GroupBPage = () => {
         </Text>
         <WordImageCell id={step}/>
         <WordSurveyCell
-        userId={5}
+        userId={6}
         imageId={step}
         onFinished={handleNextStep}
         onPrevious={handlePreviousStep}
