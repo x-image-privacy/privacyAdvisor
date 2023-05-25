@@ -1,9 +1,11 @@
 import type { CreateCustomerSatisfactionScore, CreateCustomerSatisfactionScoreVariables, FindCsatSurveyByUserId } from 'types/graphql'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
+import { toast } from '@redwoodjs/web/toast'
+
 import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION} from 'web/config/constants'
-import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
-import { Stack } from '@chakra-ui/react'
+import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { Button, Stack } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
@@ -80,8 +82,8 @@ const UPDATE_CUSTOMER_SATISFACTION_SCORE = gql`
 `
 
 interface CsatValues {
-  CSAT_RANK_QUESTION: string
-  CSAT_OPEN_QUESTION: string
+  [CSAT_RANK_QUESTION]: string
+  [CSAT_OPEN_QUESTION]: string
 
 }
 
@@ -103,15 +105,19 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
   const [updateCustomerSurvey] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SURVEY)
 
 
-  const [createCsat] = useMutation<CreateCustomerSatisfactionScore,CreateCustomerSatisfactionScoreVariables>(CREATE_CUSTOMER_SATISFACTION_SCORE)
+  const [createCsat, {loading, error}] = useMutation<CreateCustomerSatisfactionScore,CreateCustomerSatisfactionScoreVariables>(CREATE_CUSTOMER_SATISFACTION_SCORE, {
+    onError: (data) => {
+      toast.error('fail')
+    }
+  })
   const [updateCsat] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SCORE)
 
   const onSubmit: SubmitHandler<CsatValues> = async (data) => {
     const csatRank = parseInt(data[CSAT_RANK_QUESTION])
 
     if (csatSurvey && csatSurvey.id) {
-      if(csatSurvey.csat.id) {
-        updateCsat({
+      if(csatSurvey.csat?.id) {
+        await updateCsat({
           variables: {
             id: csatSurvey.csat.id,
             input: {
@@ -130,7 +136,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
           }
         })
 
-        updateCustomerSurvey({
+        await updateCustomerSurvey({
           variables: {
             id: csatSurvey.id,
             input: {
@@ -149,7 +155,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
         }
       })
 
-      createCustomerSurvey({
+      await createCustomerSurvey({
         variables: {
           input: {
             userId,
@@ -159,8 +165,9 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
       })
     }
 
-
-    onFinished()
+    if (!error) {
+      onFinished()
+    }
   }
 
   return(
@@ -178,19 +185,17 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
             'Very dissatisfied',
           ]}
           direction="column" 
-          value={csatSurvey?.csat.rank.toString() || ''} 
+          value={csatSurvey?.csat?.rank.toString() || ''} 
           validation={{ required: true }}     
         />
         <OpenEndedQuestionField
           question="What is the biggest value you get from using this interface?"
           name={CSAT_OPEN_QUESTION}
           placeholder="Justify here..." 
-          value={csatSurvey?.csat.justification || ''}
+          value={csatSurvey?.csat?.justification || ''}
           validation={{ required: true }}
         />
-      <Submit className="button" color="grayIcon">
-        Next
-      </Submit>
+      <Button type="submit">Next</Button>
     </Stack>
   </Form>
   )

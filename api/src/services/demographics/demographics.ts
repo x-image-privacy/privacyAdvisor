@@ -16,6 +16,12 @@ export const demographic: QueryResolvers['demographic'] = ({ id }) => {
   })
 }
 
+export const demographicByUser: QueryResolvers['demographicByUser'] = ({ userId }) => {
+  return db.demographic.findUnique({
+    where: { userId },
+  })
+}
+
 export const createDemographic: MutationResolvers['createDemographic'] = ({
   input,
 }) => {

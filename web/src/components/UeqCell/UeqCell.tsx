@@ -1,10 +1,20 @@
 import { CreateUserExperienceQuestionaireScore, CreateUserExperienceQuestionaireScoreVariables, FindUeqSurveyByUserId } from 'types/graphql'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
-import {UEQ_QUESTION_1, UEQ_QUESTION_2, UEQ_QUESTION_3, UEQ_QUESTION_4,
-  UEQ_QUESTION_5, UEQ_QUESTION_6, UEQ_QUESTION_7, UEQ_QUESTION_8} from 'web/config/constants'
-import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
-import { Square, Stack, Text } from '@chakra-ui/react'
+import { toast } from '@redwoodjs/web/toast'
+
+import {
+  UEQ_CLARITY, 
+  UEQ_COMPLEXITY, 
+  UEQ_EFFICIENCY, 
+  UEQ_INTEREST, 
+  UEQ_MOTIVATION, 
+  UEQ_NORM, 
+  UEQ_ORIGINALITY,
+ UEQ_SUPPORT
+} from 'web/config/constants'
+import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { Button, Square, Stack, Text } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 
 type UeqProps = {
@@ -111,14 +121,14 @@ const UPDATE_UEQ_SCORE = gql`
 `
 
 interface UeqValues {
-  UEQ_QUESTION_1: string
-  UEQ_QUESTION_2: string
-  UEQ_QUESTION_3: string
-  UEQ_QUESTION_4: string
-  UEQ_QUESTION_5: string
-  UEQ_QUESTION_6: string
-  UEQ_QUESTION_7: string
-  UEQ_QUESTION_8: string
+  [UEQ_SUPPORT]: string
+  [UEQ_COMPLEXITY]: string
+  [UEQ_EFFICIENCY]: string
+  [UEQ_CLARITY]: string
+  [UEQ_MOTIVATION]: string
+  [UEQ_INTEREST]: string
+  [UEQ_NORM]: string
+  [UEQ_ORIGINALITY]: string
 }
 
 export const Loading = () => <div>Loading...</div>
@@ -134,26 +144,29 @@ export const Success = (
 
 
 const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUserId & UeqProps) => {
-  const [createCustomerSurvey] = useMutation(CREATE_CUSTOMER_SATISFACTION_SURVEY)
+  const [createCustomerSurvey, {loading, error}] = useMutation(CREATE_CUSTOMER_SATISFACTION_SURVEY, {
+    onError: (data) => {
+      toast.error('fail')
+    }
+  })
   const [updateCustomerSurvey] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SURVEY)
 
   const [createUeq] = useMutation<CreateUserExperienceQuestionaireScore, CreateUserExperienceQuestionaireScoreVariables>(CREATE_UEQ_SCORE)
   const [updateUeq] = useMutation(UPDATE_UEQ_SCORE)
 
   const onSubmit: SubmitHandler<UeqValues> = async (data) => {
-    const supportRank = parseInt(data[UEQ_QUESTION_1])
-    const complexityRank = parseInt(data[UEQ_QUESTION_2])
-    const efficiencyRank = parseInt(data[UEQ_QUESTION_3])
-    const clarityRank = parseInt(data[UEQ_QUESTION_4])
-    const motivationRank = parseInt(data[UEQ_QUESTION_5])
-    const interestRank = parseInt(data[UEQ_QUESTION_6])
-    const normRank = parseInt(data[UEQ_QUESTION_7])
-    const originalityRank = parseInt(data[UEQ_QUESTION_8])
+    const supportRank = parseInt(data[UEQ_SUPPORT])
+    const complexityRank = parseInt(data[UEQ_COMPLEXITY])
+    const efficiencyRank = parseInt(data[UEQ_EFFICIENCY])
+    const clarityRank = parseInt(data[UEQ_CLARITY])
+    const motivationRank = parseInt(data[UEQ_MOTIVATION])
+    const interestRank = parseInt(data[UEQ_INTEREST])
+    const normRank = parseInt(data[UEQ_NORM])
+    const originalityRank = parseInt(data[UEQ_ORIGINALITY])
 
     if (ueqSurvey && ueqSurvey.user.id) {
-      console.log("survey exist", ueqSurvey)
-      if (ueqSurvey.ueq.id) {
-        updateUeq({
+      if (ueqSurvey.ueq?.id) {
+        await updateUeq({
           variables: {
             id: ueqSurvey.ueq.id,
             input: {
@@ -169,7 +182,6 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
           }
         })
       } else {
-        console.log("exist and create ueq")
         const newUeq = await createUeq({
           variables: {
             input: {
@@ -185,7 +197,7 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
           }
         })
 
-        updateCustomerSurvey({
+        await updateCustomerSurvey({
           variables: {
             id: ueqSurvey.id,
             input: {
@@ -211,8 +223,7 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
         }
       })
       
-      console.log("create survey")
-      createCustomerSurvey({
+      await createCustomerSurvey({
         variables: {
           input: {
             userId,
@@ -221,9 +232,10 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
         }
       })
     }
-
-    onFinished()
-
+    
+    if (!error) {
+      onFinished()
+    }
   }
   return(
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
@@ -234,81 +246,79 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
           </Stack>
           <Stack spacing="15px" align="stretch">
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_1}
+              name={UEQ_SUPPORT}
               leftHand="Obstructive"
               rightHand="Supportive"
               direction="row"
               n={7}
-              value={ueqSurvey?.ueq.support.toString() || ''}  
+              value={ueqSurvey?.ueq?.support.toString() || ''}  
               validation={{ required: true }}     
             />
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_2}
+              name={UEQ_COMPLEXITY}
               leftHand="Complicated"
               rightHand="Easy"
               direction="row"
               n={7} 
-              value={ueqSurvey?.ueq.complexity.toString() || ''}             
+              value={ueqSurvey?.ueq?.complexity.toString() || ''}             
               validation={{ required: true }}     
             />
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_3}
+              name={UEQ_EFFICIENCY}
               leftHand="Inefficient"
               rightHand="Efficient"
               direction="row"
               n={7} 
-              value={ueqSurvey?.ueq.efficiency.toString() || ''}              
+              value={ueqSurvey?.ueq?.efficiency.toString() || ''}              
               validation={{ required: true }}     
             />
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_4}
+              name={UEQ_CLARITY}
               leftHand="Confusing"
               rightHand="Clear"
               direction="row"
               n={7} 
-              value={ueqSurvey?.ueq.clarity.toString() || ''}              
+              value={ueqSurvey?.ueq?.clarity.toString() || ''}              
               validation={{ required: true }}     
             />
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_5}
+              name={UEQ_MOTIVATION}
               leftHand="Boring"
               rightHand="Exciting"
               direction="row"
               n={7} 
-              value={ueqSurvey?.ueq.motivation.toString() || ''}              
+              value={ueqSurvey?.ueq?.motivation.toString() || ''}              
               validation={{ required: true }}     
             />
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_6}
+              name={UEQ_INTEREST}
               leftHand="Not interesting"
               rightHand="Interesting"
               direction="row"
               n={7} 
-              value={ueqSurvey?.ueq.interest.toString() || ''}              
+              value={ueqSurvey?.ueq?.interest.toString() || ''}              
               validation={{ required: true }}     
             />
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_7}
+              name={UEQ_NORM}
               leftHand="Conventional"
               rightHand="Inventive"
               direction="row"
               n={7} 
-              value={ueqSurvey?.ueq.norm.toString() || ''}              
+              value={ueqSurvey?.ueq?.norm.toString() || ''}              
               validation={{ required: true }}     
             />
             <LikertScaleQuestionField
-              name={UEQ_QUESTION_8}
+              name={UEQ_ORIGINALITY}
               leftHand="Usual"
               rightHand="Leading edge"
               direction="row"
               n={7} 
-              value={ueqSurvey?.ueq.originality.toString() || ''} 
+              value={ueqSurvey?.ueq?.originality.toString() || ''} 
               validation={{ required: true }}     
             />
             </Stack>
-            <Submit className="button" color="grayIcon">
-              Next
-            </Submit>
+            <Button type="submit">Next</Button>
           </Stack>
         </Form>
   )

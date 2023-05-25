@@ -61,10 +61,10 @@ const UPDATE_DEMOGRAPHIC_SURVEY = gql`
 `
 
 interface DemographicValues {
-  DEMOGRAPHIC_AGE: string
-  DEMOGRAPHIC_EDUCATION: string
-  DEMOGRAPHIC_TECHNOLOGY: string
-  DEMOGRAPHIC_PRIVACY: string
+  [DEMOGRAPHIC_AGE]: string
+  [DEMOGRAPHIC_EDUCATION]: string
+  [DEMOGRAPHIC_TECHNOLOGY]: string
+  [DEMOGRAPHIC_PRIVACY]: string
 }
 
 export const Loading = () => <div>Loading...</div>

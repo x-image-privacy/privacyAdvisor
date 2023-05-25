@@ -8,14 +8,16 @@ import { useState } from 'react'
 import WordSurveyCell from 'src/components/WordSurveyCell/WordSurveyCell'
 import WordImageCell from 'src/components/WordImageCell/WordImageCell'
 import { navigate, routes } from '@redwoodjs/router'
+import { useAuth } from 'src/auth'
 
 
 const GroupBPage = () => {
+  const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
   const handleNextStep = () => {
 
     // Change page
-    if (step === 6){
+    if (step === 2){
       navigate(routes.customerSatisfaction(), {replace: true})
     }
 
@@ -37,7 +39,7 @@ const GroupBPage = () => {
         </Text>
         <WordImageCell id={step}/>
         <WordSurveyCell
-        userId={6}
+        userId={currentUser?.id as number}
         imageId={step}
         onFinished={handleNextStep}
         onPrevious={handlePreviousStep}

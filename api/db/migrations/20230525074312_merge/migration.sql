@@ -1,9 +1,12 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "group" TEXT NOT NULL,
+    "username" TEXT NOT NULL DEFAULT '',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "submittedAt" TIMESTAMP(3) NOT NULL,
+    "hashedPassword" TEXT NOT NULL DEFAULT '',
+    "salt" TEXT NOT NULL DEFAULT '',
+    "group" TEXT,
+    "submittedAt" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -11,6 +14,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Image" (
     "id" SERIAL NOT NULL,
+    "imageNumber" INTEGER NOT NULL,
     "imageLocation" TEXT NOT NULL,
     "dataLocation" TEXT NOT NULL,
 
@@ -20,25 +24,16 @@ CREATE TABLE "Image" (
 -- CreateTable
 CREATE TABLE "ImageSurvey" (
     "id" SERIAL NOT NULL,
-    "userId" INTEGER,
-    "imageId" INTEGER,
-    "hasInterface" BOOLEAN NOT NULL,
     "privateRank" INTEGER NOT NULL,
     "publicElem" TEXT NOT NULL,
     "privateElem" TEXT NOT NULL,
     "satisfactionRank" INTEGER,
     "satisfactionElem" TEXT,
+    "userId" INTEGER,
+    "imageId" INTEGER,
+    "hasInterface" BOOLEAN NOT NULL,
 
     CONSTRAINT "ImageSurvey_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "NetPromoterScore" (
-    "id" SERIAL NOT NULL,
-    "rank" INTEGER NOT NULL,
-    "justification" TEXT NOT NULL,
-
-    CONSTRAINT "NetPromoterScore_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -48,6 +43,15 @@ CREATE TABLE "CustomerSatisfactionScore" (
     "justification" TEXT NOT NULL,
 
     CONSTRAINT "CustomerSatisfactionScore_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "NetPromoterScore" (
+    "id" SERIAL NOT NULL,
+    "rank" INTEGER NOT NULL,
+    "justification" TEXT NOT NULL,
+
+    CONSTRAINT "NetPromoterScore_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -76,6 +80,33 @@ CREATE TABLE "CustomerSatisfactionSurvey" (
     CONSTRAINT "CustomerSatisfactionSurvey_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Demographic" (
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "age" INTEGER NOT NULL,
+    "education" INTEGER NOT NULL,
+    "technology" INTEGER NOT NULL,
+    "privacy" INTEGER NOT NULL,
+
+    CONSTRAINT "Demographic_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Image_imageNumber_key" ON "Image"("imageNumber");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ImageSurvey_userId_imageId_hasInterface_key" ON "ImageSurvey"("userId", "imageId", "hasInterface");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "CustomerSatisfactionSurvey_userId_key" ON "CustomerSatisfactionSurvey"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Demographic_userId_key" ON "Demographic"("userId");
+
 -- AddForeignKey
 ALTER TABLE "ImageSurvey" ADD CONSTRAINT "ImageSurvey_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -93,3 +124,6 @@ ALTER TABLE "CustomerSatisfactionSurvey" ADD CONSTRAINT "CustomerSatisfactionSur
 
 -- AddForeignKey
 ALTER TABLE "CustomerSatisfactionSurvey" ADD CONSTRAINT "CustomerSatisfactionSurvey_ueqId_fkey" FOREIGN KEY ("ueqId") REFERENCES "UserExperienceQuestionaireScore"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Demographic" ADD CONSTRAINT "Demographic_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

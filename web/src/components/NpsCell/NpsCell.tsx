@@ -1,10 +1,12 @@
 import type { CreateNetPromoterScore, CreateNetPromoterScoreVariables, FindNpsSurveyByUserId } from 'types/graphql'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
-import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
+import { Form, SubmitHandler } from '@redwoodjs/forms'
 
 import { NPS_OPEN_QUESTION, NPS_RANK_QUESTION } from 'web/config/constants'
-import { Stack } from '@chakra-ui/react'
+import { Button, Stack } from '@chakra-ui/react'
+import { toast } from '@redwoodjs/web/toast'
+
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
@@ -84,8 +86,8 @@ const UPDATE_NPS_SCORE = gql`
 
 
 interface NpsValues {
-  NPS_RANK_QUESTION: string
-  NPS_OPEN_QUESTION: string
+  [NPS_RANK_QUESTION]: string
+  [NPS_OPEN_QUESTION]: string
 }
 
 export const Loading = () => <div>Loading...</div>
@@ -103,7 +105,11 @@ const NpsSurveyComponent = ({
   userId, 
   onFinished, 
 }: FindNpsSurveyByUserId & NpsProps) => {
-  const [createCustomerSurvey] = useMutation(CREATE_CUSTOMER_SATISFACTION_SURVEY)
+  const [createCustomerSurvey, {loading, error}] = useMutation(CREATE_CUSTOMER_SATISFACTION_SURVEY, {
+    onError: (data) => {
+      toast.error('fail')
+    }
+  })
   const [updateCustomerSurvey] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SURVEY)
 
   const [createNps] = useMutation<CreateNetPromoterScore, CreateNetPromoterScoreVariables>(CREATE_NPS_SCORE)
@@ -114,9 +120,8 @@ const NpsSurveyComponent = ({
     const npsRank = parseInt(data[NPS_RANK_QUESTION])
 
     if (npsSurvey && npsSurvey.user.id) {
-      console.log("survey exist", npsSurvey)
-      if (npsSurvey.nps.id) {
-        updateNps({
+      if (npsSurvey.nps?.id) {
+        await updateNps({
           variables: {
             id: npsSurvey.nps.id,
             input: {
@@ -126,7 +131,6 @@ const NpsSurveyComponent = ({
           }
         })
       } else {
-        console.log("exsit and create nps")
         const newNps = await createNps({
           variables: {
             input: {
@@ -136,7 +140,7 @@ const NpsSurveyComponent = ({
           }
         })
 
-        updateCustomerSurvey({
+        await updateCustomerSurvey({
           variables: {
             id: npsSurvey.id,
             input: {
@@ -155,8 +159,7 @@ const NpsSurveyComponent = ({
         }
       })
 
-      console.log("create survey")
-      createCustomerSurvey({
+      await createCustomerSurvey({
         variables: {
           input: {
             userId,
@@ -166,7 +169,10 @@ const NpsSurveyComponent = ({
       })
     }
 
-    onFinished()
+    
+    if (!error) {
+      onFinished()
+    }
   }
 
   return(
@@ -178,19 +184,17 @@ const NpsSurveyComponent = ({
           question="How likely are you to recommend this interface to a friend?"
           text={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
           direction="row"
-          value={npsSurvey?.nps.rank.toString() || ''}
+          value={npsSurvey?.nps?.rank.toString() || ''}
           validation={{ required: true }}     
         />
         <OpenEndedQuestionField
           question="Tell us a bit more about why you chosee this rating"
           name={NPS_OPEN_QUESTION}
           placeholder="Answer here..." 
-          value={npsSurvey?.nps.justification || ''}       
+          value={npsSurvey?.nps?.justification || ''}       
           validation={{ required: true }}     
         />
-        <Submit className="button" color="grayIcon">
-          Next
-        </Submit>
+        <Button type="submit">Next</Button>
       </Stack>
     </Form>
 

@@ -6,9 +6,12 @@ import NpsCell from 'src/components/NpsCell/NpsCell'
 import UeqCell from 'src/components/UeqCell/UeqCell'
 import DemographicCell from 'src/components/DemographicCell/DemographicCell'
 import { navigate, routes } from '@redwoodjs/router'
+import { useAuth } from 'src/auth'
+
 
 
 const CustomerSatisfactionPage = () => {
+  const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
   const handleNextStep = () => {
     setStep((s) => s + 1)
@@ -24,25 +27,25 @@ const CustomerSatisfactionPage = () => {
 
       {step == 1 && 
         <CsatCell
-          userId={6}
-          onFinished={handleNextStep}/> 
+        userId={currentUser?.id as number}
+        onFinished={handleNextStep}/> 
       }
       {step == 2 &&
         <NpsCell
-          userId={6}
+        userId={currentUser?.id as number}
         onFinished={handleNextStep} /> 
       }
 
       {step == 3 && 
         <UeqCell 
-          userId={6}
-          onFinished={handleNextStep} />
+        userId={currentUser?.id as number}
+        onFinished={handleNextStep} />
       }
 
       {step == 4 &&
         <DemographicCell 
-          userId={6}
-          onFinished={handleNextStep} />
+        userId={currentUser?.id as number}
+        onFinished={handleNextStep} />
       }
 
     </Stack>

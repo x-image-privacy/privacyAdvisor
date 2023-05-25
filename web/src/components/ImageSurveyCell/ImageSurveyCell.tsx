@@ -1,7 +1,6 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
 
 import {
-  FindImageSurveyByUserAndImageId,
   FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
   UpdateImageSurveyMutationVariables,
@@ -13,7 +12,7 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
-import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
+import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
