@@ -1,5 +1,5 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
-import type { FindImageSurveyByUserAndImageIdWord} from 'types/graphql'
+import type { FindImageSurveyByUserAndImageIdWord, FindImageSurveyByUserImageIdAndHasInterface} from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
   PRIVATE_ELEMENTS_QUESTION_GROUP_B,
@@ -8,7 +8,7 @@ import {
   JUSTIFY_VISUALISATION_GROUP_B
 } from 'web/config/constants'
 
-import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
+import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
@@ -42,6 +42,18 @@ export const QUERY = gql`
     }
   }
 `
+
+export const QUERY_PREVIOUS_DATA = gql`
+query FindImageSurveyByUserImageIdAndHasInterface($userId: Int!, $imageId: Int!) {
+  previousValues: imageSurveyByUserImageAndHasInterface(userId: $userId, imageId: $imageId, hasInterface: true) {
+    id
+    privateRank
+    privateElem
+    publicElem
+    satisfactionRank
+    satisfactionElem
+  }
+}`
 
 const CREATE_IMAGE_SURVEY = gql`
   mutation CreateWordSurveyMutation($input: CreateImageSurveyInput!) {
@@ -93,16 +105,17 @@ export const Failure = ({
 )
 
 export const Success = (
-  props: CellSuccessProps<FindImageSurveyByUserAndImageIdWord> & WordImageSurveyProps
+  props: CellSuccessProps<FindImageSurveyByUserAndImageIdWord, FindImageSurveyByUserImageIdAndHasInterface> & WordImageSurveyProps
   ) => <WordImageSurveyComponent {...props}/>
   
 const WordImageSurveyComponent = ({
   imageSurvey, 
+  previousValues,
   userId,
   imageId, 
   onPrevious,
   onFinished,
-}: FindImageSurveyByUserAndImageIdWord & WordImageSurveyProps) => {
+}: FindImageSurveyByUserAndImageIdWord & FindImageSurveyByUserImageIdAndHasInterface & WordImageSurveyProps) => {
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
 
@@ -149,7 +162,6 @@ const WordImageSurveyComponent = ({
         justifyContent="start"
         divider={<StackDivider borderColor="grayIcon" />}
       >
-        {/* // todo: overwrite the  */}
         <Button onClick={onPrevious}>Previous</Button>
         <LikertScaleQuestionField
           name={IS_PRIVATE_QUESTION_GROUP_B}
@@ -158,21 +170,21 @@ const WordImageSurveyComponent = ({
           leftHand="No"
           rightHand="Yes"
           direction="row" 
-          value=''
+          value={previousValues?.privateRank.toString() || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements do you consider as public in this image?"
           name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
           placeholder="Answer here..." 
-          value=''
+          value={previousValues?.publicElem || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements would you feel uncomfortable disclosing in this image?"
           name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
           placeholder="Answer here..." 
-          value=''
+          value={previousValues?.privateElem || ''}
           validation={{ required: true }}
         />
         <Stack direction="column" spacing={4} justifyContent="start">
@@ -183,19 +195,17 @@ const WordImageSurveyComponent = ({
             leftHand="No"
             rightHand="Yes"
             direction="row"
-            value=''            
+            value={previousValues?.satisfactionRank?.toString() || ''}         
             validation={{ required: true }}  
           />
           <OpenEndedQuestionField
             placeholder="Justify here..."
             name={JUSTIFY_VISUALISATION_GROUP_B} 
-            value=''
+            value={previousValues?.satisfactionElem || ''}
             validation={{ required: true }}  
           />
         </Stack>
-        <Submit className="button" color="grayIcon">
-          Next
-        </Submit>
+        <Button type="submit">Next</Button>
       </Stack>
     </Form>
 )}

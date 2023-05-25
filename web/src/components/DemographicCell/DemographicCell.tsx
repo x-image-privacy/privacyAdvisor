@@ -8,8 +8,8 @@ import {
   DEMOGRAPHIC_EDUCATION, 
   DEMOGRAPHIC_TECHNOLOGY,
   DEMOGRAPHIC_PRIVACY} from 'web/config/constants'
-import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
-import { Stack } from '@chakra-ui/react'
+import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { Button, Stack } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 
 type DemographicProps = {
@@ -77,9 +77,8 @@ export const Failure = ({
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = (props: CellSuccessProps<FindDemographicQueryByUser> & DemographicProps) => {
-  <DemographicComponent {...props} />
-}
+export const Success = (props: CellSuccessProps<FindDemographicQueryByUser> & DemographicProps) => <DemographicComponent {...props} />
+
 
 const DemographicComponent = ({
   demographic,
@@ -89,13 +88,15 @@ const DemographicComponent = ({
   const [create] = useMutation(CREATE_DEMOGRAPHIC_SURVEY)
   const [update] = useMutation(UPDATE_DEMOGRAPHIC_SURVEY)
 
+  console.log(demographic)
+
   const onSubmit: SubmitHandler<DemographicValues> = (data) => {
     const ageRank = parseInt(data[DEMOGRAPHIC_AGE])
     const educationRank = parseInt(data[DEMOGRAPHIC_EDUCATION])
     const technologyRank = parseInt(data[DEMOGRAPHIC_TECHNOLOGY])
     const privacyRank = parseInt(data[DEMOGRAPHIC_PRIVACY])
 
-    if (demographic && demographic.id) {
+    if (demographic && demographic.user.id) {
       update({
         variables: {
           id: demographic.id,
@@ -125,7 +126,7 @@ const DemographicComponent = ({
 
   return(
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur'}}>
-      <Stack direction='column' gap={8} alignItems='start'>
+      <Stack direction='column' gap={8} alignContent='center'>
         <LikertScaleQuestionField
           name={DEMOGRAPHIC_AGE}
           n={6}
@@ -162,10 +163,7 @@ const DemographicComponent = ({
           value={demographic?.technology.toString() || ''}
           validation={{ required: true }}     
         />
-
-        <Submit className='button' color='grayIcon'>
-          Finish !
-        </Submit>
+        <Button type="submit">Next</Button>
       </Stack>
     </Form>
   )
