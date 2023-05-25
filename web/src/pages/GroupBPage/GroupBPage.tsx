@@ -37,7 +37,7 @@ const GroupBPage = () => {
           You are shown a picture with a visualisation to describe this image.
           Please answer some questions
         </Text>
-        <WordImageCell id={step}/>
+        <WordImageCell imageNumber={step}/>
         <WordSurveyCell
         userId={currentUser?.id as number}
         imageId={step}

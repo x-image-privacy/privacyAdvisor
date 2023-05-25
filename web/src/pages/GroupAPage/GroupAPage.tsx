@@ -32,8 +32,7 @@ const GroupAPage = () => {
         <Text data-testid="instruction">
           You are shown a picture and please answer some questions
         </Text>
-        <Text>Current Step: {step}</Text>
-        <ImageCell id={step} />
+        <ImageCell imageNumber={step} />
         <ImageSurveyCell
           userId={currentUser?.id as number}
           imageId={step}

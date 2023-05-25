@@ -1,11 +1,15 @@
-import type {FindWordImageQuery} from 'types/graphql'
+import type {FindWordImageByImageNumber} from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import { Flex, Image, Text } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 import Wordcloud from '@x-image-privacy/wordcloud'
 
+type WordImageProps = {
+  imageNumber: number
+}
+
 export const QUERY = gql`
-  query FindWordImageQuery($id: Int!) {
-    image: image(id: $id) {
+  query FindWordImageByImageNumber($imageNumber: Int!) {
+    image: imageByImageNumber(imageNumber: $imageNumber) {
       id
       imageLocation
       dataLocation
@@ -25,15 +29,14 @@ export const Failure = ({
 
 export const Success = ({
   image,
-}: CellSuccessProps<FindWordImageQuery>) => {
+}: CellSuccessProps<FindWordImageByImageNumber> ) => {
 
   const location = image.imageLocation
   const data = image.dataLocation
 
   return ( 
     <Flex alignItems="center" gap={2}>
-      <Text>Current image: {image.id}</Text>
-      <Image src="/data/image1.jpg" />
+      <Image src={image.imageLocation} />
       <Wordcloud
         data={[
           { id: 'word-1', text: ' Big word ', coef: 0.99 },

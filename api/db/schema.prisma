@@ -23,10 +23,12 @@ model User {
 
 model Image {
   id            Int           @id @default(autoincrement())
-  imageNumber   Int           @unique
+  imageNumber   Int           
   imageLocation String
   dataLocation  String
   ImageSurvey   ImageSurvey[]
+
+  @@unique([imageNumber])
 }
 
 model ImageSurvey {
