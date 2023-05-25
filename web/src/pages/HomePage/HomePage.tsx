@@ -1,28 +1,62 @@
+import {
+  Button,
+  Center,
+  Container,
+  Flex,
+  Heading,
+  Spacer,
+  Text,
+} from '@chakra-ui/react'
+
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
+import ParticipateButton from 'src/components/ParticipateButton/ParticipateButton'
+
 const HomePage = () => {
+  const devRoutes = [
+    {
+      label: 'Home',
+      link: routes.home(),
+    },
+    {
+      label: 'Group A',
+      link: routes.groupA(),
+    },
+    {
+      label: 'Group B',
+      link: routes.groupB(),
+    },
+    {
+      label: 'Customer satisfaction',
+      link: routes.customerSatisfaction(),
+    }
+  ]
   return (
     <>
       <MetaTags title="Home" description="Home page" />
 
-      <h1>HomePage</h1>
-      <p>
-        My default route is named <code>home</code>, link to me with `
-        <Link to={routes.home()}>Home</Link>`
-      </p>
-      <p>
-        A link to the group A page:
-        <Link to={routes.groupA()}>Group a</Link>
-      </p>
-      <p>
-        A link to the group B page:
-        <Link to={routes.groupB()}>Group b</Link>
-      </p>
-      <p>
-        A link to the customer satisfaction page:
-        <Link to={routes.customerSatisfaction()}>customer satisfaction question</Link>
-      </p>
+      <Container>
+        <Center flexDirection="column" gap={4}>
+          <Heading>Welcome to this study !</Heading>
+          <Text>
+            Thank you for taking the time to participate in this study
+          </Text>
+          <ParticipateButton />
+          {process.env.NODE_ENV === 'development' && (
+            <>
+              <Spacer />
+              <Flex gap={2}>
+                {devRoutes.map((r) => (
+                  <Button key={r.label}>
+                    <Link to={r.link}>{r.label}</Link>
+                  </Button>
+                ))}
+              </Flex>
+            </>
+          )}
+        </Center>
+      </Container>
     </>
   )
 }

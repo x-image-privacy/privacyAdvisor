@@ -28,7 +28,10 @@ const TemplateFive = (
   args: JSX.IntrinsicAttributes & LikertScaleQuestionProps
 ) => <LikertScaleQuestion {...args} />
 
-export const fivePointScale = TemplateFive.bind({})
+export const FivePointScale = TemplateFive.bind({})
+FivePointScale.arg = {
+  n: 5,
+}
 
 export const generatedSevenPointScale = () => {
   return (

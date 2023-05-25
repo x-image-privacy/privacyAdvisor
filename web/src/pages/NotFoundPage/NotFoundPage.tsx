@@ -12,10 +12,12 @@ export default () => (
               main {
                 display: flex;
                 align-items: center;
+                justify-content: space-evenly;
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
                 text-align: center;
                 background-color: #E2E8F0;
                 height: 100vh;
+                flex-direction: column;
               }
               section {
                 background-color: white;
@@ -32,13 +34,29 @@ export default () => (
                 line-height: 1;
                 color: #2D3748;
               }
+              img {
+                margin-bottom: 16px;
+              }
+              a {
+                width: 100%;
+                height: 100%;
+              }
+              .home-link {
+                padding: 1rem;
+              }
             `,
       }}
     />
     <section>
+      <img alt="page not found" src="/assets/page-not-found.svg" />
       <h1>
         <span>404 Page Not Found</span>
       </h1>
+    </section>
+    <section>
+      <a href="/">
+        <div className="home-link">Bring be back home</div>
+      </a>
     </section>
   </main>
 )
