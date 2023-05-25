@@ -18,14 +18,17 @@ model User {
   submittedAt                DateTime?
   imageSurvey                ImageSurvey[]
   customerSatisfactionSurvey CustomerSatisfactionSurvey[]
+  demographic                Demographic[]
 }
 
 model Image {
   id            Int           @id @default(autoincrement())
-  imageNumber   Int           @unique
+  imageNumber   Int           
   imageLocation String
   dataLocation  String
   ImageSurvey   ImageSurvey[]
+
+  @@unique([imageNumber])
 }
 
 model ImageSurvey {
@@ -81,4 +84,19 @@ model CustomerSatisfactionSurvey {
   npsId  Int?
   ueq    UserExperienceQuestionaireScore? @relation(fields: [ueqId], references: [id])
   ueqId  Int?
+
+  @@unique([userId])
+
+}
+
+model Demographic {
+  id          Int   @id @default(autoincrement())
+  user        User  @relation(fields: [userId], references: [id])
+  userId      Int
+  age         Int
+  education   Int
+  technology  Int
+  privacy     Int
+
+  @@unique([userId])
 }

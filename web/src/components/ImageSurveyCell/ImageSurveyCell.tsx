@@ -1,18 +1,19 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
+
 import {
-  FindImageSurveyByUserAndImageId,
+  FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
   UpdateImageSurveyMutationVariables,
 } from 'types/graphql'
+
 import {
   IS_PRIVATE_QUESTION_GROUP_A,
   PRIVATE_ELEMENTS_QUESTION_GROUP_A,
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
-import { Form, Submit, SubmitHandler } from '@redwoodjs/forms'
-import { useMutation } from '@redwoodjs/web'
-import { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
@@ -25,7 +26,7 @@ type ImageSurveyProps = {
 }
 
 export const QUERY = gql`
-  query FindImageSurveyByUserAndImageId($userId: Int!, $imageId: Int!) {
+  query FindImageSurveyByUserAndImageIdImage($userId: Int!, $imageId: Int!) {
     imageSurvey: imageSurveyByUserAndImage(userId: $userId, imageId: $imageId) {
       id
       user {
@@ -85,7 +86,7 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = (
-  props: CellSuccessProps<FindImageSurveyByUserAndImageId> & ImageSurveyProps
+  props: CellSuccessProps<FindImageSurveyByUserAndImageIdImage> & ImageSurveyProps
 ) => <ImageSurveyComponent {...props} />
 
 const ImageSurveyComponent = ({
@@ -94,7 +95,7 @@ const ImageSurveyComponent = ({
   imageId,
   onPrevious,
   onFinished,
-}: FindImageSurveyByUserAndImageId & ImageSurveyProps) => {
+}: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation<
     UpdateImageSurveyMutation,
@@ -103,7 +104,6 @@ const ImageSurveyComponent = ({
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
-    console.log(data, privateRank, data[IS_PRIVATE_QUESTION_GROUP_A])
     if (imageSurvey && imageSurvey.id) {
       update({
         variables: {

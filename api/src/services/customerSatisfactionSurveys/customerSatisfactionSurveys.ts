@@ -18,6 +18,13 @@ export const customerSatisfactionSurvey: QueryResolvers['customerSatisfactionSur
     })
   }
 
+export const customerSatisfactionSurveyByUser: QueryResolvers['customerSatisfactionSurveyByUser'] =
+  ({ userId }) => {
+    return db.customerSatisfactionSurvey.findUnique({
+      where: { userId },
+    })
+  }
+
 export const createCustomerSatisfactionSurvey: MutationResolvers['createCustomerSatisfactionSurvey'] =
   ({ input }) => {
     return db.customerSatisfactionSurvey.create({

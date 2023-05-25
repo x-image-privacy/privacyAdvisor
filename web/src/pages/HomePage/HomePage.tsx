@@ -28,17 +28,9 @@ const HomePage = () => {
       link: routes.groupB(),
     },
     {
-      label: 'CSAT',
-      link: routes.csat(),
-    },
-    {
-      label: 'UEQ',
-      link: routes.ueq(),
-    },
-    {
-      label: 'NPS',
-      link: routes.nps(),
-    },
+      label: 'Customer satisfaction',
+      link: routes.customerSatisfaction(),
+    }
   ]
   return (
     <>

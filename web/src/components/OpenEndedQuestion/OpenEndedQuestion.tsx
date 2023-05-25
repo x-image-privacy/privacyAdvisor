@@ -3,7 +3,7 @@ import { ChangeEventHandler } from 'react'
 import { Stack, Text, Input, Square } from '@chakra-ui/react'
 
 export type OpenEndedQuestionProps = {
-  question: string
+  question?: string
   onChange: ChangeEventHandler<HTMLInputElement>
   placeholder: string
   value: string
@@ -17,10 +17,10 @@ const OpenEndedQuestion = ({
 }: OpenEndedQuestionProps) => {
   return (
     <Stack alignItems="center">
-      <Stack direction="row">
+      {question && <Stack direction="row">
         <Square size="20px" bg="grayIcon" data-testid="square" />
         <Text data-testid="question">{question}</Text>
-      </Stack>
+      </Stack>}
       <Input
         placeholder={placeholder}
         size="lg"

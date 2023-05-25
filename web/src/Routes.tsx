@@ -13,6 +13,9 @@ import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
 import { useAuth } from './auth'
 import NavigationLayout from './layouts/NavigationLayout/NavigationLayout'
+import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage'
+import LoginPage from './pages/LoginPage/LoginPage'
+import SignupPage from './pages/SignupPage/SignupPage'
 
 const Routes = () => {
   return (
@@ -20,27 +23,12 @@ const Routes = () => {
       <Route path="/signup" page={SignupPage} name="signup" />
       <Route path="/login" page={LoginPage} name="login" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
-      <Set wrap={ScaffoldLayout} title="Images" titleTo="images" buttonLabel="New Image" buttonTo="newImage">
-        <Route path="/images/new" page={ImageNewImagePage} name="newImage" />
-        <Route path="/images/{id:Int}/edit" page={ImageEditImagePage} name="editImage" />
-        <Route path="/images/{id:Int}" page={ImageImagePage} name="image" />
-        <Route path="/images" page={ImageImagesPage} name="images" />
-      </Set>
-      <Set wrap={ScaffoldLayout} title="Users" titleTo="users" buttonLabel="New User" buttonTo="newUser">
-        <Route path="/users/new" page={UserNewUserPage} name="newUser" />
-        <Route path="/users/{id:Int}/edit" page={UserEditUserPage} name="editUser" />
-        <Route path="/users/{id:Int}" page={UserUserPage} name="user" />
-        <Route path="/users" page={UserUsersPage} name="users" />
-      </Set>
       <Set wrap={NavigationLayout}>
-        <Route path="/" page={HomePage} name="home" />
+        <Route path="/" page={HomePage} name="home" /> 
         <Private unauthenticated="signup">
           <Route path="/group-a" page={GroupAPage} name="groupA" />
           <Route path="/group-b" page={GroupBPage} name="groupB" />
-          <Route path="/group-b-global-question" page={GroupBGlobalQuestionPage} name="groupBGlobalQuestion" />
-          <Route path="/csat" page={CustomerSatPage} name="csat" />
-          <Route path="/nps" page={NetPromoterScorePage} name="nps" />
-          <Route path="/ueq" page={UserExperienceQuestionnairePage} name="ueq" />
+          <Route path="/customer-satisfaction" page={CustomerSatisfactionPage} name="customerSatisfaction" />
         </Private>
       </Set>
       <Route notfound page={NotFoundPage} />

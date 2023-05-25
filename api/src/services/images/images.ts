@@ -16,6 +16,12 @@ export const image: QueryResolvers['image'] = ({ id }) => {
   })
 }
 
+export const imageByImageNumber: QueryResolvers['imageByImageNumber'] = ({ imageNumber }) => {
+  return db.image.findUnique({
+    where: { imageNumber },
+  })
+}
+
 export const createImage: MutationResolvers['createImage'] = ({ input }) => {
   return db.image.create({
     data: input,

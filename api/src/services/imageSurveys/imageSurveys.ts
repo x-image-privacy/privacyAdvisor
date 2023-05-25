@@ -23,6 +23,13 @@ export const imageSurveyByUserAndImage: QueryResolvers['imageSurveyByUserAndImag
     })
   }
 
+export const imageSurveyByUserImageAndHasInterface: QueryResolvers['imageSurveyByUserImageAndHasInterface'] =
+  ({ userId, imageId, hasInterface }) => {
+    return db.imageSurvey.findFirst({
+      where: { userId, imageId, hasInterface },
+    })
+  }
+
 export const createImageSurvey: MutationResolvers['createImageSurvey'] = ({
   input,
 }) => {

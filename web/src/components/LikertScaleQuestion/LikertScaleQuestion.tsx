@@ -1,7 +1,7 @@
 import { Flex, Radio, RadioGroup, Square, Stack, Text } from '@chakra-ui/react'
 
 export type LikertScaleQuestionProps = {
-  n: 5 | 7 | 11
+  n: 5 | 7 | 11 | 6 | 4
   question?: string
   leftHand?: string
   rightHand?: string
