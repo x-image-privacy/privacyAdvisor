@@ -30,6 +30,10 @@ const HomePage = () => {
     {
       label: 'Customer satisfaction',
       link: routes.customerSatisfaction(),
+    },
+    {
+      label: 'End survey',
+      link: routes.endSurvey(),
     }
   ]
   return (

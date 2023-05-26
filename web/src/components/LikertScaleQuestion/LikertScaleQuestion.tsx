@@ -32,7 +32,7 @@ const LikertScaleQuestion = ({
           <Text data-testid="question">{question}</Text>
         </Stack>
       )}
-      <Flex alignItems="center" gap={2}>
+      <Flex alignItems="center" gap={2} pl={4}>
         {leftHand && <Text data-testid="left">{leftHand}</Text>}
         <RadioGroup onChange={onChange} value={value}>
           {text ? (

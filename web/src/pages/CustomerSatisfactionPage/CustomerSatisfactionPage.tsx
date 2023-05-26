@@ -14,8 +14,10 @@ const CustomerSatisfactionPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
   const handleNextStep = () => {
+    if (step == 4) {
+      navigate(routes.endSurvey(), {replace: true})
+    }
     setStep((s) => s + 1)
-    // navigate(routes.home(), {replace: true})
   }
   return (
     <Container maxW="6xl">
