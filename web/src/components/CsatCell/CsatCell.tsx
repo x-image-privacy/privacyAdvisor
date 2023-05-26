@@ -5,7 +5,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION} from 'web/config/constants'
 import { Form, SubmitHandler } from '@redwoodjs/forms'
-import { Button, Stack } from '@chakra-ui/react'
+import { Button, Flex, Stack } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
@@ -172,31 +172,35 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
 
   return(
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack direction="column" gap={8} alignItems="start">
-        <LikertScaleQuestionField
-          name={CSAT_RANK_QUESTION}
-          n={5}
-          question="How satisfied are you with the interface?"
-          text={[
-            'Very satisfied',
-            'Satisfied',
-            'Neutral',
-            'Dissatisfied',
-            'Very dissatisfied',
-          ]}
-          direction="column" 
-          value={csatSurvey?.csat?.rank.toString() || ''} 
-          validation={{ required: true }}     
+      <Flex flexDirection="column" gap={12}>
+        <Stack direction="column" gap={8} alignItems="start">
+          <LikertScaleQuestionField
+            name={CSAT_RANK_QUESTION}
+            n={5}
+            question="How satisfied are you with the interface?"
+            text={[
+              'Very satisfied',
+              'Satisfied',
+              'Neutral',
+              'Dissatisfied',
+              'Very dissatisfied',
+            ]}
+            direction="column" 
+            value={csatSurvey?.csat?.rank.toString() || ''} 
+            validation={{ required: true }}     
+          />
+          <OpenEndedQuestionField
+            question="What is the biggest value you get from using this interface?"
+            name={CSAT_OPEN_QUESTION}
+            placeholder="Justify here..." 
+            value={csatSurvey?.csat?.justification || ''}
+            validation={{ required: true }}
         />
-        <OpenEndedQuestionField
-          question="What is the biggest value you get from using this interface?"
-          name={CSAT_OPEN_QUESTION}
-          placeholder="Justify here..." 
-          value={csatSurvey?.csat?.justification || ''}
-          validation={{ required: true }}
-        />
-      <Button type="submit">Next</Button>
-    </Stack>
+        </Stack>
+      <Stack alignItems="end" mb={5}>
+        <Button type="submit">Next</Button>
+        </Stack>
+      </Flex>
   </Form>
   )
 

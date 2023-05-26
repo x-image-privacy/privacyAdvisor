@@ -9,7 +9,7 @@ import {
   DEMOGRAPHIC_TECHNOLOGY,
   DEMOGRAPHIC_PRIVACY} from 'web/config/constants'
 import { Form, SubmitHandler } from '@redwoodjs/forms'
-import { Button, Stack } from '@chakra-ui/react'
+import { Button, Flex, Stack } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 
 type DemographicProps = {
@@ -126,7 +126,8 @@ const DemographicComponent = ({
 
   return(
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur'}}>
-      <Stack direction='column' gap={8} alignContent='center'>
+      <Flex flexDirection="column" gap={12}>
+      <Stack direction='column' gap={8} alignItems="start">
         <LikertScaleQuestionField
           name={DEMOGRAPHIC_AGE}
           n={6}
@@ -163,8 +164,11 @@ const DemographicComponent = ({
           value={demographic?.technology.toString() || ''}
           validation={{ required: true }}     
         />
-        <Button type="submit">Next</Button>
       </Stack>
+        <Stack alignItems="end" mb={5}>
+          <Button type="submit">Next</Button>
+        </Stack>
+      </Flex>
     </Form>
   )
 }

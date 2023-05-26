@@ -28,7 +28,7 @@ const GroupAPage = () => {
 
   return (
     <Container maxW="6xl">
-      <Stack direction="column" gap={8} alignItems="center">
+      <Stack direction="column" gap={8} alignItems="center" mb={10}>
         <Text data-testid="instruction">
           You are shown a picture and please answer some questions
         </Text>

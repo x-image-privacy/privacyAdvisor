@@ -14,7 +14,7 @@ import {
  UEQ_SUPPORT
 } from 'web/config/constants'
 import { Form, SubmitHandler } from '@redwoodjs/forms'
-import { Button, Square, Stack, Text } from '@chakra-ui/react'
+import { Button, Flex, Square, Stack, Text } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 
 type UeqProps = {
@@ -239,88 +239,93 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
   }
   return(
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack gap={4} alignItems="start">
-        <Stack direction="row">
-          <Square size="20px" bg="grayIcon" />
-          <Text>You find the interface:</Text>
-          </Stack>
-          <Stack spacing="15px" align="stretch">
-            <LikertScaleQuestionField
-              name={UEQ_SUPPORT}
-              leftHand="Obstructive"
-              rightHand="Supportive"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.support.toString() || ''}  
-              validation={{ required: true }}     
-            />
-            <LikertScaleQuestionField
-              name={UEQ_COMPLEXITY}
-              leftHand="Complicated"
-              rightHand="Easy"
-              direction="row"
-              n={7} 
-              value={ueqSurvey?.ueq?.complexity.toString() || ''}             
-              validation={{ required: true }}     
-            />
-            <LikertScaleQuestionField
-              name={UEQ_EFFICIENCY}
-              leftHand="Inefficient"
-              rightHand="Efficient"
-              direction="row"
-              n={7} 
-              value={ueqSurvey?.ueq?.efficiency.toString() || ''}              
-              validation={{ required: true }}     
-            />
-            <LikertScaleQuestionField
-              name={UEQ_CLARITY}
-              leftHand="Confusing"
-              rightHand="Clear"
-              direction="row"
-              n={7} 
-              value={ueqSurvey?.ueq?.clarity.toString() || ''}              
-              validation={{ required: true }}     
-            />
-            <LikertScaleQuestionField
-              name={UEQ_MOTIVATION}
-              leftHand="Boring"
-              rightHand="Exciting"
-              direction="row"
-              n={7} 
-              value={ueqSurvey?.ueq?.motivation.toString() || ''}              
-              validation={{ required: true }}     
-            />
-            <LikertScaleQuestionField
-              name={UEQ_INTEREST}
-              leftHand="Not interesting"
-              rightHand="Interesting"
-              direction="row"
-              n={7} 
-              value={ueqSurvey?.ueq?.interest.toString() || ''}              
-              validation={{ required: true }}     
-            />
-            <LikertScaleQuestionField
-              name={UEQ_NORM}
-              leftHand="Conventional"
-              rightHand="Inventive"
-              direction="row"
-              n={7} 
-              value={ueqSurvey?.ueq?.norm.toString() || ''}              
-              validation={{ required: true }}     
-            />
-            <LikertScaleQuestionField
-              name={UEQ_ORIGINALITY}
-              leftHand="Usual"
-              rightHand="Leading edge"
-              direction="row"
-              n={7} 
-              value={ueqSurvey?.ueq?.originality.toString() || ''} 
-              validation={{ required: true }}     
-            />
+      <Flex flexDirection="column" gap={12}>
+
+        <Stack gap={4} alignItems="start">
+          <Stack direction="row">
+            <Square size="20px" bg="grayIcon" />
+            <Text>You find the interface:</Text>
             </Stack>
+            <Flex direction='column' alignItems="center" gap={5}>
+              <LikertScaleQuestionField
+                name={UEQ_SUPPORT}
+                leftHand="Obstructive"
+                rightHand="Supportive"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.support.toString() || ''}  
+                validation={{ required: true }}     
+              />
+              <LikertScaleQuestionField
+                name={UEQ_COMPLEXITY}
+                leftHand="Complicated"
+                rightHand="Easy"
+                direction="row"
+                n={7} 
+                value={ueqSurvey?.ueq?.complexity.toString() || ''}             
+                validation={{ required: true }}     
+              />
+              <LikertScaleQuestionField
+                name={UEQ_EFFICIENCY}
+                leftHand="Inefficient"
+                rightHand="Efficient"
+                direction="row"
+                n={7} 
+                value={ueqSurvey?.ueq?.efficiency.toString() || ''}              
+                validation={{ required: true }}     
+              />
+              <LikertScaleQuestionField
+                name={UEQ_CLARITY}
+                leftHand="Confusing"
+                rightHand="Clear"
+                direction="row"
+                n={7} 
+                value={ueqSurvey?.ueq?.clarity.toString() || ''}              
+                validation={{ required: true }}     
+              />
+              <LikertScaleQuestionField
+                name={UEQ_MOTIVATION}
+                leftHand="Boring"
+                rightHand="Exciting"
+                direction="row"
+                n={7} 
+                value={ueqSurvey?.ueq?.motivation.toString() || ''}              
+                validation={{ required: true }}     
+              />
+              <LikertScaleQuestionField
+                name={UEQ_INTEREST}
+                leftHand="Not interesting"
+                rightHand="Interesting"
+                direction="row"
+                n={7} 
+                value={ueqSurvey?.ueq?.interest.toString() || ''}              
+                validation={{ required: true }}     
+              />
+              <LikertScaleQuestionField
+                name={UEQ_NORM}
+                leftHand="Conventional"
+                rightHand="Inventive"
+                direction="row"
+                n={7} 
+                value={ueqSurvey?.ueq?.norm.toString() || ''}              
+                validation={{ required: true }}     
+              />
+              <LikertScaleQuestionField
+                name={UEQ_ORIGINALITY}
+                leftHand="Usual"
+                rightHand="Leading edge"
+                direction="row"
+                n={7} 
+                value={ueqSurvey?.ueq?.originality.toString() || ''} 
+                validation={{ required: true }}     
+              />
+              </Flex>
+          </Stack>
+          <Stack alignItems="end">
             <Button type="submit">Next</Button>
           </Stack>
-        </Form>
+        </Flex>
+    </Form>
   )
   
 }

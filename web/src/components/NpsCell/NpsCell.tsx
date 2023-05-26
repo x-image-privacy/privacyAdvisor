@@ -4,7 +4,7 @@ import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { Form, SubmitHandler } from '@redwoodjs/forms'
 
 import { NPS_OPEN_QUESTION, NPS_RANK_QUESTION } from 'web/config/constants'
-import { Button, Stack } from '@chakra-ui/react'
+import { Button, Flex, Stack } from '@chakra-ui/react'
 import { toast } from '@redwoodjs/web/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
@@ -106,14 +106,14 @@ const NpsSurveyComponent = ({
   onFinished, 
 }: FindNpsSurveyByUserId & NpsProps) => {
   const [createCustomerSurvey, {loading, error}] = useMutation(CREATE_CUSTOMER_SATISFACTION_SURVEY, {
-    onError: (data) => {
-      toast.error('fail')
+    onError: () => {
+      toast.error('Create nps survey fails.')
     }
   })
   const [updateCustomerSurvey] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SURVEY)
 
   const [createNps] = useMutation<CreateNetPromoterScore, CreateNetPromoterScoreVariables>(CREATE_NPS_SCORE)
-  const [updateNps] = useMutation(CREATE_NPS_SCORE)
+  const [updateNps] = useMutation(UPDATE_NPS_SCORE)
 
   const onSubmit: SubmitHandler<NpsValues> = async (data) => {
     console.log(npsSurvey)
@@ -177,25 +177,29 @@ const NpsSurveyComponent = ({
 
   return(
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack direction="column" gap={8} alignItems="start">
-        <LikertScaleQuestionField
-          name={NPS_RANK_QUESTION}
-          n={11}
-          question="How likely are you to recommend this interface to a friend?"
-          text={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
-          direction="row"
-          value={npsSurvey?.nps?.rank.toString() || ''}
-          validation={{ required: true }}     
-        />
-        <OpenEndedQuestionField
-          question="Tell us a bit more about why you chosee this rating"
-          name={NPS_OPEN_QUESTION}
-          placeholder="Answer here..." 
-          value={npsSurvey?.nps?.justification || ''}       
-          validation={{ required: true }}     
-        />
-        <Button type="submit">Next</Button>
-      </Stack>
+      <Flex flexDirection="column" gap={12}>
+        <Stack direction="column" gap={8} alignItems='start'>
+          <LikertScaleQuestionField
+            name={NPS_RANK_QUESTION}
+            n={11}
+            question="How likely are you to recommend this interface to a friend?"
+            text={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
+            direction="row"
+            value={npsSurvey?.nps?.rank.toString() || ''}
+            validation={{ required: true }}     
+          />
+          <OpenEndedQuestionField
+            question="Tell us a bit more about why you chosee this rating"
+            name={NPS_OPEN_QUESTION}
+            placeholder="Answer here..." 
+            value={npsSurvey?.nps?.justification || ''}       
+            validation={{ required: true }}     
+          />
+        </Stack>
+        <Stack alignItems="end" mb={5}>
+          <Button type="submit">Next</Button>
+        </Stack>
+      </Flex>
     </Form>
 
   )

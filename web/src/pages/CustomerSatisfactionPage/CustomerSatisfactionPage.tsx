@@ -21,9 +21,8 @@ const CustomerSatisfactionPage = () => {
     <Container maxW="6xl">
     <Stack direction="column" gap={8} alignItems="center">
       <Text data-testid="instruction">
-        You are shown a picture and please answer some questions
+        Please answer some questions
       </Text>
-      <Text>Current Step: {step}</Text>
 
       {step == 1 && 
         <CsatCell

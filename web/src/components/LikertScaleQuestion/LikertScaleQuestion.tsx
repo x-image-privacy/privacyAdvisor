@@ -25,7 +25,7 @@ const LikertScaleQuestion = ({
   // https://stackoverflow.com/questions/3746725/how-to-create-an-array-containing-1-n
   const scale = Array.from({ length: n }, (_, i) => i + 1)
   return (
-    <Stack alignItems="center">
+    <Stack alignItems="start">
       {question && (
         <Stack direction="row">
           <Square size="20px" bg="grayIcon" data-testid="square" />

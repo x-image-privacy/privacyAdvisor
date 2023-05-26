@@ -32,7 +32,7 @@ const GroupBPage = () => {
 
   return (
     <Container maxW="6xl">
-      <Stack direction="column" gap={8} alignItems="center">
+      <Stack direction="column" gap={8} alignItems="center" mb={10}>
         <Text data-testid="instruction">
           You are shown a picture with a visualisation to describe this image.
           Please answer some questions
