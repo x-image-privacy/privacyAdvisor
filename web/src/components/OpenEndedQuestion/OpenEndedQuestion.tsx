@@ -21,7 +21,7 @@ const OpenEndedQuestion = ({
         <Square size="20px" bg="grayIcon" data-testid="square" />
         <Text data-testid="question">{question}</Text>
       </Stack>}
-      <Box w='100%' pl={4}>
+      <Box w='100%'>
         <Input
         placeholder={placeholder}
         size="lg"

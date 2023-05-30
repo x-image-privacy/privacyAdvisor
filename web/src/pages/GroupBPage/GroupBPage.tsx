@@ -17,8 +17,10 @@ const GroupBPage = () => {
   const handleNextStep = () => {
 
     // Change page
-    if (step === 2){
-      navigate(routes.customerSatisfaction(), {replace: true})
+    if (step >= 2){
+      return (
+        navigate(routes.customerSatisfaction(), {replace: true})
+      )
     }
 
     setStep((s) => s + 1)

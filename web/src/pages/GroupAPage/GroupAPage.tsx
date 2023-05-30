@@ -13,8 +13,10 @@ const GroupAPage = () => {
   const handleNextStep = () => {
 
     // Change page
-    if (step === 2){
-      navigate(routes.groupB(), {replace: true})
+    if (step >= 2){
+      return (
+        navigate(routes.groupB(), {replace: true})
+      )
     }
     // increment step
     setStep((s) => s + 1)
