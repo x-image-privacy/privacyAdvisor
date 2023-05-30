@@ -4,7 +4,7 @@ import { Container, Stack, Text } from '@chakra-ui/react'
 
 import { useAuth } from 'src/auth'
 import ImageSurveyCell from 'src/components/ImageSurveyCell'
-import ImageCell from 'src/components/ImageCell/ImageCell'
+import ImageCell from 'src/components/ImageCell'
 import { navigate, routes } from '@redwoodjs/router'
 
 const GroupAPage = () => {
@@ -13,15 +13,21 @@ const GroupAPage = () => {
   const handleNextStep = () => {
 
     // Change page
-    if (step >= 2){
-      navigate(routes.groupB(), {replace: true})
-      return;      
+    if (step >= 2) {
+      navigate(routes.groupB(), { replace: true })
+      return;
     }
     // increment step
-    setStep((s) => s + 1)
     
+    setStep((s) => s + 1)
+
+
+
+
+
+
   }
-  const handlePreviousStep = () => {
+  const handlePreviousStep = ( ) =>{
     if (step > 1) {
       setStep((s) => s - 1)
     }

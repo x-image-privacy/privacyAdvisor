@@ -5,20 +5,20 @@ import {
 } from '@chakra-ui/react'
 
 import { useState } from 'react'
-import WordSurveyCell from 'src/components/WordSurveyCell/WordSurveyCell'
-import WordImageCell from 'src/components/WordImageCell/WordImageCell'
+import WordSurveyCell from 'src/components/WordSurveyCell'
+import WordImageCell from 'src/components/WordImageCell'
 import { navigate, routes } from '@redwoodjs/router'
 import { useAuth } from 'src/auth'
-
 
 const GroupBPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
   const handleNextStep = () => {
 
+
     // Change page
     if (step >= 2){
-      navigate(routes.customerSatisfaction(), {replace: true})
+      // navigate(routes.customerSatisfaction(), {replace: true})
       return;
     }
 
@@ -30,6 +30,10 @@ const GroupBPage = () => {
       setStep((s) => s - 1)
     }
   }
+
+
+
+
 
   return (
     <Container maxW="6xl">
