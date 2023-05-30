@@ -1,20 +1,24 @@
-import { CreateUserExperienceQuestionaireScore, CreateUserExperienceQuestionaireScoreVariables, FindUeqSurveyByUserId } from 'types/graphql'
-import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+import { Button, Flex, Square, Stack, Text } from '@chakra-ui/react'
+import {
+  CreateUserExperienceQuestionaireScore,
+  CreateUserExperienceQuestionaireScoreVariables,
+  FindUeqSurveyByUserId,
+} from 'types/graphql'
+import {
+  UEQ_CLARITY,
+  UEQ_COMPLEXITY,
+  UEQ_EFFICIENCY,
+  UEQ_INTEREST,
+  UEQ_MOTIVATION,
+  UEQ_NORM,
+  UEQ_ORIGINALITY,
+  UEQ_SUPPORT,
+} from 'web/config/constants'
 
+import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import {
-  UEQ_CLARITY, 
-  UEQ_COMPLEXITY, 
-  UEQ_EFFICIENCY, 
-  UEQ_INTEREST, 
-  UEQ_MOTIVATION, 
-  UEQ_NORM, 
-  UEQ_ORIGINALITY,
- UEQ_SUPPORT
-} from 'web/config/constants'
-import { Form, SubmitHandler } from '@redwoodjs/forms'
-import { Button, Flex, Square, Stack, Text } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 
 type UeqProps = {
@@ -24,7 +28,7 @@ type UeqProps = {
 
 export const QUERY = gql`
   query FindUeqSurveyByUserId($userId: Int!) {
-    ueqSurvey: customerSatisfactionSurveyByUser(userId: $userId)  {
+    ueqSurvey: customerSatisfactionSurveyByUser(userId: $userId) {
       id
       user {
         id
@@ -45,7 +49,9 @@ export const QUERY = gql`
 `
 
 const CREATE_CUSTOMER_SATISFACTION_SURVEY = gql`
-  mutation CreateCustomerSatisfactionSurveyUeq($input: CreateCustomerSatisfactionSurveyInput!) {
+  mutation CreateCustomerSatisfactionSurveyUeq(
+    $input: CreateCustomerSatisfactionSurveyInput!
+  ) {
     createCustomerSatisfactionSurvey(input: $input) {
       id
       ueq {
@@ -60,7 +66,8 @@ const CREATE_CUSTOMER_SATISFACTION_SURVEY = gql`
         originality
       }
     }
-  }`
+  }
+`
 
 const UPDATE_CUSTOMER_SATISFACTION_SURVEY = gql`
   mutation UpdateCustomerSatisfactionSurveyUeq(
@@ -86,7 +93,9 @@ const UPDATE_CUSTOMER_SATISFACTION_SURVEY = gql`
 `
 
 const CREATE_UEQ_SCORE = gql`
-  mutation CreateUserExperienceQuestionaireScore($input: CreateUserExperienceQuestionaireScoreInput!) {
+  mutation CreateUserExperienceQuestionaireScore(
+    $input: CreateUserExperienceQuestionaireScoreInput!
+  ) {
     createUserExperienceQuestionaireScore(input: $input) {
       id
       support
@@ -133,25 +142,37 @@ interface UeqValues {
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = (props: UeqProps) => <UeqSurveyComponent {...props}/>
+export const Empty = (props: UeqProps) => <UeqSurveyComponent {...props} />
 
 export const Failure = ({ error }: CellFailureProps<FindUeqSurveyByUserId>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = (
-  props: CellSuccessProps<FindUeqSurveyByUserId> & UeqProps) => <UeqSurveyComponent {...props}/>
+  props: CellSuccessProps<FindUeqSurveyByUserId> & UeqProps
+) => <UeqSurveyComponent {...props} />
 
-
-const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUserId & UeqProps) => {
-  const [createCustomerSurvey, {loading, error}] = useMutation(CREATE_CUSTOMER_SATISFACTION_SURVEY, {
-    onError: (data) => {
-      toast.error('fail')
+const UeqSurveyComponent = ({
+  ueqSurvey,
+  userId,
+  onFinished,
+}: FindUeqSurveyByUserId & UeqProps) => {
+  const [createCustomerSurvey, { error }] = useMutation(
+    CREATE_CUSTOMER_SATISFACTION_SURVEY,
+    {
+      onError: () => {
+        toast.error('fail')
+      },
     }
-  })
-  const [updateCustomerSurvey] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SURVEY)
+  )
+  const [updateCustomerSurvey] = useMutation(
+    UPDATE_CUSTOMER_SATISFACTION_SURVEY
+  )
 
-  const [createUeq] = useMutation<CreateUserExperienceQuestionaireScore, CreateUserExperienceQuestionaireScoreVariables>(CREATE_UEQ_SCORE)
+  const [createUeq] = useMutation<
+    CreateUserExperienceQuestionaireScore,
+    CreateUserExperienceQuestionaireScoreVariables
+  >(CREATE_UEQ_SCORE)
   const [updateUeq] = useMutation(UPDATE_UEQ_SCORE)
 
   const onSubmit: SubmitHandler<UeqValues> = async (data) => {
@@ -179,7 +200,7 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
               norm: normRank,
               originality: originalityRank,
             },
-          }
+          },
         })
       } else {
         const newUeq = await createUeq({
@@ -194,18 +215,17 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
               norm: normRank,
               originality: originalityRank,
             },
-          }
+          },
         })
 
         await updateCustomerSurvey({
           variables: {
             id: ueqSurvey.id,
             input: {
-              ueqId: newUeq.data?.createUserExperienceQuestionaireScore.id
-            }
-          }
+              ueqId: newUeq.data?.createUserExperienceQuestionaireScore.id,
+            },
+          },
         })
-
       }
     } else {
       const newUeq = await createUeq({
@@ -219,113 +239,111 @@ const UeqSurveyComponent = ({ueqSurvey, userId, onFinished,}: FindUeqSurveyByUse
             interest: interestRank,
             norm: normRank,
             originality: originalityRank,
-          }
-        }
+          },
+        },
       })
-      
+
       await createCustomerSurvey({
         variables: {
           input: {
             userId,
-            ueqId: newUeq.data?.createUserExperienceQuestionaireScore.id
-          }
-        }
+            ueqId: newUeq.data?.createUserExperienceQuestionaireScore.id,
+          },
+        },
       })
     }
-    
+
     if (!error) {
       onFinished()
     }
   }
-  return(
+  return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
       <Flex flexDirection="column" gap={12}>
-
         <Stack gap={4} alignItems="start">
           <Stack direction="row">
             <Square size="20px" bg="grayIcon" />
             <Text>You find the interface:</Text>
-            </Stack>
-            <Flex direction='column' alignItems="center" gap={5}>
-              <LikertScaleQuestionField
-                name={UEQ_SUPPORT}
-                leftHand="Obstructive"
-                rightHand="Supportive"
-                direction="row"
-                n={7}
-                value={ueqSurvey?.ueq?.support.toString() || ''}  
-                validation={{ required: true }}     
-              />
-              <LikertScaleQuestionField
-                name={UEQ_COMPLEXITY}
-                leftHand="Complicated"
-                rightHand="Easy"
-                direction="row"
-                n={7} 
-                value={ueqSurvey?.ueq?.complexity.toString() || ''}             
-                validation={{ required: true }}     
-              />
-              <LikertScaleQuestionField
-                name={UEQ_EFFICIENCY}
-                leftHand="Inefficient"
-                rightHand="Efficient"
-                direction="row"
-                n={7} 
-                value={ueqSurvey?.ueq?.efficiency.toString() || ''}              
-                validation={{ required: true }}     
-              />
-              <LikertScaleQuestionField
-                name={UEQ_CLARITY}
-                leftHand="Confusing"
-                rightHand="Clear"
-                direction="row"
-                n={7} 
-                value={ueqSurvey?.ueq?.clarity.toString() || ''}              
-                validation={{ required: true }}     
-              />
-              <LikertScaleQuestionField
-                name={UEQ_MOTIVATION}
-                leftHand="Boring"
-                rightHand="Exciting"
-                direction="row"
-                n={7} 
-                value={ueqSurvey?.ueq?.motivation.toString() || ''}              
-                validation={{ required: true }}     
-              />
-              <LikertScaleQuestionField
-                name={UEQ_INTEREST}
-                leftHand="Not interesting"
-                rightHand="Interesting"
-                direction="row"
-                n={7} 
-                value={ueqSurvey?.ueq?.interest.toString() || ''}              
-                validation={{ required: true }}     
-              />
-              <LikertScaleQuestionField
-                name={UEQ_NORM}
-                leftHand="Conventional"
-                rightHand="Inventive"
-                direction="row"
-                n={7} 
-                value={ueqSurvey?.ueq?.norm.toString() || ''}              
-                validation={{ required: true }}     
-              />
-              <LikertScaleQuestionField
-                name={UEQ_ORIGINALITY}
-                leftHand="Usual"
-                rightHand="Leading edge"
-                direction="row"
-                n={7} 
-                value={ueqSurvey?.ueq?.originality.toString() || ''} 
-                validation={{ required: true }}     
-              />
-              </Flex>
           </Stack>
-          <Stack alignItems="end">
-            <Button type="submit">Next</Button>
-          </Stack>
-        </Flex>
+          <Flex direction="column" alignItems="center" gap={5}>
+            <LikertScaleQuestionField
+              name={UEQ_SUPPORT}
+              leftHand="Obstructive"
+              rightHand="Supportive"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.support.toString() || ''}
+              validation={{ required: true }}
+            />
+            <LikertScaleQuestionField
+              name={UEQ_COMPLEXITY}
+              leftHand="Complicated"
+              rightHand="Easy"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.complexity.toString() || ''}
+              validation={{ required: true }}
+            />
+            <LikertScaleQuestionField
+              name={UEQ_EFFICIENCY}
+              leftHand="Inefficient"
+              rightHand="Efficient"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.efficiency.toString() || ''}
+              validation={{ required: true }}
+            />
+            <LikertScaleQuestionField
+              name={UEQ_CLARITY}
+              leftHand="Confusing"
+              rightHand="Clear"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.clarity.toString() || ''}
+              validation={{ required: true }}
+            />
+            <LikertScaleQuestionField
+              name={UEQ_MOTIVATION}
+              leftHand="Boring"
+              rightHand="Exciting"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.motivation.toString() || ''}
+              validation={{ required: true }}
+            />
+            <LikertScaleQuestionField
+              name={UEQ_INTEREST}
+              leftHand="Not interesting"
+              rightHand="Interesting"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.interest.toString() || ''}
+              validation={{ required: true }}
+            />
+            <LikertScaleQuestionField
+              name={UEQ_NORM}
+              leftHand="Conventional"
+              rightHand="Inventive"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.norm.toString() || ''}
+              validation={{ required: true }}
+            />
+            <LikertScaleQuestionField
+              name={UEQ_ORIGINALITY}
+              leftHand="Usual"
+              rightHand="Leading edge"
+              direction="row"
+              n={7}
+              value={ueqSurvey?.ueq?.originality.toString() || ''}
+              validation={{ required: true }}
+            />
+          </Flex>
+        </Stack>
+        <Stack alignItems="end">
+          <Button type="submit">Next</Button>
+        </Stack>
+      </Flex>
     </Form>
   )
-  
 }

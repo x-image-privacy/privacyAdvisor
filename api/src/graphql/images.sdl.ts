@@ -12,21 +12,4 @@ export const schema = gql`
     image(id: Int!): Image @requireAuth
     imageByImageNumber(imageNumber: Int!): Image @requireAuth
   }
-
-  input CreateImageInput {
-    imageNumber: Int!
-    imageLocation: String!
-    dataLocation: String!
-  }
-
-  input UpdateImageInput {
-    imageNumber: Int
-    imageLocation: String
-    dataLocation: String
-  }
-
-  type Mutation {
-    createImage(input: CreateImageInput!): Image! @requireAuth
-    updateImage(id: Int!, input: UpdateImageInput!): Image! @requireAuth
-  }
 `

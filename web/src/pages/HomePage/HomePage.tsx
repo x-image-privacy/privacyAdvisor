@@ -34,7 +34,7 @@ const HomePage = () => {
     {
       label: 'End survey',
       link: routes.endSurvey(),
-    }
+    },
   ]
   return (
     <>

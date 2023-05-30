@@ -4,6 +4,8 @@ import type {
   CustomerSatisfactionSurveyRelationResolvers,
 } from 'types/graphql'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { db } from 'src/lib/db'
 
 export const customerSatisfactionSurveys: QueryResolvers['customerSatisfactionSurveys'] =
@@ -27,17 +29,29 @@ export const customerSatisfactionSurveyByUser: QueryResolvers['customerSatisfact
 
 export const createCustomerSatisfactionSurvey: MutationResolvers['createCustomerSatisfactionSurvey'] =
   ({ input }) => {
-    return db.customerSatisfactionSurvey.create({
-      data: input,
-    })
+    if (input.userId !== context.currentUser.id) {
+      throw new ForbiddenError('User id')
+    } else {
+      return db.customerSatisfactionSurvey.create({
+        data: input,
+      })
+    }
   }
 
 export const updateCustomerSatisfactionSurvey: MutationResolvers['updateCustomerSatisfactionSurvey'] =
-  ({ id, input }) => {
-    return db.customerSatisfactionSurvey.update({
-      data: input,
+  async ({ id, input }) => {
+    const previous = await db.imageSurvey.findUnique({
       where: { id },
     })
+
+    if (previous.userId !== context.currentUser.id) {
+      throw new ForbiddenError('User id')
+    } else {
+      return db.customerSatisfactionSurvey.update({
+        data: input,
+        where: { id },
+      })
+    }
   }
 
 export const CustomerSatisfactionSurvey: CustomerSatisfactionSurveyRelationResolvers =

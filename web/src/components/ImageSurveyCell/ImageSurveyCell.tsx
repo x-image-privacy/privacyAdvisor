@@ -1,11 +1,9 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
-
 import {
   FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
   UpdateImageSurveyMutationVariables,
 } from 'types/graphql'
-
 import {
   IS_PRIVATE_QUESTION_GROUP_A,
   PRIVATE_ELEMENTS_QUESTION_GROUP_A,
@@ -86,7 +84,8 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = (
-  props: CellSuccessProps<FindImageSurveyByUserAndImageIdImage> & ImageSurveyProps
+  props: CellSuccessProps<FindImageSurveyByUserAndImageIdImage> &
+    ImageSurveyProps
 ) => <ImageSurveyComponent {...props} />
 
 const ImageSurveyComponent = ({

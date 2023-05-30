@@ -1,11 +1,14 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
-import type { FindImageSurveyByUserAndImageIdWord, FindImageSurveyByUserImageIdAndHasInterface} from 'types/graphql'
+import type {
+  FindImageSurveyByUserAndImageIdWord,
+  FindImageSurveyByUserImageIdAndHasInterface,
+} from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
   PRIVATE_ELEMENTS_QUESTION_GROUP_B,
   PUBLIC_ELEMENTS_QUESTION_GROUP_B,
   GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B,
-  JUSTIFY_VISUALISATION_GROUP_B
+  JUSTIFY_VISUALISATION_GROUP_B,
 } from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
@@ -13,7 +16,6 @@ import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
-
 
 type WordImageSurveyProps = {
   imageId: number
@@ -44,16 +46,24 @@ export const QUERY = gql`
 `
 
 export const QUERY_PREVIOUS_DATA = gql`
-query FindImageSurveyByUserImageIdAndHasInterface($userId: Int!, $imageId: Int!) {
-  previousValues: imageSurveyByUserImageAndHasInterface(userId: $userId, imageId: $imageId, hasInterface: true) {
-    id
-    privateRank
-    privateElem
-    publicElem
-    satisfactionRank
-    satisfactionElem
+  query FindImageSurveyByUserImageIdAndHasInterface(
+    $userId: Int!
+    $imageId: Int!
+  ) {
+    previousValues: imageSurveyByUserImageAndHasInterface(
+      userId: $userId
+      imageId: $imageId
+      hasInterface: true
+    ) {
+      id
+      privateRank
+      privateElem
+      publicElem
+      satisfactionRank
+      satisfactionElem
+    }
   }
-}`
+`
 
 const CREATE_IMAGE_SURVEY = gql`
   mutation CreateWordSurveyMutation($input: CreateImageSurveyInput!) {
@@ -96,32 +106,40 @@ interface WordImageSurveyValues {
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = (props: WordImageSurveyProps) => <WordImageSurveyComponent {...props}/>
+export const Empty = (props: WordImageSurveyProps) => (
+  <WordImageSurveyComponent {...props} />
+)
 
-export const Failure = ({
-  error,
-}: CellFailureProps) => (
+export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = (
-  props: CellSuccessProps<FindImageSurveyByUserAndImageIdWord, FindImageSurveyByUserImageIdAndHasInterface> & WordImageSurveyProps
-  ) => <WordImageSurveyComponent {...props}/>
-  
+  props: CellSuccessProps<
+    FindImageSurveyByUserAndImageIdWord,
+    FindImageSurveyByUserImageIdAndHasInterface
+  > &
+    WordImageSurveyProps
+) => <WordImageSurveyComponent {...props} />
+
 const WordImageSurveyComponent = ({
-  imageSurvey, 
+  imageSurvey,
   previousValues,
   userId,
-  imageId, 
+  imageId,
   onPrevious,
   onFinished,
-}: FindImageSurveyByUserAndImageIdWord & FindImageSurveyByUserImageIdAndHasInterface & WordImageSurveyProps) => {
+}: FindImageSurveyByUserAndImageIdWord &
+  FindImageSurveyByUserImageIdAndHasInterface &
+  WordImageSurveyProps) => {
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
 
   const onSubmit: SubmitHandler<WordImageSurveyValues> = (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
-    const satisfactionRank = parseInt(data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B])
+    const satisfactionRank = parseInt(
+      data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]
+    )
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({
@@ -132,7 +150,7 @@ const WordImageSurveyComponent = ({
             privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_B],
             publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_B],
             satisfactionRank,
-            satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B]
+            satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
           },
         },
       })
@@ -154,7 +172,7 @@ const WordImageSurveyComponent = ({
     }
     onFinished()
   }
-  return ( 
+  return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
       <Stack
         direction="row"
@@ -169,21 +187,21 @@ const WordImageSurveyComponent = ({
           question="Is this image private?"
           leftHand="No"
           rightHand="Yes"
-          direction="row" 
+          direction="row"
           value={previousValues?.privateRank.toString() || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements do you consider as public in this image?"
           name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
-          placeholder="Answer here..." 
+          placeholder="Answer here..."
           value={previousValues?.publicElem || ''}
           validation={{ required: true }}
         />
         <OpenEndedQuestionField
           question="Which elements would you feel uncomfortable disclosing in this image?"
           name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
-          placeholder="Answer here..." 
+          placeholder="Answer here..."
           value={previousValues?.privateElem || ''}
           validation={{ required: true }}
         />
@@ -195,17 +213,18 @@ const WordImageSurveyComponent = ({
             leftHand="No"
             rightHand="Yes"
             direction="row"
-            value={previousValues?.satisfactionRank?.toString() || ''}         
-            validation={{ required: true }}  
+            value={previousValues?.satisfactionRank?.toString() || ''}
+            validation={{ required: true }}
           />
           <OpenEndedQuestionField
             placeholder="Justify here..."
-            name={JUSTIFY_VISUALISATION_GROUP_B} 
+            name={JUSTIFY_VISUALISATION_GROUP_B}
             value={previousValues?.satisfactionElem || ''}
-            validation={{ required: true }}  
+            validation={{ required: true }}
           />
         </Stack>
         <Button type="submit">Next</Button>
       </Stack>
     </Form>
-)}
+  )
+}

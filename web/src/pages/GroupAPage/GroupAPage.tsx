@@ -2,32 +2,26 @@ import { useState } from 'react'
 
 import { Container, Stack, Text } from '@chakra-ui/react'
 
-import { useAuth } from 'src/auth'
-import ImageSurveyCell from 'src/components/ImageSurveyCell'
-import ImageCell from 'src/components/ImageCell'
 import { navigate, routes } from '@redwoodjs/router'
+
+import { useAuth } from 'src/auth'
+import ImageCell from 'src/components/ImageCell'
+import ImageSurveyCell from 'src/components/ImageSurveyCell'
 
 const GroupAPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
   const handleNextStep = () => {
-
     // Change page
     if (step >= 2) {
       navigate(routes.groupB(), { replace: true })
-      return;
+      return
     }
     // increment step
-    
+
     setStep((s) => s + 1)
-
-
-
-
-
-
   }
-  const handlePreviousStep = ( ) =>{
+  const handlePreviousStep = () => {
     if (step > 1) {
       setStep((s) => s - 1)
     }
