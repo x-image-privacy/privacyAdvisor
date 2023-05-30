@@ -25,8 +25,6 @@ export const Failure = ({
 export const Success = ({
   image,
 }: CellSuccessProps<FindPlainImageByImageNumber>) => {
-  const location = image.imageLocation
-
     return (
       <Flex alignItems="center" gap={2}>
         <Image src={image.imageLocation}/>

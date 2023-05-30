@@ -38,12 +38,6 @@ export const updateImage: MutationResolvers['updateImage'] = ({
   })
 }
 
-export const deleteImage: MutationResolvers['deleteImage'] = ({ id }) => {
-  return db.image.delete({
-    where: { id },
-  })
-}
-
 export const Image: ImageRelationResolvers = {
   ImageSurvey: (_obj, { root }) => {
     return db.image.findUnique({ where: { id: root?.id } }).ImageSurvey()

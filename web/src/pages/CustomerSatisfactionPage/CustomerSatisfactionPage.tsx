@@ -14,9 +14,8 @@ const CustomerSatisfactionPage = () => {
   const [step, setStep] = useState(1)
   const handleNextStep = () => {
     if (step >= 4) {
-      return (
-        navigate(routes.endSurvey(), {replace: true})
-      )
+      navigate(routes.endSurvey(), {replace: true})
+      return;
     }
     setStep((s) => s + 1)
   }

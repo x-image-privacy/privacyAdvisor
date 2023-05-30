@@ -18,9 +18,8 @@ const GroupBPage = () => {
 
     // Change page
     if (step >= 2){
-      return (
-        navigate(routes.customerSatisfaction(), {replace: true})
-      )
+      navigate(routes.customerSatisfaction(), {replace: true})
+      return;
     }
 
     setStep((s) => s + 1)
@@ -41,10 +40,10 @@ const GroupBPage = () => {
         </Text>
         <WordImageCell imageNumber={step}/>
         <WordSurveyCell
-        userId={currentUser?.id as number}
-        imageId={step}
-        onFinished={handleNextStep}
-        onPrevious={handlePreviousStep}
+          userId={currentUser?.id as number}
+          imageId={step}
+          onFinished={handleNextStep}
+          onPrevious={handlePreviousStep}
         />
       </Stack>
     </Container>

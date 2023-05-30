@@ -16,6 +16,9 @@
     "eslint-plugin-react": "latest",
     "prettier": "2.8.8"
   },
+  "eslintConfig": {
+    "extends": "@redwoodjs/eslint-config"
+  },
   "engines": {
     "node": ">=16.19 <=18.x",
     "yarn": ">=1.15"

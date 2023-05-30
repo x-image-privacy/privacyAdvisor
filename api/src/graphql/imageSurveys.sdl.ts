@@ -48,6 +48,5 @@ export const schema = gql`
     createImageSurvey(input: CreateImageSurveyInput!): ImageSurvey! @requireAuth
     updateImageSurvey(id: Int!, input: UpdateImageSurveyInput!): ImageSurvey!
       @requireAuth
-    deleteImageSurvey(id: Int!): ImageSurvey! @requireAuth
   }
 `

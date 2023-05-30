@@ -29,6 +29,5 @@ export const schema = gql`
       id: Int!
       input: UpdateNetPromoterScoreInput!
     ): NetPromoterScore! @requireAuth
-    deleteNetPromoterScore(id: Int!): NetPromoterScore! @requireAuth
   }
 `

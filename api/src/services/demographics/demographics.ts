@@ -40,14 +40,6 @@ export const updateDemographic: MutationResolvers['updateDemographic'] = ({
   })
 }
 
-export const deleteDemographic: MutationResolvers['deleteDemographic'] = ({
-  id,
-}) => {
-  return db.demographic.delete({
-    where: { id },
-  })
-}
-
 export const Demographic: DemographicRelationResolvers = {
   user: (_obj, { root }) => {
     return db.demographic.findUnique({ where: { id: root?.id } }).user()

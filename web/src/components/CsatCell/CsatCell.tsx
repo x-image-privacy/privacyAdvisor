@@ -106,7 +106,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
 
 
   const [createCsat, {loading, error}] = useMutation<CreateCustomerSatisfactionScore,CreateCustomerSatisfactionScoreVariables>(CREATE_CUSTOMER_SATISFACTION_SCORE, {
-    onError: (data) => {
+    onError: () => {
       toast.error('fail')
     }
   })
@@ -203,6 +203,4 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
       </Flex>
   </Form>
   )
-
-
 }

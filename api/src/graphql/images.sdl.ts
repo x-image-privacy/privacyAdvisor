@@ -28,6 +28,5 @@ export const schema = gql`
   type Mutation {
     createImage(input: CreateImageInput!): Image! @requireAuth
     updateImage(id: Int!, input: UpdateImageInput!): Image! @requireAuth
-    deleteImage(id: Int!): Image! @requireAuth
   }
 `

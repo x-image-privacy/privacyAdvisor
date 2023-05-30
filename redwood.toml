@@ -7,11 +7,11 @@
 
 [web]
   title = "Redwood App"
-  port = 8929
+  port = 8930
   apiUrl = "/.netlify/functions"
   includeEnvironmentVariables = [] # any ENV vars that should be available to the web side, see https://redwoodjs.com/docs/environment-variables#web
 [api]
-  port = 8928
+  port = 8929
 [browser]
   open = true
 [notifications]

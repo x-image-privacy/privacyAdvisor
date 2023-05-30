@@ -41,7 +41,5 @@ export const schema = gql`
       id: Int!
       input: UpdateCustomerSatisfactionSurveyInput!
     ): CustomerSatisfactionSurvey! @requireAuth
-    deleteCustomerSatisfactionSurvey(id: Int!): CustomerSatisfactionSurvey!
-      @requireAuth
   }
 `

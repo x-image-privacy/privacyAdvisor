@@ -29,6 +29,27 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@chakra-ui/storybook-addon": "^4.0.16"
+    "@chakra-ui/storybook-addon": "^4.0.16",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "3.5.2",
+    "eslint-plugin-cypress": "2.12.1",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-react": "^7.31.10"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "importOrder": [
+      "^@(?!graasp|chakra-ui)(.*)",
+      "^react",
+      "^@?chakra-ui(.*)",
+      "^@?graasp(.*)",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
   }
 }
