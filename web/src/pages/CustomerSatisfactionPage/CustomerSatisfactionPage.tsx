@@ -9,7 +9,6 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useAuth } from 'src/auth'
 
 
-
 const CustomerSatisfactionPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)

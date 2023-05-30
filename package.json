@@ -12,11 +12,9 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "^8.41.0",
-    "eslint-plugin-react": "latest"
-  },
-  "eslintConfig": {
-    "extends": "@redwoodjs/eslint-config",
-    "root": true
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "latest",
+    "prettier": "2.8.8"
   },
   "engines": {
     "node": ">=16.19 <=18.x",

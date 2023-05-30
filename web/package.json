@@ -21,7 +21,7 @@
     "@redwoodjs/forms": "4.4.3",
     "@redwoodjs/router": "4.4.3",
     "@redwoodjs/web": "4.4.3",
-    "@x-image-privacy/wordcloud": "github:x-image-privacy/word-cloud#main",
+    "@x-image-privacy/wordcloud": "https://github.com/x-image-privacy/word-cloud#main",
     "framer-motion": "^6",
     "humanize-string": "2.1.0",
     "prop-types": "15.8.1",
