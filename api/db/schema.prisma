@@ -16,6 +16,8 @@ model User {
   salt                       String                       @default("")
   group                      String?
   submittedAt                DateTime?
+  milestone                  String                       @default("group-a")
+  email                      String?
   imageSurvey                ImageSurvey[]
   customerSatisfactionSurvey CustomerSatisfactionSurvey[]
   demographic                Demographic[]
