@@ -1,40 +1,14 @@
-import type { DeleteUserMutationVariables, FindUserById } from 'types/graphql'
+import type { FindUserById } from 'types/graphql'
 
-import { Link, routes, navigate } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
+import { Link, routes } from '@redwoodjs/router'
 
 import { timeTag } from 'src/lib/formatters'
-
-const DELETE_USER_MUTATION = gql`
-  mutation DeleteUserMutation($id: Int!) {
-    deleteUser(id: $id) {
-      id
-    }
-  }
-`
 
 interface Props {
   user: NonNullable<FindUserById['user']>
 }
 
 const User = ({ user }: Props) => {
-  const [deleteUser] = useMutation(DELETE_USER_MUTATION, {
-    onCompleted: () => {
-      toast.success('User deleted')
-      navigate(routes.users())
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-  })
-
-  const onDeleteClick = (id: DeleteUserMutationVariables['id']) => {
-    if (confirm('Are you sure you want to delete user ' + id + '?')) {
-      deleteUser({ variables: { id } })
-    }
-  }
-
   return (
     <>
       <div className="rw-segment">
@@ -71,13 +45,6 @@ const User = ({ user }: Props) => {
         >
           Edit
         </Link>
-        <button
-          type="button"
-          className="rw-button rw-button-red"
-          onClick={() => onDeleteClick(user.id)}
-        >
-          Delete
-        </button>
       </nav>
     </>
   )

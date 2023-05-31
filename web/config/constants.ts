@@ -28,3 +28,5 @@ export const DEMOGRAPHIC_AGE = 'demographic_age'
 export const DEMOGRAPHIC_EDUCATION = 'demographic_education'
 export const DEMOGRAPHIC_TECHNOLOGY = 'demographic_technology'
 export const DEMOGRAPHIC_PRIVACY = 'demographic_privacy'
+
+export const USER_EMAIL = 'user_email'

@@ -111,7 +111,7 @@ const NpsSurveyComponent = ({
   userId,
   onFinished,
 }: FindNpsSurveyByUserId & NpsProps) => {
-  const [createCustomerSurvey, { loading, error }] = useMutation(
+  const [createCustomerSurvey, { error }] = useMutation(
     CREATE_CUSTOMER_SATISFACTION_SURVEY,
     {
       onError: () => {
@@ -130,7 +130,6 @@ const NpsSurveyComponent = ({
   const [updateNps] = useMutation(UPDATE_NPS_SCORE)
 
   const onSubmit: SubmitHandler<NpsValues> = async (data) => {
-    console.log(npsSurvey)
     const npsRank = parseInt(data[NPS_RANK_QUESTION])
 
     if (npsSurvey && npsSurvey.user.id) {

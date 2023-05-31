@@ -5,7 +5,6 @@ import {
   userExperienceQuestionaireScore,
   createUserExperienceQuestionaireScore,
   updateUserExperienceQuestionaireScore,
-  deleteUserExperienceQuestionaireScore,
 } from './userExperienceQuestionaireScores'
 import type { StandardScenario } from './userExperienceQuestionaireScores.scenarios'
 
@@ -74,18 +73,6 @@ describe('userExperienceQuestionaireScores', () => {
       })
 
       expect(result.support).toEqual(2740629)
-    }
-  )
-
-  scenario(
-    'deletes a userExperienceQuestionaireScore',
-    async (scenario: StandardScenario) => {
-      const original = (await deleteUserExperienceQuestionaireScore({
-        id: scenario.userExperienceQuestionaireScore.one.id,
-      })) as UserExperienceQuestionaireScore
-      const result = await userExperienceQuestionaireScore({ id: original.id })
-
-      expect(result).toEqual(null)
     }
   )
 })

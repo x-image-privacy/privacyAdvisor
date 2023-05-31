@@ -57,6 +57,14 @@ const UPDATE_DEMOGRAPHIC_SURVEY = gql`
   }
 `
 
+const UPDATE_USER = gql`
+  mutation UpdateUser($id: Int!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      submittedAt
+    }
+  }
+`
+
 interface DemographicValues {
   [DEMOGRAPHIC_AGE]: string
   [DEMOGRAPHIC_EDUCATION]: string
@@ -85,14 +93,18 @@ const DemographicComponent = ({
 }: FindDemographicQueryByUser & DemographicProps) => {
   const [create] = useMutation(CREATE_DEMOGRAPHIC_SURVEY)
   const [update] = useMutation(UPDATE_DEMOGRAPHIC_SURVEY)
-
-  console.log(demographic)
+  const [updateUser] = useMutation(UPDATE_USER)
 
   const onSubmit: SubmitHandler<DemographicValues> = (data) => {
     const ageRank = parseInt(data[DEMOGRAPHIC_AGE])
     const educationRank = parseInt(data[DEMOGRAPHIC_EDUCATION])
     const technologyRank = parseInt(data[DEMOGRAPHIC_TECHNOLOGY])
     const privacyRank = parseInt(data[DEMOGRAPHIC_PRIVACY])
+
+    const current = new Date()
+    const date = `${current.getDate()}/${
+      current.getMonth() + 1
+    }/${current.getFullYear()}`
 
     if (demographic && demographic.user.id) {
       update({
@@ -119,6 +131,16 @@ const DemographicComponent = ({
         },
       })
     }
+
+    updateUser({
+      variables: {
+        id: userId,
+        input: {
+          submittedAt: date,
+        },
+      },
+    })
+
     onFinished()
   }
 
