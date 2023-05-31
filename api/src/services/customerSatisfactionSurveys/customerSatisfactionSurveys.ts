@@ -40,7 +40,7 @@ export const createCustomerSatisfactionSurvey: MutationResolvers['createCustomer
 
 export const updateCustomerSatisfactionSurvey: MutationResolvers['updateCustomerSatisfactionSurvey'] =
   async ({ id, input }) => {
-    const previous = await db.imageSurvey.findUnique({
+    const previous = await db.customerSatisfactionSurvey.findUnique({
       where: { id },
     })
 

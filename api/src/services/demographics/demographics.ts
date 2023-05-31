@@ -40,7 +40,7 @@ export const createDemographic: MutationResolvers['createDemographic'] = ({
 
 export const updateDemographic: MutationResolvers['updateDemographic'] =
   async ({ id, input }) => {
-    const previous = await db.imageSurvey.findUnique({
+    const previous = await db.demographic.findUnique({
       where: { id },
     })
 

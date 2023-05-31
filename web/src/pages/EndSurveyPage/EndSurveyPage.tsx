@@ -16,7 +16,7 @@ const EndSurveyPage = () => {
           <Text align="center">Thank you for your participation</Text>
           <Text align="center">Participation prize here</Text>
         </Flex>
-        <PrizeCell userId={currentUser?.id as number} />
+        {/* <PrizeCell userId={currentUser?.id as number} /> */}
       </Container>
     </Flex>
   )

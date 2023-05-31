@@ -101,10 +101,8 @@ const DemographicComponent = ({
     const technologyRank = parseInt(data[DEMOGRAPHIC_TECHNOLOGY])
     const privacyRank = parseInt(data[DEMOGRAPHIC_PRIVACY])
 
-    const current = new Date()
-    const date = `${current.getDate()}/${
-      current.getMonth() + 1
-    }/${current.getFullYear()}`
+    const date = new Date()
+    const currentTime = date.toISOString()
 
     if (demographic && demographic.user.id) {
       update({
@@ -136,7 +134,7 @@ const DemographicComponent = ({
       variables: {
         id: userId,
         input: {
-          submittedAt: date,
+          submittedAt: currentTime,
         },
       },
     })
