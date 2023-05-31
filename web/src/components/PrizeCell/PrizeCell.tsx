@@ -1,5 +1,9 @@
-import { Button } from '@chakra-ui/react'
-import { FindUserByIdEmail } from 'types/graphql'
+import { Button, Stack } from '@chakra-ui/react'
+import {
+  FindUserByIdEmail,
+  UpdateUserMutation,
+  UpdateUserMutationVariables,
+} from 'types/graphql'
 import { USER_EMAIL } from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
@@ -14,6 +18,7 @@ type PrizeProps = {
 export const Query = gql`
   query FindUserByIdEmail($id: Int!) {
     userPrize: user(id: $id) {
+      id
       email
     }
   }
@@ -21,6 +26,7 @@ export const Query = gql`
 const UPDATE_USER = gql`
   mutation UpdateUserEmail($id: Int!, $input: UpdateUserInput!) {
     updateUser(id: $id, input: $input) {
+      id
       email
     }
   }
@@ -46,32 +52,32 @@ const PrizeComponent = ({
   userPrize,
   userId,
 }: FindUserByIdEmail & PrizeProps) => {
-  const [update] = useMutation(UPDATE_USER)
+  const [update] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    UPDATE_USER
+  )
 
   const onSubmit: SubmitHandler<PrizeValues> = (data) => {
-    if (!userPrize) {
-      update({
-        variables: {
-          id: userId,
-          input: {
-            email: data[USER_EMAIL],
-          },
+    update({
+      variables: {
+        id: userId,
+        input: {
+          email: data[USER_EMAIL],
         },
-      })
-    }
+      },
+    })
   }
 
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <OpenEndedQuestionField
-        question="Enter your email"
-        name={USER_EMAIL}
-        placeholder="Answer here..."
-        value={userPrize?.email || ''}
-        validation={{ required: true }}
-      />
-
-      <Button type="submit">Next</Button>
+      <Stack direction="row" gap={4} alignItems="start">
+        <OpenEndedQuestionField
+          question="Enter your email"
+          name={USER_EMAIL}
+          placeholder="Answer here..."
+          value={userPrize?.email || ''}
+        />
+        <Button type="submit">Next</Button>
+      </Stack>
     </Form>
   )
 }

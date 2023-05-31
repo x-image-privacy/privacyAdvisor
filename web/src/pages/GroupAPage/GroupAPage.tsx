@@ -17,8 +17,8 @@ const GroupAPage = () => {
       navigate(routes.groupB(), { replace: true })
       return
     }
-    // increment step
 
+    // increment step
     setStep((s) => s + 1)
   }
   const handlePreviousStep = () => {

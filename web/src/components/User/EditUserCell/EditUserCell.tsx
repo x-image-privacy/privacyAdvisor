@@ -14,6 +14,8 @@ export const QUERY = gql`
       group
       createdAt
       submittedAt
+      email
+      milestone
     }
   }
 `
@@ -24,6 +26,8 @@ const UPDATE_USER_MUTATION = gql`
       group
       createdAt
       submittedAt
+      email
+      milestone
     }
   }
 `

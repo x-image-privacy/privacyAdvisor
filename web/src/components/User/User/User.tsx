@@ -31,10 +31,6 @@ const User = ({ user }: Props) => {
               <th>Created at</th>
               <td>{timeTag(user.createdAt)}</td>
             </tr>
-            <tr>
-              <th>Submitted at</th>
-              <td>{timeTag(user.submittedAt)}</td>
-            </tr>
           </tbody>
         </table>
       </div>

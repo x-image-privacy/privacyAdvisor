@@ -11,6 +11,8 @@ export const QUERY = gql`
       group
       createdAt
       submittedAt
+      email
+      milestone
     }
   }
 `

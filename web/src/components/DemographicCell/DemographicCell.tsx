@@ -60,6 +60,7 @@ const UPDATE_DEMOGRAPHIC_SURVEY = gql`
 const UPDATE_USER = gql`
   mutation UpdateUser($id: Int!, $input: UpdateUserInput!) {
     updateUser(id: $id, input: $input) {
+      id
       submittedAt
     }
   }
@@ -102,7 +103,8 @@ const DemographicComponent = ({
     const privacyRank = parseInt(data[DEMOGRAPHIC_PRIVACY])
 
     const date = new Date()
-    const currentTime = date.toISOString()
+    const currentTime = date.toISOString() as unknown as Date
+    console.log(currentTime)
 
     if (demographic && demographic.user.id) {
       update({
