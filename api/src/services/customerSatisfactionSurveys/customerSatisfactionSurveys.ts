@@ -30,7 +30,7 @@ export const customerSatisfactionSurveyByUser: QueryResolvers['customerSatisfact
 export const createCustomerSatisfactionSurvey: MutationResolvers['createCustomerSatisfactionSurvey'] =
   ({ input }) => {
     if (input.userId !== context.currentUser.id) {
-      throw new ForbiddenError('User id')
+      throw new ForbiddenError('User id can only update itself')
     } else {
       return db.customerSatisfactionSurvey.create({
         data: input,
@@ -45,7 +45,7 @@ export const updateCustomerSatisfactionSurvey: MutationResolvers['updateCustomer
     })
 
     if (previous.userId !== context.currentUser.id) {
-      throw new ForbiddenError('User id')
+      throw new ForbiddenError('User id can only update itself')
     } else {
       return db.customerSatisfactionSurvey.update({
         data: input,

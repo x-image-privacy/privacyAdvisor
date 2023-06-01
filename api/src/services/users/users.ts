@@ -27,7 +27,7 @@ export const updateUser: MutationResolvers['updateUser'] = async ({
   })
 
   if (previous.id !== context.currentUser.id) {
-    throw new ForbiddenError('User id')
+    throw new ForbiddenError('User id can only update itself')
   } else {
     return db.user.update({
       data: input,

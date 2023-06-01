@@ -36,7 +36,7 @@ export const createImageSurvey: MutationResolvers['createImageSurvey'] = ({
   input,
 }) => {
   if (input.userId !== context.currentUser.id) {
-    throw new ForbiddenError('User id')
+    throw new ForbiddenError('User id can only update itself')
   } else {
     return db.imageSurvey.create({
       data: input,
@@ -51,7 +51,7 @@ export const updateImageSurvey: MutationResolvers['updateImageSurvey'] =
     })
 
     if (previous.userId !== context.currentUser.id) {
-      throw new ForbiddenError('User id')
+      throw new ForbiddenError('User id can only update itself')
     } else {
       return db.imageSurvey.update({
         data: input,

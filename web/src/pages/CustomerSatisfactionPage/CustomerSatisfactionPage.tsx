@@ -10,14 +10,13 @@ import CsatCell from 'src/components/CsatCell'
 import DemographicCell from 'src/components/DemographicCell'
 import NpsCell from 'src/components/NpsCell'
 import UeqCell from 'src/components/UeqCell'
-
-import { IsMilestone } from '../HomePage/HomePage'
+import { isMilestone } from 'src/milestone'
 
 const CustomerSatisfactionPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
 
-  IsMilestone(PAGE_SURVEY, currentUser?.milestone as string)
+  isMilestone(PAGE_SURVEY, currentUser?.milestone as string)
 
   const handleNextStep = () => {
     if (step >= 4) {

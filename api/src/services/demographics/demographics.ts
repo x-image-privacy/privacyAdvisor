@@ -30,7 +30,7 @@ export const createDemographic: MutationResolvers['createDemographic'] = ({
   input,
 }) => {
   if (input.userId !== context.currentUser.id) {
-    throw new ForbiddenError('User id')
+    throw new ForbiddenError('User id can only update itself')
   } else {
     return db.demographic.create({
       data: input,
@@ -45,7 +45,7 @@ export const updateDemographic: MutationResolvers['updateDemographic'] =
     })
 
     if (previous.userId !== context.currentUser.id) {
-      throw new ForbiddenError('User id')
+      throw new ForbiddenError('User id can only update itself')
     } else {
       return db.demographic.update({
         data: input,

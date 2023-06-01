@@ -8,13 +8,13 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useAuth } from 'src/auth'
 import ImageCell from 'src/components/ImageCell'
 import ImageSurveyCell from 'src/components/ImageSurveyCell'
-import { IsMilestone } from 'src/pages/HomePage/HomePage'
+import { isMilestone } from 'src/milestone'
 
 const GroupAPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
 
-  IsMilestone(PAGE_GROUP_A, currentUser?.milestone as string)
+  isMilestone(PAGE_GROUP_A, currentUser?.milestone as string)
 
   const handleNextStep = () => {
     // Change page

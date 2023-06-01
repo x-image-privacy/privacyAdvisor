@@ -3,13 +3,12 @@ import { PAGE_END } from 'web/config/constants'
 
 import { useAuth } from 'src/auth'
 import PrizeCell from 'src/components/PrizeCell'
-
-import { IsMilestone } from '../HomePage/HomePage'
+import { isMilestone } from 'src/milestone'
 
 const EndSurveyPage = () => {
   const { currentUser } = useAuth()
 
-  IsMilestone(PAGE_END, currentUser?.milestone as string)
+  isMilestone(PAGE_END, currentUser?.milestone as string)
 
   return (
     <Flex display="flex" flexDir="column" alignItems="center" gap={3}>
