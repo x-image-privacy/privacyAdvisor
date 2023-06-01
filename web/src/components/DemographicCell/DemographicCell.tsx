@@ -104,7 +104,6 @@ const DemographicComponent = ({
 
     const date = new Date()
     const currentTime = date.toISOString() as unknown as Date
-    console.log(currentTime)
 
     if (demographic && demographic.user.id) {
       update({

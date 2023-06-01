@@ -12,10 +12,10 @@ import { CellFailureProps, CellSuccessProps, useMutation } from '@redwoodjs/web'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
 type PrizeProps = {
-  userId: number
+  id: number
 }
 
-export const Query = gql`
+export const QUERY = gql`
   query FindUserByIdEmail($id: Int!) {
     userPrize: user(id: $id) {
       id
@@ -48,18 +48,18 @@ export const Success = (
   props: CellSuccessProps<FindUserByIdEmail> & PrizeProps
 ) => <PrizeComponent {...props} />
 
-const PrizeComponent = ({
-  userPrize,
-  userId,
-}: FindUserByIdEmail & PrizeProps) => {
+const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
   const [update] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
     UPDATE_USER
   )
 
+  console.log('user email', userPrize)
+
   const onSubmit: SubmitHandler<PrizeValues> = (data) => {
+    console.log('data', data)
     update({
       variables: {
-        id: userId,
+        id: id,
         input: {
           email: data[USER_EMAIL],
         },
@@ -69,14 +69,13 @@ const PrizeComponent = ({
 
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack direction="row" gap={4} alignItems="start">
+      <Stack direction="column" gap={4} alignItems="start">
         <OpenEndedQuestionField
-          question="Enter your email"
           name={USER_EMAIL}
           placeholder="Answer here..."
           value={userPrize?.email || ''}
         />
-        <Button type="submit">Next</Button>
+        <Button type="submit">Submit</Button>
       </Stack>
     </Form>
   )
