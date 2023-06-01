@@ -98,7 +98,7 @@ const DemographicComponent = ({
   const [update] = useMutation(UPDATE_DEMOGRAPHIC_SURVEY)
   const [updateUser] = useMutation(UPDATE_USER_DEMOGRAPHIC)
 
-  const onSubmit: SubmitHandler<DemographicValues> = (data) => {
+  const onSubmit: SubmitHandler<DemographicValues> = async (data) => {
     const ageRank = parseInt(data[DEMOGRAPHIC_AGE])
     const educationRank = parseInt(data[DEMOGRAPHIC_EDUCATION])
     const technologyRank = parseInt(data[DEMOGRAPHIC_TECHNOLOGY])
@@ -133,7 +133,7 @@ const DemographicComponent = ({
       })
     }
 
-    updateUser({
+    await updateUser({
       variables: {
         id: userId,
         input: {

@@ -146,7 +146,7 @@ const WordImageSurveyComponent = ({
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
   const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
 
-  const onSubmit: SubmitHandler<WordImageSurveyValues> = (data) => {
+  const onSubmit: SubmitHandler<WordImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
     const satisfactionRank = parseInt(
       data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]
@@ -183,7 +183,7 @@ const WordImageSurveyComponent = ({
     }
 
     if (imageId >= NUMBER_OF_IMAGE) {
-      updateUser({
+      await updateUser({
         variables: {
           id: userId,
           input: {
