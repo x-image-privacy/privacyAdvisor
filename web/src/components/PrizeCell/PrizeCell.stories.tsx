@@ -1,23 +1,14 @@
 import type { ComponentStory } from '@storybook/react'
 
-import { Loading, Empty, Failure, Success } from './CsatCell'
-import { standard } from './CsatCell.mock'
+import { Loading, Empty, Failure, Success } from './PrizeCell'
+import { standard } from './PrizeCell.mock'
 
 export const loading = () => {
   return Loading ? <Loading /> : <></>
 }
 
 export const empty = () => {
-  return Empty ? (
-    <Empty
-      userId={0}
-      onFinished={function (): void {
-        throw new Error('Function not implemented.')
-      }}
-    />
-  ) : (
-    <></>
-  )
+  return Empty ? <Empty /> : <></>
 }
 
 export const failure: ComponentStory<typeof Failure> = (args) => {
@@ -28,4 +19,4 @@ export const success: ComponentStory<typeof Success> = (args) => {
   return Success ? <Success {...standard()} {...args} /> : <></>
 }
 
-export default { title: 'Cells/CsatCell' }
+export default { title: 'Cells/PrizeCell' }

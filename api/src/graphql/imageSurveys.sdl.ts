@@ -18,8 +18,11 @@ export const schema = gql`
     imageSurvey(id: Int!): ImageSurvey @requireAuth
     imageSurveyByUserAndImage(userId: Int!, imageId: Int!): ImageSurvey
       @requireAuth
-    imageSurveyByUserImageAndHasInterface(userId: Int!, imageId: Int!, hasInterface: Boolean!): ImageSurvey
-      @requireAuth
+    imageSurveyByUserImageAndHasInterface(
+      userId: Int!
+      imageId: Int!
+      hasInterface: Boolean!
+    ): ImageSurvey @requireAuth
   }
 
   input CreateImageSurveyInput {
@@ -48,6 +51,5 @@ export const schema = gql`
     createImageSurvey(input: CreateImageSurveyInput!): ImageSurvey! @requireAuth
     updateImageSurvey(id: Int!, input: UpdateImageSurveyInput!): ImageSurvey!
       @requireAuth
-    deleteImageSurvey(id: Int!): ImageSurvey! @requireAuth
   }
 `

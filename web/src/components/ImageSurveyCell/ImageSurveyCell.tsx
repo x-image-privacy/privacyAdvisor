@@ -1,13 +1,13 @@
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
-
 import {
   FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
   UpdateImageSurveyMutationVariables,
 } from 'types/graphql'
-
 import {
   IS_PRIVATE_QUESTION_GROUP_A,
+  MILESTONE_GROUP_B,
+  NUMBER_OF_IMAGE,
   PRIVATE_ELEMENTS_QUESTION_GROUP_A,
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
@@ -31,7 +31,6 @@ export const QUERY = gql`
       id
       user {
         id
-        group
       }
       image {
         id
@@ -69,6 +68,15 @@ const UPDATE_IMAGE_SURVEY = gql`
   }
 `
 
+const UPDATE_USER_IMAGE_SURVEY_ = gql`
+  mutation UpdateUserImageSurvey($id: Int!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+      milestone
+    }
+  }
+`
+
 interface PlainImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_A]: string
   [PUBLIC_ELEMENTS_QUESTION_GROUP_A]: string
@@ -86,7 +94,8 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = (
-  props: CellSuccessProps<FindImageSurveyByUserAndImageIdImage> & ImageSurveyProps
+  props: CellSuccessProps<FindImageSurveyByUserAndImageIdImage> &
+    ImageSurveyProps
 ) => <ImageSurveyComponent {...props} />
 
 const ImageSurveyComponent = ({
@@ -101,6 +110,7 @@ const ImageSurveyComponent = ({
     UpdateImageSurveyMutation,
     UpdateImageSurveyMutationVariables
   >(UPDATE_IMAGE_SURVEY)
+  const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY_)
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
@@ -125,6 +135,17 @@ const ImageSurveyComponent = ({
             privateRank: privateRank,
             privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
             publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+          },
+        },
+      })
+    }
+
+    if (imageId >= NUMBER_OF_IMAGE) {
+      updateUser({
+        variables: {
+          id: userId,
+          input: {
+            milestone: MILESTONE_GROUP_B,
           },
         },
       })

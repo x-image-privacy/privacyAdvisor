@@ -7,6 +7,8 @@ CREATE TABLE "User" (
     "salt" TEXT NOT NULL DEFAULT '',
     "group" TEXT,
     "submittedAt" TIMESTAMP(3),
+    "milestone" TEXT NOT NULL DEFAULT 'group-a',
+    "email" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

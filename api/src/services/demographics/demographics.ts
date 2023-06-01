@@ -4,6 +4,8 @@ import type {
   DemographicRelationResolvers,
 } from 'types/graphql'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { db } from 'src/lib/db'
 
 export const demographics: QueryResolvers['demographics'] = () => {
@@ -16,7 +18,9 @@ export const demographic: QueryResolvers['demographic'] = ({ id }) => {
   })
 }
 
-export const demographicByUser: QueryResolvers['demographicByUser'] = ({ userId }) => {
+export const demographicByUser: QueryResolvers['demographicByUser'] = ({
+  userId,
+}) => {
   return db.demographic.findUnique({
     where: { userId },
   })
@@ -25,28 +29,30 @@ export const demographicByUser: QueryResolvers['demographicByUser'] = ({ userId 
 export const createDemographic: MutationResolvers['createDemographic'] = ({
   input,
 }) => {
-  return db.demographic.create({
-    data: input,
-  })
+  if (input.userId !== context.currentUser.id) {
+    throw new ForbiddenError('User id can only update itself')
+  } else {
+    return db.demographic.create({
+      data: input,
+    })
+  }
 }
 
-export const updateDemographic: MutationResolvers['updateDemographic'] = ({
-  id,
-  input,
-}) => {
-  return db.demographic.update({
-    data: input,
-    where: { id },
-  })
-}
+export const updateDemographic: MutationResolvers['updateDemographic'] =
+  async ({ id, input }) => {
+    const previous = await db.demographic.findUnique({
+      where: { id },
+    })
 
-export const deleteDemographic: MutationResolvers['deleteDemographic'] = ({
-  id,
-}) => {
-  return db.demographic.delete({
-    where: { id },
-  })
-}
+    if (previous.userId !== context.currentUser.id) {
+      throw new ForbiddenError('User id can only update itself')
+    } else {
+      return db.demographic.update({
+        data: input,
+        where: { id },
+      })
+    }
+  }
 
 export const Demographic: DemographicRelationResolvers = {
   user: (_obj, { root }) => {

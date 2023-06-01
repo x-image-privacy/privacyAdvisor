@@ -1,7 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
-
-import { Loading, Empty, Failure, Success } from './CsatCell'
-import { standard } from './CsatCell.mock'
+import { Loading, Empty, Failure, Success } from './PrizeCell'
+import { standard } from './PrizeCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float and DateTime types.
@@ -9,7 +8,7 @@ import { standard } from './CsatCell.mock'
 //        https://redwoodjs.com/docs/testing#testing-cells
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
-describe('CsatCell', () => {
+describe('PrizeCell', () => {
   it('renders Loading successfully', () => {
     expect(() => {
       render(<Loading />)
@@ -18,14 +17,7 @@ describe('CsatCell', () => {
 
   it('renders Empty successfully', async () => {
     expect(() => {
-      render(
-        <Empty
-          userId={0}
-          onFinished={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      )
+      render(<Empty />)
     }).not.toThrow()
   })
 
@@ -43,7 +35,7 @@ describe('CsatCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success csat={standard().csat} />)
+      render(<Success prize={standard().prize} />)
     }).not.toThrow()
   })
 })

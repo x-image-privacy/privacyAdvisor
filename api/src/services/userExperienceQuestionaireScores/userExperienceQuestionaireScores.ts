@@ -33,13 +33,6 @@ export const updateUserExperienceQuestionaireScore: MutationResolvers['updateUse
     })
   }
 
-export const deleteUserExperienceQuestionaireScore: MutationResolvers['deleteUserExperienceQuestionaireScore'] =
-  ({ id }) => {
-    return db.userExperienceQuestionaireScore.delete({
-      where: { id },
-    })
-  }
-
 export const UserExperienceQuestionaireScore: UserExperienceQuestionaireScoreRelationResolvers =
   {
     CustomerSatisfactionSurvey: (_obj, { root }) => {

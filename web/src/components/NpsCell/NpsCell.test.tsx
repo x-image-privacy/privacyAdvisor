@@ -1,4 +1,5 @@
 import { render } from '@redwoodjs/testing/web'
+
 import { Loading, Empty, Failure, Success } from './NpsCell'
 import { standard } from './NpsCell.mock'
 
@@ -17,7 +18,14 @@ describe('NpsCell', () => {
 
   it('renders Empty successfully', async () => {
     expect(() => {
-      render(<Empty />)
+      render(
+        <Empty
+          userId={0}
+          onFinished={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      )
     }).not.toThrow()
   })
 

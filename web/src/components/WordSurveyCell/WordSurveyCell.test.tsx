@@ -1,4 +1,5 @@
 import { render } from '@redwoodjs/testing/web'
+
 import { Loading, Empty, Failure, Success } from './WordSurveyCell'
 import { standard } from './WordSurveyCell.mock'
 
@@ -17,7 +18,18 @@ describe('WordSurveyCell', () => {
 
   it('renders Empty successfully', async () => {
     expect(() => {
-      render(<Empty />)
+      render(
+        <Empty
+          imageId={0}
+          userId={0}
+          onFinished={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+          onPrevious={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
+      )
     }).not.toThrow()
   })
 

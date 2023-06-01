@@ -30,7 +30,11 @@ const HomePage = () => {
     {
       label: 'Customer satisfaction',
       link: routes.customerSatisfaction(),
-    }
+    },
+    {
+      label: 'End survey',
+      link: routes.endSurvey(),
+    },
   ]
   return (
     <>
@@ -42,6 +46,7 @@ const HomePage = () => {
           <Text>
             Thank you for taking the time to participate in this study
           </Text>
+          <Text>This survey takes about 15 minutes.</Text>
           <ParticipateButton />
           {process.env.NODE_ENV === 'development' && (
             <>

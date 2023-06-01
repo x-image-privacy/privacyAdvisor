@@ -1,8 +1,4 @@
-import type {
-  QueryResolvers,
-  MutationResolvers,
-  ImageRelationResolvers,
-} from 'types/graphql'
+import type { QueryResolvers, ImageRelationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
@@ -16,31 +12,11 @@ export const image: QueryResolvers['image'] = ({ id }) => {
   })
 }
 
-export const imageByImageNumber: QueryResolvers['imageByImageNumber'] = ({ imageNumber }) => {
+export const imageByImageNumber: QueryResolvers['imageByImageNumber'] = ({
+  imageNumber,
+}) => {
   return db.image.findUnique({
     where: { imageNumber },
-  })
-}
-
-export const createImage: MutationResolvers['createImage'] = ({ input }) => {
-  return db.image.create({
-    data: input,
-  })
-}
-
-export const updateImage: MutationResolvers['updateImage'] = ({
-  id,
-  input,
-}) => {
-  return db.image.update({
-    data: input,
-    where: { id },
-  })
-}
-
-export const deleteImage: MutationResolvers['deleteImage'] = ({ id }) => {
-  return db.image.delete({
-    where: { id },
   })
 }
 

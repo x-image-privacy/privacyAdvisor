@@ -4,6 +4,8 @@ import type {
   ImageSurveyRelationResolvers,
 } from 'types/graphql'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { db } from 'src/lib/db'
 
 export const imageSurveys: QueryResolvers['imageSurveys'] = () => {
@@ -33,28 +35,30 @@ export const imageSurveyByUserImageAndHasInterface: QueryResolvers['imageSurveyB
 export const createImageSurvey: MutationResolvers['createImageSurvey'] = ({
   input,
 }) => {
-  return db.imageSurvey.create({
-    data: input,
-  })
+  if (input.userId !== context.currentUser.id) {
+    throw new ForbiddenError('User id can only update itself')
+  } else {
+    return db.imageSurvey.create({
+      data: input,
+    })
+  }
 }
 
-export const updateImageSurvey: MutationResolvers['updateImageSurvey'] = ({
-  id,
-  input,
-}) => {
-  return db.imageSurvey.update({
-    data: input,
-    where: { id },
-  })
-}
+export const updateImageSurvey: MutationResolvers['updateImageSurvey'] =
+  async ({ id, input }) => {
+    const previous = await db.imageSurvey.findUnique({
+      where: { id },
+    })
 
-export const deleteImageSurvey: MutationResolvers['deleteImageSurvey'] = ({
-  id,
-}) => {
-  return db.imageSurvey.delete({
-    where: { id },
-  })
-}
+    if (previous.userId !== context.currentUser.id) {
+      throw new ForbiddenError('User id can only update itself')
+    } else {
+      return db.imageSurvey.update({
+        data: input,
+        where: { id },
+      })
+    }
+  }
 
 export const ImageSurvey: ImageSurveyRelationResolvers = {
   user: (_obj, { root }) => {

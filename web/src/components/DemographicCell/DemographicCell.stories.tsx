@@ -8,7 +8,16 @@ export const loading = () => {
 }
 
 export const empty = () => {
-  return Empty ? <Empty /> : <></>
+  return Empty ? (
+    <Empty
+      userId={0}
+      onFinished={function (): void {
+        throw new Error('Function not implemented.')
+      }}
+    />
+  ) : (
+    <></>
+  )
 }
 
 export const failure: ComponentStory<typeof Failure> = (args) => {

@@ -1,6 +1,6 @@
 import type { User } from '@prisma/client'
 
-import { users, user, createUser, updateUser, deleteUser } from './users'
+import { users, user, createUser, updateUser } from './users'
 import type { StandardScenario } from './users.scenarios'
 
 // Generated boilerplate tests do not account for all circumstances
@@ -39,12 +39,5 @@ describe('users', () => {
     })
 
     expect(result.group).toEqual('String2')
-  })
-
-  scenario('deletes a user', async (scenario: StandardScenario) => {
-    const original = (await deleteUser({ id: scenario.user.one.id })) as User
-    const result = await user({ id: original.id })
-
-    expect(result).toEqual(null)
   })
 })

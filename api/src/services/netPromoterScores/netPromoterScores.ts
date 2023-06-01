@@ -33,13 +33,6 @@ export const updateNetPromoterScore: MutationResolvers['updateNetPromoterScore']
     })
   }
 
-export const deleteNetPromoterScore: MutationResolvers['deleteNetPromoterScore'] =
-  ({ id }) => {
-    return db.netPromoterScore.delete({
-      where: { id },
-    })
-  }
-
 export const NetPromoterScore: NetPromoterScoreRelationResolvers = {
   CustomerSatisfactionSurvey: (_obj, { root }) => {
     return db.netPromoterScore

@@ -35,6 +35,5 @@ export const schema = gql`
     createDemographic(input: CreateDemographicInput!): Demographic! @requireAuth
     updateDemographic(id: Int!, input: UpdateDemographicInput!): Demographic!
       @requireAuth
-    deleteDemographic(id: Int!): Demographic! @requireAuth
   }
 `

@@ -1,11 +1,15 @@
-import type { CreateCustomerSatisfactionScore, CreateCustomerSatisfactionScoreVariables, FindCsatSurveyByUserId } from 'types/graphql'
-import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+import { Button, Flex, Stack } from '@chakra-ui/react'
+import type {
+  CreateCustomerSatisfactionScore,
+  CreateCustomerSatisfactionScoreVariables,
+  FindCsatSurveyByUserId,
+} from 'types/graphql'
+import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION } from 'web/config/constants'
 
+import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION} from 'web/config/constants'
-import { Form, SubmitHandler } from '@redwoodjs/forms'
-import { Button, Stack } from '@chakra-ui/react'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
@@ -30,16 +34,19 @@ export const QUERY = gql`
   }
 `
 const CREATE_CUSTOMER_SATISFACTION_SURVEY = gql`
-  mutation CreateCustomerSatisfactionSurvey($input: CreateCustomerSatisfactionSurveyInput!) {
+  mutation CreateCustomerSatisfactionSurvey(
+    $input: CreateCustomerSatisfactionSurveyInput!
+  ) {
     createCustomerSatisfactionSurvey(input: $input) {
       id
       csat {
         id
-        rank 
+        rank
         justification
       }
     }
-  }`
+  }
+`
 
 const UPDATE_CUSTOMER_SATISFACTION_SURVEY = gql`
   mutation UpdateCustomerSatisfactionSurvey(
@@ -51,7 +58,7 @@ const UPDATE_CUSTOMER_SATISFACTION_SURVEY = gql`
       userId
       csat {
         id
-        rank 
+        rank
         justification
       }
     }
@@ -59,7 +66,9 @@ const UPDATE_CUSTOMER_SATISFACTION_SURVEY = gql`
 `
 
 const CREATE_CUSTOMER_SATISFACTION_SCORE = gql`
-  mutation CreateCustomerSatisfactionScore($input: CreateCustomerSatisfactionScoreInput!) {
+  mutation CreateCustomerSatisfactionScore(
+    $input: CreateCustomerSatisfactionScoreInput!
+  ) {
     createCustomerSatisfactionScore(input: $input) {
       id
       rank
@@ -74,8 +83,8 @@ const UPDATE_CUSTOMER_SATISFACTION_SCORE = gql`
     $input: UpdateCustomerSatisfactionScoreInput!
   ) {
     updateCustomerSatisfactionScore(id: $id, input: $input) {
-      id 
-      rank 
+      id
+      rank
       justification
     }
   }
@@ -84,31 +93,39 @@ const UPDATE_CUSTOMER_SATISFACTION_SCORE = gql`
 interface CsatValues {
   [CSAT_RANK_QUESTION]: string
   [CSAT_OPEN_QUESTION]: string
-
 }
 
 export const Loading = () => <div>Loading...</div>
 
-export const Empty = (props: CsatProps) => <CsatSurveyComponent {...props}/>
+export const Empty = (props: CsatProps) => <CsatSurveyComponent {...props} />
 
-export const Failure = ({
-  error,
-}: CellFailureProps) => (
+export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = (
-  props: CellSuccessProps<FindCsatSurveyByUserId> & CsatProps ) => <CsatSurveyComponent {...props}/>
+  props: CellSuccessProps<FindCsatSurveyByUserId> & CsatProps
+) => <CsatSurveyComponent {...props} />
 
-const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyByUserId & CsatProps) => {
-  const [createCustomerSurvey] = useMutation(CREATE_CUSTOMER_SATISFACTION_SURVEY)
-  const [updateCustomerSurvey] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SURVEY)
+const CsatSurveyComponent = ({
+  csatSurvey,
+  userId,
+  onFinished,
+}: FindCsatSurveyByUserId & CsatProps) => {
+  const [createCustomerSurvey] = useMutation(
+    CREATE_CUSTOMER_SATISFACTION_SURVEY
+  )
+  const [updateCustomerSurvey] = useMutation(
+    UPDATE_CUSTOMER_SATISFACTION_SURVEY
+  )
 
-
-  const [createCsat, {loading, error}] = useMutation<CreateCustomerSatisfactionScore,CreateCustomerSatisfactionScoreVariables>(CREATE_CUSTOMER_SATISFACTION_SCORE, {
-    onError: (data) => {
+  const [createCsat, { error }] = useMutation<
+    CreateCustomerSatisfactionScore,
+    CreateCustomerSatisfactionScoreVariables
+  >(CREATE_CUSTOMER_SATISFACTION_SCORE, {
+    onError: () => {
       toast.error('fail')
-    }
+    },
   })
   const [updateCsat] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SCORE)
 
@@ -116,7 +133,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
     const csatRank = parseInt(data[CSAT_RANK_QUESTION])
 
     if (csatSurvey && csatSurvey.id) {
-      if(csatSurvey.csat?.id) {
+      if (csatSurvey.csat?.id) {
         await updateCsat({
           variables: {
             id: csatSurvey.csat.id,
@@ -124,7 +141,7 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
               rank: csatRank,
               justification: data[CSAT_OPEN_QUESTION],
             },
-          }
+          },
         })
       } else {
         const newCsat = await createCsat({
@@ -133,16 +150,16 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
               rank: csatRank,
               justification: data[CSAT_OPEN_QUESTION],
             },
-          }
+          },
         })
 
         await updateCustomerSurvey({
           variables: {
             id: csatSurvey.id,
             input: {
-              csatId: newCsat.data?.createCustomerSatisfactionScore.id
+              csatId: newCsat.data?.createCustomerSatisfactionScore.id,
             },
-          }
+          },
         })
       }
     } else {
@@ -151,17 +168,17 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
           input: {
             rank: csatRank,
             justification: data[CSAT_OPEN_QUESTION],
-          }
-        }
+          },
+        },
       })
 
       await createCustomerSurvey({
         variables: {
           input: {
             userId,
-            csatId: newCsat.data?.createCustomerSatisfactionScore.id
-          }
-        }
+            csatId: newCsat.data?.createCustomerSatisfactionScore.id,
+          },
+        },
       })
     }
 
@@ -170,35 +187,37 @@ const CsatSurveyComponent = ({ csatSurvey, userId, onFinished,}: FindCsatSurveyB
     }
   }
 
-  return(
+  return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack direction="column" gap={8} alignItems="start">
-        <LikertScaleQuestionField
-          name={CSAT_RANK_QUESTION}
-          n={5}
-          question="How satisfied are you with the interface?"
-          text={[
-            'Very satisfied',
-            'Satisfied',
-            'Neutral',
-            'Dissatisfied',
-            'Very dissatisfied',
-          ]}
-          direction="column" 
-          value={csatSurvey?.csat?.rank.toString() || ''} 
-          validation={{ required: true }}     
-        />
-        <OpenEndedQuestionField
-          question="What is the biggest value you get from using this interface?"
-          name={CSAT_OPEN_QUESTION}
-          placeholder="Justify here..." 
-          value={csatSurvey?.csat?.justification || ''}
-          validation={{ required: true }}
-        />
-      <Button type="submit">Next</Button>
-    </Stack>
-  </Form>
+      <Flex flexDirection="column" gap={12}>
+        <Stack direction="column" gap={8} alignItems="start">
+          <LikertScaleQuestionField
+            name={CSAT_RANK_QUESTION}
+            n={5}
+            question="How satisfied are you with the interface?"
+            text={[
+              'Very satisfied',
+              'Satisfied',
+              'Neutral',
+              'Dissatisfied',
+              'Very dissatisfied',
+            ]}
+            direction="column"
+            value={csatSurvey?.csat?.rank.toString() || ''}
+            validation={{ required: true }}
+          />
+          <OpenEndedQuestionField
+            question="What is the biggest value you get from using this interface?"
+            name={CSAT_OPEN_QUESTION}
+            placeholder="Justify here..."
+            value={csatSurvey?.csat?.justification || ''}
+            validation={{ required: true }}
+          />
+        </Stack>
+        <Stack alignItems="end" mb={5}>
+          <Button type="submit">Next</Button>
+        </Stack>
+      </Flex>
+    </Form>
   )
-
-
 }

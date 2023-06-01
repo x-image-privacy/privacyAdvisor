@@ -21,7 +21,7 @@
     "@redwoodjs/forms": "4.4.3",
     "@redwoodjs/router": "4.4.3",
     "@redwoodjs/web": "4.4.3",
-    "@x-image-privacy/wordcloud": "github:x-image-privacy/word-cloud#main",
+    "@x-image-privacy/wordcloud": "https://github.com/x-image-privacy/word-cloud#main",
     "framer-motion": "^6",
     "humanize-string": "2.1.0",
     "prop-types": "15.8.1",
@@ -29,6 +29,12 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@chakra-ui/storybook-addon": "^4.0.16"
+    "@chakra-ui/storybook-addon": "^4.0.16",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "3.5.2",
+    "eslint-plugin-cypress": "2.12.1",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-react": "^7.31.10"
   }
 }
