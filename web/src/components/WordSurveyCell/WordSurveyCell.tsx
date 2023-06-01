@@ -11,13 +11,10 @@ import {
   JUSTIFY_VISUALISATION_GROUP_B,
   NUMBER_OF_IMAGE,
   MILESTONE_SURVEY,
-  PAGE_GROUP_B,
 } from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
-
-import { IsMilestone } from 'src/pages/HomePage/HomePage'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
@@ -35,7 +32,6 @@ export const QUERY = gql`
       id
       user {
         id
-        milestone
       }
       image {
         id
@@ -146,8 +142,6 @@ const WordImageSurveyComponent = ({
 }: FindImageSurveyByUserAndImageIdWord &
   FindImageSurveyByUserImageIdAndHasInterface &
   WordImageSurveyProps) => {
-  IsMilestone(PAGE_GROUP_B, imageSurvey?.user.milestone || '')
-
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
   const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
