@@ -1,3 +1,4 @@
+import { asyncMap } from '@apollo/client/utilities'
 import { Button, Stack, StackDivider } from '@chakra-ui/react'
 import {
   FindImageSurveyByUserAndImageIdImage,
@@ -112,7 +113,7 @@ const ImageSurveyComponent = ({
   >(UPDATE_IMAGE_SURVEY)
   const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY_)
 
-  const onSubmit: SubmitHandler<PlainImageSurveyValues> = (data) => {
+  const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
     if (imageSurvey && imageSurvey.id) {
       update({
@@ -141,7 +142,7 @@ const ImageSurveyComponent = ({
     }
 
     if (imageId >= NUMBER_OF_IMAGE) {
-      updateUser({
+      await updateUser({
         variables: {
           id: userId,
           input: {
