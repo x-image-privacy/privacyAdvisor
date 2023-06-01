@@ -1,4 +1,4 @@
-import { Button, Stack } from '@chakra-ui/react'
+import { Button, Flex, Stack } from '@chakra-ui/react'
 import {
   FindUserByIdEmail,
   UpdateUserMutation,
@@ -53,10 +53,9 @@ const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
     UPDATE_USER
   )
 
-  console.log('user email', userPrize)
+  console.log(userPrize)
 
   const onSubmit: SubmitHandler<PrizeValues> = (data) => {
-    console.log('data', data)
     update({
       variables: {
         id: id,
@@ -69,14 +68,18 @@ const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
 
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack direction="column" gap={4} alignItems="start">
-        <OpenEndedQuestionField
-          name={USER_EMAIL}
-          placeholder="Answer here..."
-          value={userPrize?.email || ''}
-        />
-        <Button type="submit">Submit</Button>
-      </Stack>
+      <Flex flexDirection="column" gap={5}>
+        <Stack direction="column" gap={4} alignItems="start">
+          <OpenEndedQuestionField
+            name={USER_EMAIL}
+            placeholder="Answer here..."
+            value={userPrize?.email || ''}
+          />
+        </Stack>
+        <Stack alignItems="end" mb={2}>
+          <Button type="submit">Submit</Button>
+        </Stack>
+      </Flex>
     </Form>
   )
 }

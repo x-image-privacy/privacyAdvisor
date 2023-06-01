@@ -17,9 +17,11 @@ const OpenEndedQuestion = ({
 }: OpenEndedQuestionProps) => {
   return (
     <Stack alignItems="start" direction="row" gap={2}>
-      <Stack alignItems="start" direction="column">
-        <Square size="20px" bg="grayIcon" data-testid="square" />
-      </Stack>
+      {question && (
+        <Stack alignItems="start" direction="column">
+          <Square size="20px" bg="grayIcon" data-testid="square" />
+        </Stack>
+      )}
       <Stack alignItems="start" direction="column">
         {question && <Text data-testid="question">{question}</Text>}
         <Input
