@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Container, Stack, Text } from '@chakra-ui/react'
+import { NUMBER_OF_IMAGE, PAGE_GROUP_B } from 'web/config/constants'
 
 import { navigate, routes } from '@redwoodjs/router'
 
@@ -8,12 +9,16 @@ import { useAuth } from 'src/auth'
 import WordImageCell from 'src/components/WordImageCell'
 import WordSurveyCell from 'src/components/WordSurveyCell'
 
+import { IsMilestone } from '../HomePage/HomePage'
+
 const GroupBPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
+
+  IsMilestone(PAGE_GROUP_B, currentUser?.milestone as string)
   const handleNextStep = () => {
     // Change page
-    if (step >= 2) {
+    if (step >= NUMBER_OF_IMAGE) {
       navigate(routes.customerSatisfaction(), { replace: true })
       return
     }

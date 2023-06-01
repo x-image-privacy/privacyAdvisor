@@ -30,3 +30,14 @@ export const DEMOGRAPHIC_TECHNOLOGY = 'demographic_technology'
 export const DEMOGRAPHIC_PRIVACY = 'demographic_privacy'
 
 export const USER_EMAIL = 'user_email'
+export const NUMBER_OF_IMAGE = 2
+
+export const MILESTONE_GROUP_A = 'group-a'
+export const MILESTONE_GROUP_B = 'group-b'
+export const MILESTONE_SURVEY = 'survey'
+export const MILESTONE_END = 'end'
+
+export const PAGE_GROUP_A = 'group-a'
+export const PAGE_GROUP_B = 'group-b'
+export const PAGE_SURVEY = 'survey'
+export const PAGE_END = 'end'

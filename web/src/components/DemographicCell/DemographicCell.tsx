@@ -5,6 +5,7 @@ import {
   DEMOGRAPHIC_EDUCATION,
   DEMOGRAPHIC_TECHNOLOGY,
   DEMOGRAPHIC_PRIVACY,
+  MILESTONE_END,
 } from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
@@ -57,11 +58,12 @@ const UPDATE_DEMOGRAPHIC_SURVEY = gql`
   }
 `
 
-const UPDATE_USER = gql`
-  mutation UpdateUser($id: Int!, $input: UpdateUserInput!) {
+const UPDATE_USER_DEMOGRAPHIC = gql`
+  mutation UpdateUserDemographic($id: Int!, $input: UpdateUserInput!) {
     updateUser(id: $id, input: $input) {
       id
       submittedAt
+      milestone
     }
   }
 `
@@ -94,7 +96,7 @@ const DemographicComponent = ({
 }: FindDemographicQueryByUser & DemographicProps) => {
   const [create] = useMutation(CREATE_DEMOGRAPHIC_SURVEY)
   const [update] = useMutation(UPDATE_DEMOGRAPHIC_SURVEY)
-  const [updateUser] = useMutation(UPDATE_USER)
+  const [updateUser] = useMutation(UPDATE_USER_DEMOGRAPHIC)
 
   const onSubmit: SubmitHandler<DemographicValues> = (data) => {
     const ageRank = parseInt(data[DEMOGRAPHIC_AGE])
@@ -136,6 +138,7 @@ const DemographicComponent = ({
         id: userId,
         input: {
           submittedAt: currentTime,
+          milestone: MILESTONE_END,
         },
       },
     })

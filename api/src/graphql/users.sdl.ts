@@ -29,6 +29,7 @@ export const schema = gql`
     email: String
     group: String
     submittedAt: DateTime
+    milestone: String
   }
 
   type Mutation {

@@ -9,6 +9,8 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_B,
   GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B,
   JUSTIFY_VISUALISATION_GROUP_B,
+  NUMBER_OF_IMAGE,
+  MILESTONE_SURVEY,
 } from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
@@ -96,6 +98,15 @@ const UPDATE_IMAGE_SURVEY = gql`
   }
 `
 
+const UPDATE_USER_WORD_SURVEY_ = gql`
+  mutation UpdateUserWordSurvey($id: Int!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+      milestone
+    }
+  }
+`
+
 interface WordImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_B]: string
   [PUBLIC_ELEMENTS_QUESTION_GROUP_B]: string
@@ -134,6 +145,7 @@ const WordImageSurveyComponent = ({
   WordImageSurveyProps) => {
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
+  const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
 
   const onSubmit: SubmitHandler<WordImageSurveyValues> = (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
@@ -170,6 +182,18 @@ const WordImageSurveyComponent = ({
         },
       })
     }
+
+    if (imageId >= NUMBER_OF_IMAGE) {
+      updateUser({
+        variables: {
+          id: userId,
+          input: {
+            milestone: MILESTONE_SURVEY,
+          },
+        },
+      })
+    }
+
     onFinished()
   }
   return (

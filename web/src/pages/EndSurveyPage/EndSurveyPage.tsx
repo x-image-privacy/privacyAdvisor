@@ -1,10 +1,15 @@
 import { Flex, Image, Heading, Container, Text, Stack } from '@chakra-ui/react'
+import { PAGE_END } from 'web/config/constants'
 
 import { useAuth } from 'src/auth'
 import PrizeCell from 'src/components/PrizeCell'
 
+import { IsMilestone } from '../HomePage/HomePage'
+
 const EndSurveyPage = () => {
   const { currentUser } = useAuth()
+
+  IsMilestone(PAGE_END, currentUser?.milestone as string)
 
   return (
     <Flex display="flex" flexDir="column" alignItems="center" gap={3}>
