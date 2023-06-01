@@ -1,8 +1,8 @@
 import { Button, Flex, Stack } from '@chakra-ui/react'
 import {
   FindUserByIdEmail,
-  UpdateUserMutation,
   UpdateUserMutationVariables,
+  UpdateUserMutation,
 } from 'types/graphql'
 import { USER_EMAIL } from 'web/config/constants'
 
@@ -20,11 +20,12 @@ export const QUERY = gql`
     userPrize: user(id: $id) {
       id
       email
+      milestone
     }
   }
 `
 const UPDATE_USER = gql`
-  mutation UpdateUserEmail($id: Int!, $input: UpdateUserInput!) {
+  mutation UpdateUserMutation($id: Int!, $input: UpdateUserInput!) {
     updateUser(id: $id, input: $input) {
       id
       email
@@ -52,8 +53,6 @@ const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
   const [update] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
     UPDATE_USER
   )
-
-  console.log(userPrize)
 
   const onSubmit: SubmitHandler<PrizeValues> = (data) => {
     update({

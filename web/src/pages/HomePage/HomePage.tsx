@@ -56,6 +56,7 @@ const HomePage = () => {
           <Text>
             Thank you for taking the time to participate in this study
           </Text>
+          <Text>This survey takes about 15 minutes.</Text>
           <ParticipateButton />
           {process.env.NODE_ENV === 'development' && (
             <>
@@ -77,6 +78,7 @@ const HomePage = () => {
 
 export const IsMilestone = (page: string, milestone: string) => {
   if (page == PAGE_GROUP_A) {
+    console.log(milestone)
     switch (milestone) {
       case MILESTONE_GROUP_A:
         break

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { Container, Stack, Text } from '@chakra-ui/react'
-import { PAGE_SURVEY } from 'web/config/constants'
 
 import { navigate, routes } from '@redwoodjs/router'
 
@@ -11,13 +10,10 @@ import DemographicCell from 'src/components/DemographicCell'
 import NpsCell from 'src/components/NpsCell'
 import UeqCell from 'src/components/UeqCell'
 
-import { IsMilestone } from '../HomePage/HomePage'
-
 const CustomerSatisfactionPage = () => {
   const { currentUser } = useAuth()
   const [step, setStep] = useState(1)
 
-  IsMilestone(PAGE_SURVEY, currentUser?.milestone as string)
   const handleNextStep = () => {
     if (step >= 4) {
       navigate(routes.endSurvey(), { replace: true })

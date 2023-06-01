@@ -4,11 +4,17 @@ import type {
   CreateCustomerSatisfactionScoreVariables,
   FindCsatSurveyByUserId,
 } from 'types/graphql'
-import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION } from 'web/config/constants'
+import {
+  CSAT_OPEN_QUESTION,
+  CSAT_RANK_QUESTION,
+  PAGE_SURVEY,
+} from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+
+import { IsMilestone } from 'src/pages/HomePage/HomePage'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
@@ -24,6 +30,7 @@ export const QUERY = gql`
       id
       user {
         id
+        milestone
       }
       csat {
         id
@@ -112,6 +119,8 @@ const CsatSurveyComponent = ({
   userId,
   onFinished,
 }: FindCsatSurveyByUserId & CsatProps) => {
+  IsMilestone(PAGE_SURVEY, csatSurvey?.user.milestone || '')
+
   const [createCustomerSurvey] = useMutation(
     CREATE_CUSTOMER_SATISFACTION_SURVEY
   )

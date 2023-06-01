@@ -8,12 +8,15 @@ import {
   IS_PRIVATE_QUESTION_GROUP_A,
   MILESTONE_GROUP_B,
   NUMBER_OF_IMAGE,
+  PAGE_GROUP_A,
   PRIVATE_ELEMENTS_QUESTION_GROUP_A,
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+
+import { IsMilestone } from 'src/pages/HomePage/HomePage'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
@@ -31,7 +34,7 @@ export const QUERY = gql`
       id
       user {
         id
-        group
+        milestone
       }
       image {
         id
@@ -106,6 +109,8 @@ const ImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
+  IsMilestone(PAGE_GROUP_A, imageSurvey?.user.milestone || '')
+
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation<
     UpdateImageSurveyMutation,
