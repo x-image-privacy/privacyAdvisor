@@ -1,4 +1,10 @@
-import { Button, Stack, StackDivider } from '@chakra-ui/react'
+import {
+  Button,
+  ButtonGroup,
+  Flex,
+  Stack,
+  StackDivider,
+} from '@chakra-ui/react'
 import type {
   FindImageSurveyByUserAndImageIdWord,
   FindImageSurveyByUserImageIdAndHasInterface,
@@ -197,57 +203,67 @@ const WordImageSurveyComponent = ({
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack
-        direction="row"
-        spacing={5}
-        justifyContent="start"
-        divider={<StackDivider borderColor="grayIcon" />}
-      >
-        <Button onClick={onPrevious}>Previous</Button>
-        <LikertScaleQuestionField
-          name={IS_PRIVATE_QUESTION_GROUP_B}
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-          direction="row"
-          value={previousValues?.privateRank.toString() || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements do you consider as public in this image?"
-          name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
-          placeholder="Answer here..."
-          value={previousValues?.publicElem || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements would you feel uncomfortable disclosing in this image?"
-          name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
-          placeholder="Answer here..."
-          value={previousValues?.privateElem || ''}
-          validation={{ required: true }}
-        />
-        <Stack direction="column" spacing={4} justifyContent="start">
+      <Flex direction="column" gap={4} alignItems="center">
+        <Stack
+          direction="column"
+          spacing={4}
+          alignItems="start"
+          divider={<StackDivider borderColor="grayIcon" />}
+        >
           <LikertScaleQuestionField
-            name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+            name={IS_PRIVATE_QUESTION_GROUP_B}
             n={5}
-            question="Is this visualisation efficient to help you form an opinion?"
-            leftHand="No"
-            rightHand="Yes"
-            direction="row"
-            value={previousValues?.satisfactionRank?.toString() || ''}
+            question="Would you consider this image as:"
+            text={[
+              'Private',
+              'Likely private',
+              'Undecided',
+              'Likely public',
+              'Public',
+            ]}
+            direction="column"
+            value={previousValues?.privateRank.toString() || ''}
             validation={{ required: true }}
           />
           <OpenEndedQuestionField
-            placeholder="Justify here..."
-            name={JUSTIFY_VISUALISATION_GROUP_B}
-            value={previousValues?.satisfactionElem || ''}
+            question="Which elements do you consider as public in this image? (3 words)"
+            name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
+            placeholder="Answer here..."
+            value={previousValues?.publicElem || ''}
             validation={{ required: true }}
           />
+          <OpenEndedQuestionField
+            question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
+            name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
+            placeholder="Answer here..."
+            value={previousValues?.privateElem || ''}
+            validation={{ required: true }}
+          />
+          <Stack direction="column" spacing={4} justifyContent="start">
+            <LikertScaleQuestionField
+              name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+              n={5}
+              question="Is this visualisation efficient to help you form an opinion?"
+              leftHand="Yes"
+              rightHand="No"
+              direction="row"
+              value={previousValues?.satisfactionRank?.toString() || ''}
+              validation={{ required: true }}
+            />
+            <OpenEndedQuestionField
+              question="Justify your previous answer:"
+              placeholder="Justify here..."
+              name={JUSTIFY_VISUALISATION_GROUP_B}
+              value={previousValues?.satisfactionElem || ''}
+              validation={{ required: true }}
+            />
+          </Stack>
         </Stack>
-        <Button type="submit">Next</Button>
-      </Stack>
+        <ButtonGroup spacing={4}>
+          <Button onClick={onPrevious}>Previous</Button>
+          <Button type="submit">Next</Button>
+        </ButtonGroup>
+      </Flex>
     </Form>
   )
 }

@@ -1,5 +1,10 @@
-import { asyncMap } from '@apollo/client/utilities'
-import { Button, Stack, StackDivider } from '@chakra-ui/react'
+import {
+  Button,
+  ButtonGroup,
+  Flex,
+  Stack,
+  StackDivider,
+} from '@chakra-ui/react'
 import {
   FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
@@ -155,40 +160,49 @@ const ImageSurveyComponent = ({
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack
-        direction="row"
-        spacing={4}
-        justifyContent="start"
-        divider={<StackDivider borderColor="grayIcon" />}
-      >
-        {/* // todo: overwrite the  */}
-        <Button onClick={onPrevious}>Previous</Button>
-        <LikertScaleQuestionField
-          name={IS_PRIVATE_QUESTION_GROUP_A}
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-          direction="row"
-          value={imageSurvey?.privateRank.toString() || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements do you consider as public in this image?"
-          name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
-          placeholder="Answer here..."
-          value={imageSurvey?.publicElem || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements would you feel uncomfortable disclosing in this image?"
-          name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
-          placeholder="Answer here..."
-          value={imageSurvey?.privateElem || ''}
-          validation={{ required: true }}
-        />
-        <Button type="submit">Next</Button>
-      </Stack>
+      <Flex direction="column" gap={4} alignItems="center">
+        <Stack
+          direction="column"
+          spacing={4}
+          alignItems="start"
+          divider={<StackDivider borderColor="grayIcon" />}
+        >
+          <LikertScaleQuestionField
+            name={IS_PRIVATE_QUESTION_GROUP_A}
+            n={5}
+            question="Would you consider this image as:"
+            text={[
+              'Private',
+              'Likely private',
+              'Undecided',
+              'Likely public',
+              'Public',
+            ]}
+            direction="column"
+            value={imageSurvey?.privateRank.toString() || ''}
+            validation={{ required: true }}
+          />
+          <OpenEndedQuestionField
+            question="Which elements do you consider as public in this image? (3 words)"
+            name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
+            placeholder="Answer here..."
+            value={imageSurvey?.publicElem || ''}
+            validation={{ required: true }}
+          />
+          <OpenEndedQuestionField
+            question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
+            name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
+            placeholder="Answer here..."
+            value={imageSurvey?.privateElem || ''}
+            validation={{ required: true }}
+          />
+          {/* // todo: overwrite the  */}
+        </Stack>
+        <ButtonGroup spacing={4}>
+          <Button onClick={onPrevious}>Previous</Button>
+          <Button type="submit">Next</Button>
+        </ButtonGroup>
+      </Flex>
     </Form>
   )
 }
