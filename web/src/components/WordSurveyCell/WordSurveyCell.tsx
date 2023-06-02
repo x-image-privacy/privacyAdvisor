@@ -1,3 +1,5 @@
+import { SyntheticEvent, useCallback, useState } from 'react'
+
 import {
   Button,
   ButtonGroup,
@@ -23,6 +25,7 @@ import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
+import OpenEndedInputTag from '../OpenEndedInputTag/OpenEndedInputTag'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
 type WordImageSurveyProps = {
@@ -148,6 +151,13 @@ const WordImageSurveyComponent = ({
 }: FindImageSurveyByUserAndImageIdWord &
   FindImageSurveyByUserImageIdAndHasInterface &
   WordImageSurveyProps) => {
+  const [tags, setTags] = useState(['foo', 'bar'])
+  const handleTagsChange = useCallback(
+    (event: SyntheticEvent, tags: string[]) => {
+      setTags(tags)
+    },
+    []
+  )
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
   const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
@@ -258,6 +268,7 @@ const WordImageSurveyComponent = ({
               validation={{ required: true }}
             />
           </Stack>
+          <OpenEndedInputTag tags={tags} onTagsChange={handleTagsChange} />
         </Stack>
         <ButtonGroup spacing={4}>
           <Button onClick={onPrevious}>Previous</Button>
