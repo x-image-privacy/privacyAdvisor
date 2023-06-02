@@ -1,6 +1,14 @@
 import { ChangeEventHandler } from 'react'
 
-import { Stack, Text, Input, Square } from '@chakra-ui/react'
+import {
+  Stack,
+  Text,
+  Input,
+  Square,
+  Tag,
+  TagLabel,
+  TagCloseButton,
+} from '@chakra-ui/react'
 
 export type OpenEndedQuestionProps = {
   question?: string
@@ -31,6 +39,10 @@ const OpenEndedQuestion = ({
           value={value}
           data-testid="input"
         />
+        <Tag variant="solid">
+          <TagLabel>{value}</TagLabel>
+          <TagCloseButton />
+        </Tag>
       </Stack>
     </Stack>
   )
