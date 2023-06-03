@@ -25,7 +25,7 @@ import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
-import OpenEndedInputTag from '../OpenEndedInputTag/OpenEndedInputTag'
+import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
 type WordImageSurveyProps = {
@@ -151,13 +151,18 @@ const WordImageSurveyComponent = ({
 }: FindImageSurveyByUserAndImageIdWord &
   FindImageSurveyByUserImageIdAndHasInterface &
   WordImageSurveyProps) => {
-  const [tags, setTags] = useState(['foo', 'bar'])
-  const handleTagsChange = useCallback(
-    (event: SyntheticEvent, tags: string[]) => {
-      setTags(tags)
-    },
+  const [tagsPublic, setTagsPublic] = useState([])
+  const [tagsPrivate, setTagsPrivate] = useState([])
+
+  const handleTagsChangePublic = useCallback(
+    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags as never),
     []
   )
+  const handleTagsChangePrivate = useCallback(
+    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags as never),
+    []
+  )
+
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
   const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
@@ -167,6 +172,8 @@ const WordImageSurveyComponent = ({
     const satisfactionRank = parseInt(
       data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]
     )
+
+    console.log(data)
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({
@@ -235,20 +242,25 @@ const WordImageSurveyComponent = ({
             value={previousValues?.privateRank.toString() || ''}
             validation={{ required: true }}
           />
-          <OpenEndedQuestionField
+          <OpenEndedInputTagField
+            tags={tagsPublic}
+            onTagsChange={handleTagsChangePublic}
+            placeholder="Answer here"
+            value={previousValues?.privateElem || ''}
             question="Which elements do you consider as public in this image? (3 words)"
             name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
-            placeholder="Answer here..."
-            value={previousValues?.publicElem || ''}
             validation={{ required: true }}
           />
-          <OpenEndedQuestionField
+          <OpenEndedInputTagField
+            tags={tagsPrivate}
+            onTagsChange={handleTagsChangePrivate}
+            placeholder="Answer here"
+            value={previousValues?.privateElem || ''}
             question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
             name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
-            placeholder="Answer here..."
-            value={previousValues?.privateElem || ''}
             validation={{ required: true }}
           />
+
           <Stack direction="column" spacing={4} justifyContent="start">
             <LikertScaleQuestionField
               name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
@@ -268,7 +280,6 @@ const WordImageSurveyComponent = ({
               validation={{ required: true }}
             />
           </Stack>
-          <OpenEndedInputTag tags={tags} onTagsChange={handleTagsChange} />
         </Stack>
         <ButtonGroup spacing={4}>
           <Button onClick={onPrevious}>Previous</Button>

@@ -1,3 +1,5 @@
+import { SyntheticEvent, useCallback, useState } from 'react'
+
 import {
   Button,
   ButtonGroup,
@@ -22,7 +24,7 @@ import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
-import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
+import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
 
 type ImageSurveyProps = {
   imageId: number
@@ -111,6 +113,18 @@ const ImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
+  const [tagsPublic, setTagsPublic] = useState([])
+  const [tagsPrivate, setTagsPrivate] = useState([])
+
+  const handleTagsChangePublic = useCallback(
+    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags as never),
+    []
+  )
+  const handleTagsChangePrivate = useCallback(
+    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags as never),
+    []
+  )
+
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation<
     UpdateImageSurveyMutation,
@@ -182,20 +196,25 @@ const ImageSurveyComponent = ({
             value={imageSurvey?.privateRank.toString() || ''}
             validation={{ required: true }}
           />
-          <OpenEndedQuestionField
+          <OpenEndedInputTagField
+            tags={tagsPublic}
+            onTagsChange={handleTagsChangePublic}
+            placeholder="Answer here"
+            value={imageSurvey?.privateElem || ''}
             question="Which elements do you consider as public in this image? (3 words)"
             name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
-            placeholder="Answer here..."
-            value={imageSurvey?.publicElem || ''}
             validation={{ required: true }}
           />
-          <OpenEndedQuestionField
+          <OpenEndedInputTagField
+            tags={tagsPrivate}
+            onTagsChange={handleTagsChangePrivate}
+            placeholder="Answer here"
+            value={imageSurvey?.privateElem || ''}
             question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
             name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
-            placeholder="Answer here..."
-            value={imageSurvey?.privateElem || ''}
             validation={{ required: true }}
           />
+
           {/* // todo: overwrite the  */}
         </Stack>
         <ButtonGroup spacing={4}>

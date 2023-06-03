@@ -1,7 +1,20 @@
-import { ForwardedRef, SyntheticEvent, useCallback } from 'react'
+import {
+  ChangeEventHandler,
+  ForwardedRef,
+  SyntheticEvent,
+  useCallback,
+} from 'react'
 
 import { Input, InputProps } from '@chakra-ui/input'
-import { Wrap, WrapItem, WrapItemProps, WrapProps } from '@chakra-ui/layout'
+import {
+  Square,
+  Stack,
+  Wrap,
+  WrapItem,
+  WrapItemProps,
+  WrapProps,
+  Text,
+} from '@chakra-ui/layout'
 import { TagCloseButtonProps, TagLabelProps, TagProps } from '@chakra-ui/tag'
 
 import TagInput from '../TagInput/TagInput'
@@ -18,6 +31,12 @@ export type OpenEndedInputTagProps = InputProps & {
   onTagRemove?: (event: SyntheticEvent, index: number) => void
 
   addKeys?: string[]
+  question?: string
+
+  onChange: ChangeEventHandler<HTMLInputElement>
+
+  placeholder: string
+  value: string
 
   wrapProps?: WrapProps
   wrapItemProps?: MaybeIsInputProps<WrapItemProps>
@@ -33,6 +52,10 @@ const OpenEndedInputTag = (
     onTagAdd,
     onTagRemove,
     addKeys = ['Enter'],
+    question,
+    onChange,
+    placeholder,
+    value,
     wrapProps,
     wrapItemProps,
     tagProps,
@@ -97,25 +120,47 @@ const OpenEndedInputTag = (
     [addKeys, tags.length, addTag, removeTag, onKeyDown]
   )
   return (
-    <Wrap align="center" {...wrapProps}>
-      {tags.map((tag, index) => (
-        <WrapItem {...maybeCall(wrapItemProps, false, index)} key={index}>
-          <TagInput
-            onRemove={handleRemoveTag(index)}
-            tagLabelProps={maybeCall(tagLabelProps, tag, index)}
-            tagCloseButtonProps={maybeCall(tagCloseButtonProps, tag, index)}
-            colorScheme={props.colorScheme}
-            size={props.size}
-            {...maybeCall(tagProps, tag, index)}
-          >
-            {tag}
-          </TagInput>
-        </WrapItem>
-      ))}
-      <WrapItem flexGrow={1} {...maybeCall(wrapItemProps, true, tags.length)}>
-        <Input {...props} onKeyDown={handleKeyDown} ref={ref} />
-      </WrapItem>
-    </Wrap>
+    <Stack alignItems="start" direction="row" gap={2}>
+      {question && (
+        <Stack alignItems="start" direction="column">
+          <Square size="20px" bg="grayIcon" />
+        </Stack>
+      )}
+      <Stack alignItems="start" direction="column">
+        {question && <Text data-testid="question">{question}</Text>}
+
+        <Wrap align="center" {...wrapProps}>
+          {tags.map((tag, index) => (
+            <WrapItem {...maybeCall(wrapItemProps, false, index)} key={index}>
+              <TagInput
+                onRemove={handleRemoveTag(index)}
+                tagLabelProps={maybeCall(tagLabelProps, tag, index)}
+                tagCloseButtonProps={maybeCall(tagCloseButtonProps, tag, index)}
+                colorScheme={props.colorScheme}
+                size={props.size}
+                {...maybeCall(tagProps, tag, index)}
+              >
+                {tag}
+              </TagInput>
+            </WrapItem>
+          ))}
+          <WrapItem
+            flexGrow={1}
+            {...maybeCall(wrapItemProps, true, tags.length)}
+          />
+        </Wrap>
+
+        <Input
+          {...props}
+          onKeyDown={handleKeyDown}
+          ref={ref}
+          placeholder={placeholder}
+          onChange={onChange}
+          size="lg"
+          value={value}
+        />
+      </Stack>
+    </Stack>
   )
 }
 
