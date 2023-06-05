@@ -51,7 +51,7 @@ const OpenEndedInputTag = (
     onTagsChange,
     onTagAdd,
     onTagRemove,
-    addKeys = ['Enter'],
+    addKeys = ['Enter', ' '],
     question,
     onChange,
     placeholder,
