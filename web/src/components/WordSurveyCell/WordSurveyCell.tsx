@@ -151,15 +151,15 @@ const WordImageSurveyComponent = ({
 }: FindImageSurveyByUserAndImageIdWord &
   FindImageSurveyByUserImageIdAndHasInterface &
   WordImageSurveyProps) => {
-  const [tagsPublic, setTagsPublic] = useState([])
-  const [tagsPrivate, setTagsPrivate] = useState([])
+  const [tagsPublic, setTagsPublic] = useState<string[]>([])
+  const [tagsPrivate, setTagsPrivate] = useState<string[]>([])
 
   const handleTagsChangePublic = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags as never),
+    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags),
     []
   )
   const handleTagsChangePrivate = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags as never),
+    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags),
     []
   )
 
@@ -172,8 +172,6 @@ const WordImageSurveyComponent = ({
     const satisfactionRank = parseInt(
       data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]
     )
-
-    console.log(data)
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({

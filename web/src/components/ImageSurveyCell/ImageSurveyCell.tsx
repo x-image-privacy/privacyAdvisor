@@ -113,15 +113,15 @@ const ImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
-  const [tagsPublic, setTagsPublic] = useState([])
-  const [tagsPrivate, setTagsPrivate] = useState([])
+  const [tagsPublic, setTagsPublic] = useState<string[]>([])
+  const [tagsPrivate, setTagsPrivate] = useState<string[]>([])
 
   const handleTagsChangePublic = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags as never),
+    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags),
     []
   )
   const handleTagsChangePrivate = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags as never),
+    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags),
     []
   )
 
@@ -217,8 +217,6 @@ const ImageSurveyComponent = ({
             validation={{ required: 'Private elements question is required' }}
             errorClassName="error"
           />
-
-          {/* // todo: overwrite the  */}
         </Stack>
         <FieldError
           name={IS_PRIVATE_QUESTION_GROUP_A}

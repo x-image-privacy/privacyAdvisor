@@ -106,6 +106,7 @@ const OpenEndedInputTag = (
         addTag(event, currentTarget.value)
         if (!event.isDefaultPrevented()) {
           currentTarget.value = ''
+          onChange('')
         }
         event.preventDefault()
       } else if (
@@ -117,7 +118,7 @@ const OpenEndedInputTag = (
         removeTag(event, tags.length - 1)
       }
     },
-    [addKeys, tags.length, addTag, removeTag, onKeyDown]
+    [onKeyDown, addKeys, tags.length, addTag, onChange, removeTag]
   )
   return (
     <Stack alignItems="start" direction="row" gap={2}>

@@ -43,16 +43,16 @@ const HomePage = () => {
       <Container>
         <Center flexDirection="column" alignItems="center" gap={4}>
           <Heading>Welcome to this study !</Heading>
-          <Text>
+          <Text textAlign="center">
             Thank you for taking the time to participate in this study
           </Text>
           <Text>This survey takes about 15 minutes.</Text>
-          <Text alignItems="center">
+          <Text textAlign="center">
             You will have several questions about images. Consider that you are
             publishing these images on a public social media.
           </Text>
 
-          <Text>
+          <Text textAlign="center">
             Click on the Participate button to login you and start the study!
           </Text>
 

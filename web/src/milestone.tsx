@@ -13,7 +13,6 @@ import { navigate, routes } from '@redwoodjs/router'
 
 export const isMilestone = (page: string, milestone: string) => {
   if (page == PAGE_GROUP_A) {
-    console.log(milestone)
     switch (milestone) {
       case MILESTONE_GROUP_A:
         break

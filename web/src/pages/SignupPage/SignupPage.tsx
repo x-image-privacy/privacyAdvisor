@@ -63,6 +63,10 @@ const SignupPage = () => {
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
+                <Text as="i" p={8} align="center">
+                  This login is to save your answers. You can use any username.
+                  Not personal information will be collected.
+                </Text>
                 <Form onSubmit={onSubmit} className="rw-form-wrapper">
                   <Label
                     name="username"
@@ -121,10 +125,6 @@ const SignupPage = () => {
               Log in!
             </Link>
           </div>
-          <Text as="i" m={4}>
-            This login is to save your answers. You can use any username. Not
-            personal information will be collected.
-          </Text>
         </div>
       </main>
     </>
