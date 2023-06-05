@@ -28,7 +28,16 @@ const CustomerSatisfactionPage = () => {
   return (
     <Container maxW="6xl">
       <Stack direction="column" gap={8} alignItems="center">
-        <Text data-testid="instruction">Please answer some questions</Text>
+        <Container maxW="xl">
+          <Stack gap={4} alignItems="center">
+            <Text>
+              Consider an interface with the image and the word cloud. You use
+              this interface before publising an image on a public social media.
+            </Text>
+
+            <Text> Please answer some questions about this interface.</Text>
+          </Stack>
+        </Container>
 
         {step == 1 && (
           <CsatCell

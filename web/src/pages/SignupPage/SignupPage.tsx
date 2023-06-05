@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { useEffect } from 'react'
 
+import { Text } from '@chakra-ui/layout'
+
 import {
   Form,
   Label,
@@ -119,6 +121,10 @@ const SignupPage = () => {
               Log in!
             </Link>
           </div>
+          <Text as="i" m={4}>
+            This login is to save your answers. You can use any username. Not
+            personal information will be collected.
+          </Text>
         </div>
       </main>
     </>

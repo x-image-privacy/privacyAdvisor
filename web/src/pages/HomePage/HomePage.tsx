@@ -41,12 +41,21 @@ const HomePage = () => {
       <MetaTags title="Home" description="Home page" />
 
       <Container>
-        <Center flexDirection="column" gap={4}>
+        <Center flexDirection="column" alignItems="center" gap={4}>
           <Heading>Welcome to this study !</Heading>
           <Text>
             Thank you for taking the time to participate in this study
           </Text>
           <Text>This survey takes about 15 minutes.</Text>
+          <Text alignItems="center">
+            You will have several questions about images. Consider that you are
+            publishing these images on a public social media.
+          </Text>
+
+          <Text>
+            Click on the Participate button to login you and start the study!
+          </Text>
+
           <ParticipateButton />
           {process.env.NODE_ENV === 'development' && (
             <>

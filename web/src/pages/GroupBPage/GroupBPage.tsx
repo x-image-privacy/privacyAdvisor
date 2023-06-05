@@ -35,10 +35,21 @@ const GroupBPage = () => {
   return (
     <Container maxW="6xl">
       <Stack direction="column" gap={8} alignItems="center" mb={10}>
-        <Text data-testid="instruction">
-          You are shown a picture with a visualisation to describe this image.
-          Please answer some questions
-        </Text>
+        <Container maxW="xl">
+          <Stack gap={4} alignItems="center">
+            <Text data-testid="instruction">
+              You are shown an image with multiple word clouds. The words in
+              this word cloud were obtained using AI. They are used to describe
+              the image. They have been grouped by concepts.
+            </Text>
+            <Text></Text>
+            <Text>
+              Consider that you are publishing this image on a public social
+              media.
+            </Text>
+            <Text> Please answer some questions.</Text>
+          </Stack>
+        </Container>
         <WordImageCell imageNumber={step} />
         <WordSurveyCell
           userId={currentUser?.id as number}
