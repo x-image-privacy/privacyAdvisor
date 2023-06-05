@@ -7,6 +7,7 @@ import {
   Stack,
   StackDivider,
 } from '@chakra-ui/react'
+import { color } from 'style-value-types'
 import type {
   FindImageSurveyByUserAndImageIdWord,
   FindImageSurveyByUserImageIdAndHasInterface,
@@ -21,7 +22,7 @@ import {
   MILESTONE_SURVEY,
 } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler, TextField } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
@@ -240,7 +241,8 @@ const WordImageSurveyComponent = ({
             ]}
             direction="column"
             value={previousValues?.privateRank.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Image privacy question is required' }}
+            errorClassName="error"
           />
           <OpenEndedInputTagField
             tags={tagsPublic}
@@ -249,7 +251,8 @@ const WordImageSurveyComponent = ({
             value={previousValues?.privateElem || ''}
             question="Which elements do you consider as public in this image? (3 words)"
             name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
-            validation={{ required: true }}
+            validation={{ required: 'Public elements question is required' }}
+            errorClassName="error"
           />
           <OpenEndedInputTagField
             tags={tagsPrivate}
@@ -258,7 +261,8 @@ const WordImageSurveyComponent = ({
             value={previousValues?.privateElem || ''}
             question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
             name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
-            validation={{ required: true }}
+            validation={{ required: 'Private elements question is required' }}
+            errorClassName="error"
           />
 
           <Stack direction="column" spacing={4} justifyContent="start">
@@ -270,14 +274,38 @@ const WordImageSurveyComponent = ({
               rightHand="No"
               direction="row"
               value={previousValues?.satisfactionRank?.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Word cloud question is required' }}
+              errorClassName="error"
             />
             <OpenEndedQuestionField
               question="Justify your previous answer:"
               placeholder="Justify here..."
               name={JUSTIFY_VISUALISATION_GROUP_B}
               value={previousValues?.satisfactionElem || ''}
-              validation={{ required: true }}
+              validation={{
+                required: 'Justify question is required',
+              }}
+              errorClassName="error"
+            />
+            <FieldError
+              name={IS_PRIVATE_QUESTION_GROUP_B}
+              className="error-message"
+            />
+            <FieldError
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
+              className="error"
+            />
+            <FieldError
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
+              className="error"
+            />
+            <FieldError
+              name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+              className="error"
+            />
+            <FieldError
+              name={JUSTIFY_VISUALISATION_GROUP_B}
+              className="error"
             />
           </Stack>
         </Stack>
