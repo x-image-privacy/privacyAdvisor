@@ -6,7 +6,7 @@ import type {
 } from 'types/graphql'
 import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -204,16 +204,21 @@ const CsatSurveyComponent = ({
             ]}
             direction="column"
             value={csatSurvey?.csat?.rank.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Satisfy question is required' }}
+            errorClassName="error"
           />
           <OpenEndedQuestionField
             question="What is the biggest value you get from using this interface?"
             name={CSAT_OPEN_QUESTION}
             placeholder="Justify here..."
             value={csatSurvey?.csat?.justification || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Biggest value question is required' }}
+            errorClassName="error"
           />
+          <FieldError name={CSAT_RANK_QUESTION} className="error-message" />
+          <FieldError name={CSAT_OPEN_QUESTION} className="error" />
         </Stack>
+
         <Stack alignItems="end" mb={5}>
           <Button type="submit">Next</Button>
         </Stack>

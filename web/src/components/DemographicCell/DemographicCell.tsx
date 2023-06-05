@@ -8,7 +8,7 @@ import {
   MILESTONE_END,
 } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
@@ -164,7 +164,8 @@ const DemographicComponent = ({
             ]}
             direction="column"
             value={demographic?.age.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Age question is required' }}
+            errorClassName="error"
           />
           <LikertScaleQuestionField
             name={DEMOGRAPHIC_EDUCATION}
@@ -180,7 +181,8 @@ const DemographicComponent = ({
             ]}
             direction="column"
             value={demographic?.education.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Education question is required' }}
+            errorClassName="error"
           />
           <LikertScaleQuestionField
             name={DEMOGRAPHIC_PRIVACY}
@@ -194,7 +196,8 @@ const DemographicComponent = ({
             ]}
             direction="column"
             value={demographic?.privacy.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Privacy question is required' }}
+            errorClassName="error"
           />
           <LikertScaleQuestionField
             name={DEMOGRAPHIC_TECHNOLOGY}
@@ -208,8 +211,13 @@ const DemographicComponent = ({
             ]}
             direction="column"
             value={demographic?.technology.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Technology question is required' }}
+            errorClassName="error"
           />
+          <FieldError name={DEMOGRAPHIC_AGE} className="error-message" />
+          <FieldError name={DEMOGRAPHIC_EDUCATION} className="error" />
+          <FieldError name={DEMOGRAPHIC_PRIVACY} className="error" />
+          <FieldError name={DEMOGRAPHIC_TECHNOLOGY} className="error" />
         </Stack>
         <Stack alignItems="end" mb={5}>
           <Button type="submit">Next</Button>

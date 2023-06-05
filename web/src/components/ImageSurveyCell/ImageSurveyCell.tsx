@@ -20,7 +20,7 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
@@ -194,7 +194,8 @@ const ImageSurveyComponent = ({
             ]}
             direction="column"
             value={imageSurvey?.privateRank.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Image privacy question is required' }}
+            errorClassName="error"
           />
           <OpenEndedInputTagField
             tags={tagsPublic}
@@ -203,7 +204,8 @@ const ImageSurveyComponent = ({
             value={imageSurvey?.privateElem || ''}
             question="Which elements do you consider as public in this image? (3 words)"
             name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
-            validation={{ required: true }}
+            validation={{ required: 'Public elements question is required' }}
+            errorClassName="error"
           />
           <OpenEndedInputTagField
             tags={tagsPrivate}
@@ -212,11 +214,21 @@ const ImageSurveyComponent = ({
             value={imageSurvey?.privateElem || ''}
             question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
             name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
-            validation={{ required: true }}
+            validation={{ required: 'Private elements question is required' }}
+            errorClassName="error"
           />
 
           {/* // todo: overwrite the  */}
         </Stack>
+        <FieldError
+          name={IS_PRIVATE_QUESTION_GROUP_A}
+          className="error-message"
+        />
+        <FieldError name={PUBLIC_ELEMENTS_QUESTION_GROUP_A} className="error" />
+        <FieldError
+          name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
+          className="error"
+        />
         <ButtonGroup spacing={4}>
           <Button onClick={onPrevious}>Previous</Button>
           <Button type="submit">Next</Button>

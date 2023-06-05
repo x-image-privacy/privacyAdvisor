@@ -6,7 +6,7 @@ import type {
 } from 'types/graphql'
 import { NPS_OPEN_QUESTION, NPS_RANK_QUESTION } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -198,15 +198,19 @@ const NpsSurveyComponent = ({
             text={['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
             direction="row"
             value={npsSurvey?.nps?.rank.toString() || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Recommend question is required' }}
+            errorClassName="error"
           />
           <OpenEndedQuestionField
             question="Tell us a bit more about why you chosee this rating"
             name={NPS_OPEN_QUESTION}
             placeholder="Answer here..."
             value={npsSurvey?.nps?.justification || ''}
-            validation={{ required: true }}
+            validation={{ required: 'Rating question is required' }}
+            errorClassName="error"
           />
+          <FieldError name={NPS_RANK_QUESTION} className="error-message" />
+          <FieldError name={NPS_OPEN_QUESTION} className="error" />
         </Stack>
         <Stack alignItems="end" mb={5}>
           <Button type="submit">Next</Button>

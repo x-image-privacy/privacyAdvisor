@@ -7,7 +7,6 @@ import {
   Stack,
   StackDivider,
 } from '@chakra-ui/react'
-import { color } from 'style-value-types'
 import type {
   FindImageSurveyByUserAndImageIdWord,
   FindImageSurveyByUserImageIdAndHasInterface,
@@ -22,7 +21,7 @@ import {
   MILESTONE_SURVEY,
 } from 'web/config/constants'
 
-import { FieldError, Form, SubmitHandler, TextField } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'

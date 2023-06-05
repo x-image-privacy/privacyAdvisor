@@ -15,7 +15,7 @@ import {
   UEQ_SUPPORT,
 } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -273,7 +273,8 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.support.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Support question is required' }}
+              errorClassName="error"
             />
             <LikertScaleQuestionField
               name={UEQ_COMPLEXITY}
@@ -282,7 +283,8 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.complexity.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Complicated question is required' }}
+              errorClassName="error"
             />
             <LikertScaleQuestionField
               name={UEQ_EFFICIENCY}
@@ -291,7 +293,8 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.efficiency.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Efficiency question is required' }}
+              errorClassName="error"
             />
             <LikertScaleQuestionField
               name={UEQ_CLARITY}
@@ -300,7 +303,8 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.clarity.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Clarity question is required' }}
+              errorClassName="error"
             />
             <LikertScaleQuestionField
               name={UEQ_MOTIVATION}
@@ -309,7 +313,8 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.motivation.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Motivation question is required' }}
+              errorClassName="error"
             />
             <LikertScaleQuestionField
               name={UEQ_INTEREST}
@@ -318,7 +323,8 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.interest.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Interest question is required' }}
+              errorClassName="error"
             />
             <LikertScaleQuestionField
               name={UEQ_NORM}
@@ -327,7 +333,8 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.norm.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Norm question is required' }}
+              errorClassName="error"
             />
             <LikertScaleQuestionField
               name={UEQ_ORIGINALITY}
@@ -336,9 +343,18 @@ const UeqSurveyComponent = ({
               direction="row"
               n={7}
               value={ueqSurvey?.ueq?.originality.toString() || ''}
-              validation={{ required: true }}
+              validation={{ required: 'Originality is required' }}
+              errorClassName="error"
             />
           </Flex>
+          <FieldError name={UEQ_SUPPORT} className="error-message" />
+          <FieldError name={UEQ_COMPLEXITY} className="error" />
+          <FieldError name={UEQ_EFFICIENCY} className="error" />
+          <FieldError name={UEQ_CLARITY} className="error-message" />
+          <FieldError name={UEQ_MOTIVATION} className="error" />
+          <FieldError name={UEQ_INTEREST} className="error" />
+          <FieldError name={UEQ_NORM} className="error" />
+          <FieldError name={UEQ_ORIGINALITY} className="error" />
         </Stack>
         <Stack alignItems="end">
           <Button type="submit">Next</Button>
