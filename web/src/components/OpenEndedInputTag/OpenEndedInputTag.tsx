@@ -7,7 +7,7 @@ import {
 
 import { Input, InputProps } from '@chakra-ui/input'
 import {
-  Square,
+  Circle,
   Stack,
   Wrap,
   WrapItem,
@@ -123,7 +123,7 @@ const OpenEndedInputTag = (
     <Stack alignItems="start" direction="row" gap={2}>
       {question && (
         <Stack alignItems="start" direction="column">
-          <Square size="20px" bg="grayIcon" />
+          <Circle size="17px" bg="grayIcon" data-testid="square" />
         </Stack>
       )}
       <Stack alignItems="start" direction="column">
