@@ -29,6 +29,7 @@ export type OpenEndedInputTagProps = InputProps & {
   onTagsChange?: (event: SyntheticEvent, tags: string[]) => void
   onTagAdd?: (event: SyntheticEvent, value: string) => void
   onTagRemove?: (event: SyntheticEvent, index: number) => void
+  // onTagSubmit?: (event: SyntheticEvent) => void
 
   addKeys?: string[]
   question?: string
@@ -51,6 +52,7 @@ const OpenEndedInputTag = (
     onTagsChange,
     onTagAdd,
     onTagRemove,
+    // onTagSubmit,
     addKeys = ['Enter', ' '],
     question,
     onChange,
@@ -90,6 +92,15 @@ const OpenEndedInputTag = (
     },
     [removeTag]
   )
+
+  // const handleOnSubmit = useCallback(
+  //   (event: SyntheticEvent, index: number) => {
+  //     onTagSubmit?.(event, index)
+  //     if (event.isDefaultPrevented()) return
+  //     value = tags.toString()
+  //   },
+  //   [value, tags]
+  // )
 
   const onKeyDown = props.onKeyDown
   const handleKeyDown = useCallback(
