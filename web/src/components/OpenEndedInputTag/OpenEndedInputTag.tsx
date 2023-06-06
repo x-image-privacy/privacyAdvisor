@@ -1,9 +1,4 @@
-import {
-  ChangeEventHandler,
-  ForwardedRef,
-  SyntheticEvent,
-  useCallback,
-} from 'react'
+import { KeyboardEvent, ForwardedRef, SyntheticEvent, useCallback } from 'react'
 
 import { Input, InputProps } from '@chakra-ui/input'
 import {
@@ -24,20 +19,18 @@ import { maybeCall, MaybeFunc } from './../../maybe'
 type MaybeIsInputProps<P> = MaybeFunc<[isInput: boolean, index?: number], P>
 type MaybeTagProps<P> = MaybeFunc<[tag: string, index?: number], P>
 
-export type OpenEndedInputTagProps = InputProps & {
-  tags?: string[]
+export type OpenEndedInputTagProps = Omit<InputProps, 'value'> & {
   onTagsChange?: (event: SyntheticEvent, tags: string[]) => void
-  onTagAdd?: (event: SyntheticEvent, value: string) => void
   onTagRemove?: (event: SyntheticEvent, index: number) => void
-  // onTagSubmit?: (event: SyntheticEvent) => void
+  onTagSubmit?: (event: SyntheticEvent) => void
 
   addKeys?: string[]
   question?: string
 
-  onChange: ChangeEventHandler<HTMLInputElement>
+  onChange: (newValue: { tags: string[]; input: string }) => void
 
   placeholder: string
-  value: string
+  value: { tags: string[]; input: string }
 
   wrapProps?: WrapProps
   wrapItemProps?: MaybeIsInputProps<WrapItemProps>
@@ -48,11 +41,8 @@ export type OpenEndedInputTagProps = InputProps & {
 
 const OpenEndedInputTag = (
   {
-    tags = [],
     onTagsChange,
-    onTagAdd,
     onTagRemove,
-    // onTagSubmit,
     addKeys = ['Enter', ' '],
     question,
     onChange,
@@ -67,23 +57,16 @@ const OpenEndedInputTag = (
   }: OpenEndedInputTagProps,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
-  const addTag = useCallback(
-    (event: SyntheticEvent, tag: string) => {
-      onTagAdd?.(event, tag)
-      if (event.isDefaultPrevented()) return
-
-      onTagsChange?.(event, tags.concat([tag]))
-    },
-    [tags, onTagsChange, onTagAdd]
-  )
-
   const removeTag = useCallback(
     (event: SyntheticEvent, index: number) => {
       onTagRemove?.(event, index)
       if (event.isDefaultPrevented()) return
-      onTagsChange?.(event, [...tags.slice(0, index), ...tags.slice(index + 1)])
+      onTagsChange?.(event, [
+        ...value.tags.slice(0, index),
+        ...value.tags.slice(index + 1),
+      ])
     },
-    [tags, onTagsChange, onTagRemove]
+    [value.tags, onTagsChange, onTagRemove]
   )
 
   const handleRemoveTag = useCallback(
@@ -92,15 +75,6 @@ const OpenEndedInputTag = (
     },
     [removeTag]
   )
-
-  // const handleOnSubmit = useCallback(
-  //   (event: SyntheticEvent, index: number) => {
-  //     onTagSubmit?.(event, index)
-  //     if (event.isDefaultPrevented()) return
-  //     value = tags.toString()
-  //   },
-  //   [value, tags]
-  // )
 
   const onKeyDown = props.onKeyDown
   const handleKeyDown = useCallback(
@@ -114,22 +88,28 @@ const OpenEndedInputTag = (
       const { selectionStart, selectionEnd } = currentTarget
 
       if (addKeys.indexOf(key) > -1 && currentTarget.value) {
-        addTag(event, currentTarget.value)
+        const newValue = {
+          ...value,
+          tags: [...value.tags, currentTarget.value],
+        }
+
         if (!event.isDefaultPrevented()) {
           currentTarget.value = ''
-          onChange('')
+          newValue.input = ''
+
+          onChange(newValue)
         }
         event.preventDefault()
       } else if (
         key === 'Backspace' &&
-        tags.length > 0 &&
+        value.tags.length > 0 &&
         selectionStart === 0 &&
         selectionEnd === 0
       ) {
-        removeTag(event, tags.length - 1)
+        removeTag(event, value.tags.length - 1)
       }
     },
-    [onKeyDown, addKeys, tags.length, addTag, onChange, removeTag]
+    [onKeyDown, addKeys, value, onChange, removeTag]
   )
   return (
     <Stack alignItems="start" direction="row" gap={2}>
@@ -142,7 +122,7 @@ const OpenEndedInputTag = (
         {question && <Text data-testid="question">{question}</Text>}
 
         <Wrap align="center" {...wrapProps}>
-          {tags.map((tag, index) => (
+          {value.tags.map((tag, index) => (
             <WrapItem {...maybeCall(wrapItemProps, false, index)} key={index}>
               <TagInput
                 onRemove={handleRemoveTag(index)}
@@ -158,7 +138,7 @@ const OpenEndedInputTag = (
           ))}
           <WrapItem
             flexGrow={1}
-            {...maybeCall(wrapItemProps, true, tags.length)}
+            {...maybeCall(wrapItemProps, true, value.tags.length)}
           />
         </Wrap>
 
@@ -167,9 +147,7 @@ const OpenEndedInputTag = (
           onKeyDown={handleKeyDown}
           ref={ref}
           placeholder={placeholder}
-          onChange={onChange}
           size="lg"
-          value={value}
         />
       </Stack>
     </Stack>

@@ -1,4 +1,4 @@
-import { Flex, Image } from '@chakra-ui/react'
+import { Box, Image } from '@chakra-ui/react'
 import Wordcloud from '@x-image-privacy/wordcloud'
 import type { FindWordImageByImageNumber } from 'types/graphql'
 
@@ -28,9 +28,13 @@ export const Success = ({
   image,
 }: CellSuccessProps<FindWordImageByImageNumber>) => {
   return (
-    <Flex alignItems="center" gap={2}>
-      <Image src={image.imageLocation} />
-      <Wordcloud data={defaultWords1} />
-    </Flex>
+    <Box p={4} display={{ '2xl': 'flex' }}>
+      <Box flexShrink={0}>
+        <Image src={image.imageLocation} width={{ md: 400 }} />
+      </Box>
+      <Box mt={{ lg: 'flex' }}>
+        <Wordcloud data={defaultWords1} />
+      </Box>
+    </Box>
   )
 }

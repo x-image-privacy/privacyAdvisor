@@ -113,8 +113,8 @@ const ImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
-  const [tagsPublic, setTagsPublic] = useState<string[]>([])
-  const [tagsPrivate, setTagsPrivate] = useState<string[]>([])
+  const [, setTagsPublic] = useState<string[]>([])
+  const [, setTagsPrivate] = useState<string[]>([])
 
   const handleTagsChangePublic = useCallback(
     (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags),
@@ -134,14 +134,22 @@ const ImageSurveyComponent = ({
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
+    const publicElement = Object.values(
+      data[PUBLIC_ELEMENTS_QUESTION_GROUP_A]
+    )[0].toString()
+
+    const privateElement = Object.values(
+      data[PRIVATE_ELEMENTS_QUESTION_GROUP_A]
+    )[0].toString()
+
     if (imageSurvey && imageSurvey.id) {
       update({
         variables: {
           id: imageSurvey.id,
           input: {
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+            privateElem: privateElement,
+            publicElem: publicElement,
           },
         },
       })
@@ -153,8 +161,8 @@ const ImageSurveyComponent = ({
             imageId,
             hasInterface: false,
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+            privateElem: privateElement,
+            publicElem: publicElement,
           },
         },
       })
@@ -198,20 +206,24 @@ const ImageSurveyComponent = ({
             errorClassName="error"
           />
           <OpenEndedInputTagField
-            tags={tagsPublic}
             onTagsChange={handleTagsChangePublic}
             placeholder="Answer here"
-            value={imageSurvey?.privateElem || ''}
+            value={{
+              tags: imageSurvey?.publicElem?.split(',') || ([] as string[]),
+              input: '',
+            }}
             question="Which elements do you consider as public in this image? (3 words)"
             name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
             validation={{ required: 'Public elements question is required' }}
             errorClassName="error"
           />
           <OpenEndedInputTagField
-            tags={tagsPrivate}
             onTagsChange={handleTagsChangePrivate}
             placeholder="Answer here"
-            value={imageSurvey?.privateElem || ''}
+            value={{
+              tags: imageSurvey?.privateElem?.split(',') || ([] as string[]),
+              input: '',
+            }}
             question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
             name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
             validation={{ required: 'Private elements question is required' }}
