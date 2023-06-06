@@ -1,3 +1,10 @@
+/*
+
+The idea of this implementation of the input field with tags comes 
+from: https://codesandbox.io/s/chakra-tag-input-d04s0?file=/src/ChakraTagInput/Tag.tsx
+
+ */
+
 import { KeyboardEvent, ForwardedRef, SyntheticEvent, useCallback } from 'react'
 
 import { Input, InputProps } from '@chakra-ui/input'
