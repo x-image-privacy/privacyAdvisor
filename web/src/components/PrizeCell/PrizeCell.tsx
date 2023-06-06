@@ -13,6 +13,7 @@ import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionF
 
 type PrizeProps = {
   id: number
+  onFinished: () => void
 }
 
 export const QUERY = gql`
@@ -49,7 +50,11 @@ export const Success = (
   props: CellSuccessProps<FindUserByIdEmail> & PrizeProps
 ) => <PrizeComponent {...props} />
 
-const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
+const PrizeComponent = ({
+  userPrize,
+  id,
+  onFinished,
+}: FindUserByIdEmail & PrizeProps) => {
   const [update] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
     UPDATE_USER
   )
@@ -63,6 +68,7 @@ const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
         },
       },
     })
+    onFinished()
   }
 
   return (

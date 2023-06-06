@@ -28,11 +28,11 @@ export const Success = ({
   image,
 }: CellSuccessProps<FindWordImageByImageNumber>) => {
   return (
-    <Box p={4} display={{ '2xl': 'flex' }}>
+    <Box p={2} display={{ lg: 'flex' }}>
       <Box flexShrink={0}>
-        <Image src={image.imageLocation} width={{ md: 400 }} />
+        <Image src={image.imageLocation} width={{ md: '100%' }} />
       </Box>
-      <Box mt={{ lg: 'flex' }}>
+      <Box mt={{ base: 4, md: 0 }} ml={{ md: 4 }}>
         <Wordcloud data={defaultWords1} />
       </Box>
     </Box>

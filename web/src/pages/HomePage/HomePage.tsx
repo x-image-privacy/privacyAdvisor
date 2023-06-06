@@ -40,7 +40,7 @@ const HomePage = () => {
     <>
       <MetaTags title="Home" description="Home page" />
 
-      <Container>
+      <Container size="lg">
         <Center flexDirection="column" alignItems="center" gap={4}>
           <Heading>Welcome to this study !</Heading>
           <Text textAlign="center">

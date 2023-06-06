@@ -33,18 +33,18 @@ const GroupAPage = () => {
   }
 
   return (
-    <Container maxW="6xl">
+    <Container maxW="8xl">
       <Stack direction="column" gap={8} alignItems="center" mb={10}>
         <Container maxW="xl">
           <Stack gap={4} alignItems="center">
-            <Text data-testid="instruction">
+            <Text textAlign="center">
               You are shown an image with question on this image.
             </Text>
-            <Text>
+            <Text textAlign="center">
               Consider that you are publishing this image on a public social
               media.
             </Text>
-            <Text> Please answer some questions.</Text>
+            <Text textAlign="center"> Please answer some questions.</Text>
           </Stack>
         </Container>
 
