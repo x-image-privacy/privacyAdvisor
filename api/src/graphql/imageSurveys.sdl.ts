@@ -11,6 +11,8 @@ export const schema = gql`
     privateElem: String!
     satisfactionRank: Int
     satisfactionElem: String
+    createdAt: DateTime!
+    submittedAt: DateTime
   }
 
   type Query {
@@ -45,6 +47,7 @@ export const schema = gql`
     privateElem: String
     satisfactionRank: Int
     satisfactionElem: String
+    submittedAt: DateTime
   }
 
   type Mutation {

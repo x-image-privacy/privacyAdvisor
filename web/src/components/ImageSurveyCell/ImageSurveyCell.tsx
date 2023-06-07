@@ -29,8 +29,8 @@ import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagF
 type ImageSurveyProps = {
   imageId: number
   userId: number
-  onFinished?: () => void
-  onPrevious?: () => void
+  onFinished: () => void
+  onPrevious: () => void
 }
 
 export const QUERY = gql`
@@ -72,6 +72,7 @@ const UPDATE_IMAGE_SURVEY = gql`
       privateRank
       publicElem
       privateElem
+      submittedAt
     }
   }
 `
@@ -145,6 +146,9 @@ const ImageSurveyComponent = ({
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_A]
     )[0].toString()
 
+    const date = new Date()
+    const currentTime = date.toISOString() as unknown as Date
+
     if (imageSurvey && imageSurvey.id) {
       update({
         variables: {
@@ -153,6 +157,7 @@ const ImageSurveyComponent = ({
             privateRank: privateRank,
             privateElem: privateElement,
             publicElem: publicElement,
+            submittedAt: currentTime,
           },
         },
       })
@@ -181,7 +186,8 @@ const ImageSurveyComponent = ({
         },
       })
     }
-    onFinished?.()
+
+    onFinished()
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
