@@ -105,7 +105,6 @@ const DemographicComponent = ({
     const privacyRank = parseInt(data[DEMOGRAPHIC_PRIVACY])
 
     const date = new Date()
-    const currentTime = date.toISOString() as unknown as Date
 
     if (demographic && demographic.user.id) {
       update({
@@ -137,7 +136,7 @@ const DemographicComponent = ({
       variables: {
         id: userId,
         input: {
-          submittedAt: currentTime,
+          submittedAt: date,
           milestone: MILESTONE_END,
         },
       },

@@ -171,7 +171,6 @@ const WordImageSurveyComponent = ({
     )[0].toString()
 
     const date = new Date()
-    const currentTime = date.toISOString() as unknown as Date
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({
@@ -183,7 +182,7 @@ const WordImageSurveyComponent = ({
             publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
-            submittedAt: currentTime,
+            submittedAt: date,
           },
         },
       })
@@ -199,7 +198,7 @@ const WordImageSurveyComponent = ({
             publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
-            submittedAt: currentTime,
+            submittedAt: date,
           },
         },
       })

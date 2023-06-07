@@ -146,7 +146,6 @@ const ImageSurveyComponent = ({
     )[0].toString()
 
     const date = new Date()
-    const currentTime = date.toISOString() as unknown as Date
 
     if (imageSurvey && imageSurvey.id) {
       update({
@@ -156,7 +155,7 @@ const ImageSurveyComponent = ({
             privateRank: privateRank,
             privateElem: privateElement,
             publicElem: publicElement,
-            submittedAt: currentTime,
+            submittedAt: date,
           },
         },
       })
@@ -170,7 +169,7 @@ const ImageSurveyComponent = ({
             privateRank: privateRank,
             privateElem: privateElement,
             publicElem: publicElement,
-            submittedAt: currentTime,
+            submittedAt: date,
           },
         },
       })
