@@ -60,7 +60,6 @@ const OpenEndedInputTag = (
 ) => {
   const handleRemoveTag = useCallback(
     (index: number) => () => {
-      console.log('value', value)
       const newValue = {
         ...value,
         tags: [...value.tags.slice(0, index), ...value.tags.slice(index + 1)],

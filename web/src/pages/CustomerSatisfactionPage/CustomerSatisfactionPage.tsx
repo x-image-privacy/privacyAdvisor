@@ -34,8 +34,8 @@ const CustomerSatisfactionPage = () => {
               <>
                 <Text textAlign="justify">
                   Consider an interface with the image and the word cloud from
-                  the previous question. You use this interface before publising
-                  an image on a public social media.
+                  the previous question. You use this interface before
+                  publishing an image on a public social media.
                 </Text>
                 <Text textAlign="justify">
                   Please answer some questions about this interface.
@@ -47,7 +47,7 @@ const CustomerSatisfactionPage = () => {
                 <Text textAlign="justify">
                   We will ask you a few questions about your profile to help us
                   better understand your background. If you do not want to
-                  answer, select Prefer not to say.
+                  answer, select "Prefer not to say".
                 </Text>
                 <Text textAlign="center">Please answer some questions.</Text>
               </>

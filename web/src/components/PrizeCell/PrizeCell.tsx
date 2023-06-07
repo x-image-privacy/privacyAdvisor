@@ -13,7 +13,6 @@ import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionF
 
 type PrizeProps = {
   id: number
-  onFinished: () => void
 }
 
 export const QUERY = gql`
@@ -50,11 +49,7 @@ export const Success = (
   props: CellSuccessProps<FindUserByIdEmail> & PrizeProps
 ) => <PrizeComponent {...props} />
 
-const PrizeComponent = ({
-  userPrize,
-  id,
-  onFinished,
-}: FindUserByIdEmail & PrizeProps) => {
+const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
   const [update] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
     UPDATE_USER
   )
@@ -68,22 +63,25 @@ const PrizeComponent = ({
         },
       },
     })
-    onFinished()
   }
 
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
       <Flex flexDirection="column" gap={5}>
-        <Stack direction="column" gap={4} alignItems="start">
-          <OpenEndedQuestionField
-            name={USER_EMAIL}
-            placeholder="Answer here..."
-            value={userPrize?.email || ''}
-          />
-        </Stack>
-        <Stack alignItems="end" mb={2}>
-          <Button type="submit">Submit</Button>
-        </Stack>
+        {userPrize?.email == null && (
+          <>
+            <Stack direction="column" gap={4} alignItems="start">
+              <OpenEndedQuestionField
+                name={USER_EMAIL}
+                placeholder="Answer here..."
+                value={userPrize?.email || ''}
+              />
+            </Stack>
+            <Stack alignItems="end" mb={2}>
+              <Button type="submit">Submit</Button>
+            </Stack>
+          </>
+        )}
       </Flex>
     </Form>
   )
