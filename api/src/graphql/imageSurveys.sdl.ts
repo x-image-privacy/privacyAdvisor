@@ -36,6 +36,7 @@ export const schema = gql`
     privateElem: String!
     satisfactionRank: Int
     satisfactionElem: String
+    submittedAt: DateTime
   }
 
   input UpdateImageSurveyInput {

@@ -51,6 +51,7 @@ export const QUERY = gql`
       publicElem
       satisfactionRank
       satisfactionElem
+      submittedAt
     }
   }
 `
@@ -71,6 +72,7 @@ export const QUERY_PREVIOUS_DATA = gql`
       publicElem
       satisfactionRank
       satisfactionElem
+      submittedAt
     }
   }
 `
@@ -84,6 +86,7 @@ const CREATE_IMAGE_SURVEY = gql`
       publicElem
       satisfactionRank
       satisfactionElem
+      submittedAt
     }
   }
 `
@@ -102,6 +105,7 @@ const UPDATE_IMAGE_SURVEY = gql`
       privateElem
       satisfactionRank
       satisfactionElem
+      submittedAt
     }
   }
 `
@@ -180,6 +184,9 @@ const WordImageSurveyComponent = ({
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_B]
     )[0].toString()
 
+    const date = new Date()
+    const currentTime = date.toISOString() as unknown as Date
+
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({
         variables: {
@@ -190,6 +197,7 @@ const WordImageSurveyComponent = ({
             publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
+            submittedAt: currentTime,
           },
         },
       })
@@ -205,6 +213,7 @@ const WordImageSurveyComponent = ({
             publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
+            submittedAt: currentTime,
           },
         },
       })

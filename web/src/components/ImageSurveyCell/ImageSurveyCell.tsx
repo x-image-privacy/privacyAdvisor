@@ -46,6 +46,7 @@ export const QUERY = gql`
       privateRank
       privateElem
       publicElem
+      submittedAt
     }
   }
 `
@@ -57,6 +58,7 @@ const CREATE_IMAGE_SURVEY = gql`
       privateRank
       privateElem
       publicElem
+      submittedAt
     }
   }
 `
@@ -171,6 +173,7 @@ const ImageSurveyComponent = ({
             privateRank: privateRank,
             privateElem: privateElement,
             publicElem: publicElement,
+            submittedAt: currentTime,
           },
         },
       })
