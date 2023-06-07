@@ -1,5 +1,3 @@
-import { SyntheticEvent, useCallback, useState } from 'react'
-
 import {
   Button,
   ButtonGroup,
@@ -116,24 +114,23 @@ const ImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
-  const [, setTagsPublic] = useState<string[]>([])
-  const [, setTagsPrivate] = useState<string[]>([])
-
-  const handleTagsChangePublic = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags),
-    []
-  )
-  const handleTagsChangePrivate = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags),
-    []
-  )
-
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation<
     UpdateImageSurveyMutation,
     UpdateImageSurveyMutationVariables
   >(UPDATE_IMAGE_SURVEY)
+
   const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY_)
+  // let valueUpdate = false
+  // const [updateUser, { mutateAsync: verifyCodeMutation }] = useMutation(
+  //   UPDATE_USER_IMAGE_SURVEY_,
+  //   verifyCode,
+  //   {
+  //     onSuccess: ({ data }) => {
+  //       valueUpdate = true
+  //     },
+  //   }
+  // )
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
@@ -190,6 +187,7 @@ const ImageSurveyComponent = ({
       })
     }
 
+    // if (valueUpdate)
     onFinished()
   }
   return (
@@ -218,7 +216,6 @@ const ImageSurveyComponent = ({
             errorClassName="error"
           />
           <OpenEndedInputTagField
-            onTagsChange={handleTagsChangePublic}
             placeholder="Answer here"
             value={{
               tags: imageSurvey?.publicElem?.split(',') || ([] as string[]),
@@ -230,7 +227,6 @@ const ImageSurveyComponent = ({
             errorClassName="error"
           />
           <OpenEndedInputTagField
-            onTagsChange={handleTagsChangePrivate}
             placeholder="Answer here"
             value={{
               tags: imageSurvey?.privateElem?.split(',') || ([] as string[]),

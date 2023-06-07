@@ -5,7 +5,7 @@ from: https://codesandbox.io/s/chakra-tag-input-d04s0?file=/src/ChakraTagInput/T
 
  */
 
-import { KeyboardEvent, ForwardedRef, SyntheticEvent, useCallback } from 'react'
+import { KeyboardEvent, ForwardedRef, useCallback } from 'react'
 
 import { Input, InputProps } from '@chakra-ui/input'
 import {
@@ -27,10 +27,6 @@ type MaybeIsInputProps<P> = MaybeFunc<[isInput: boolean, index?: number], P>
 type MaybeTagProps<P> = MaybeFunc<[tag: string, index?: number], P>
 
 export type OpenEndedInputTagProps = Omit<InputProps, 'value'> & {
-  onTagsChange?: (event: SyntheticEvent, tags: string[]) => void
-  onTagRemove?: (event: SyntheticEvent, index: number) => void
-  onTagSubmit?: (event: SyntheticEvent) => void
-
   addKeys?: string[]
   question?: string
 
@@ -48,8 +44,6 @@ export type OpenEndedInputTagProps = Omit<InputProps, 'value'> & {
 
 const OpenEndedInputTag = (
   {
-    onTagsChange,
-    onTagRemove,
     addKeys = ['Enter', ' '],
     question,
     onChange,
@@ -64,23 +58,17 @@ const OpenEndedInputTag = (
   }: OpenEndedInputTagProps,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
-  const removeTag = useCallback(
-    (event: SyntheticEvent, index: number) => {
-      onTagRemove?.(event, index)
-      if (event.isDefaultPrevented()) return
-      onTagsChange?.(event, [
-        ...value.tags.slice(0, index),
-        ...value.tags.slice(index + 1),
-      ])
-    },
-    [value.tags, onTagsChange, onTagRemove]
-  )
-
   const handleRemoveTag = useCallback(
-    (index: number) => (event: SyntheticEvent) => {
-      removeTag(event, index)
+    (index: number) => () => {
+      console.log('value', value)
+      const newValue = {
+        ...value,
+        tags: [...value.tags.slice(0, index), ...value.tags.slice(index + 1)],
+      }
+
+      onChange(newValue)
     },
-    [removeTag]
+    [onChange, value]
   )
 
   const onKeyDown = props.onKeyDown
@@ -113,10 +101,19 @@ const OpenEndedInputTag = (
         selectionStart === 0 &&
         selectionEnd === 0
       ) {
-        removeTag(event, value.tags.length - 1)
+        // removeTag(value.tags.length - 1)
+        const newValue = {
+          ...value,
+          tags: [
+            ...value.tags.slice(0, value.tags.length - 1),
+            ...value.tags.slice(value.tags.length - 1 + 1),
+          ],
+        }
+
+        onChange(newValue)
       }
     },
-    [onKeyDown, addKeys, value, onChange, removeTag]
+    [onKeyDown, addKeys, value, onChange]
   )
   return (
     <Stack alignItems="start" direction="row" gap={2}>

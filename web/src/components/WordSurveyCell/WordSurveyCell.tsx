@@ -1,5 +1,3 @@
-import { SyntheticEvent, useCallback, useState } from 'react'
-
 import {
   Button,
   ButtonGroup,
@@ -155,18 +153,6 @@ const WordImageSurveyComponent = ({
 }: FindImageSurveyByUserAndImageIdWord &
   FindImageSurveyByUserImageIdAndHasInterface &
   WordImageSurveyProps) => {
-  const [, setTagsPublic] = useState<string[]>([])
-  const [, setTagsPrivate] = useState<string[]>([])
-
-  const handleTagsChangePublic = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPublic(tags),
-    []
-  )
-  const handleTagsChangePrivate = useCallback(
-    (event: SyntheticEvent, tags: string[]) => setTagsPrivate(tags),
-    []
-  )
-
   const [create] = useMutation(CREATE_IMAGE_SURVEY)
   const [update] = useMutation(UPDATE_IMAGE_SURVEY)
   const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
@@ -258,7 +244,6 @@ const WordImageSurveyComponent = ({
             errorClassName="error"
           />
           <OpenEndedInputTagField
-            onTagsChange={handleTagsChangePublic}
             placeholder="Answer here"
             value={{
               tags: previousValues?.publicElem?.split(',') || ([] as string[]),
@@ -270,7 +255,6 @@ const WordImageSurveyComponent = ({
             errorClassName="error"
           />
           <OpenEndedInputTagField
-            onTagsChange={handleTagsChangePrivate}
             placeholder="Answer here"
             value={{
               tags: previousValues?.privateElem?.split(',') || ([] as string[]),
