@@ -49,7 +49,6 @@ export const QUERY = gql`
       publicElem
       satisfactionRank
       satisfactionElem
-      submittedAt
     }
   }
 `
@@ -70,7 +69,6 @@ export const QUERY_PREVIOUS_DATA = gql`
       publicElem
       satisfactionRank
       satisfactionElem
-      submittedAt
     }
   }
 `
@@ -84,7 +82,6 @@ const CREATE_IMAGE_SURVEY = gql`
       publicElem
       satisfactionRank
       satisfactionElem
-      submittedAt
     }
   }
 `
@@ -103,7 +100,6 @@ const UPDATE_IMAGE_SURVEY = gql`
       privateElem
       satisfactionRank
       satisfactionElem
-      submittedAt
     }
   }
 `
@@ -119,8 +115,8 @@ const UPDATE_USER_WORD_SURVEY_ = gql`
 
 interface WordImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_B]: string
-  [PUBLIC_ELEMENTS_QUESTION_GROUP_B]: string
-  [PRIVATE_ELEMENTS_QUESTION_GROUP_B]: string
+  [PUBLIC_ELEMENTS_QUESTION_GROUP_B]: { tags: string[]; input: string }
+  [PRIVATE_ELEMENTS_QUESTION_GROUP_B]: { tags: string[]; input: string }
   [GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]: string
   [JUSTIFY_VISUALISATION_GROUP_B]: string
 }
@@ -162,15 +158,10 @@ const WordImageSurveyComponent = ({
     const satisfactionRank = parseInt(
       data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]
     )
-    const publicElement = Object.values(
-      data[PUBLIC_ELEMENTS_QUESTION_GROUP_B]
-    )[0].toString()
+    const publicElement = data[PUBLIC_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
 
-    const privateElement = Object.values(
-      data[PRIVATE_ELEMENTS_QUESTION_GROUP_B]
-    )[0].toString()
-
-    const date = new Date()
+    const privateElement =
+      data[PRIVATE_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({
@@ -182,7 +173,6 @@ const WordImageSurveyComponent = ({
             publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
-            submittedAt: date,
           },
         },
       })
@@ -198,7 +188,6 @@ const WordImageSurveyComponent = ({
             publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
-            submittedAt: date,
           },
         },
       })
@@ -245,7 +234,7 @@ const WordImageSurveyComponent = ({
           <OpenEndedInputTagField
             placeholder="Answer here"
             value={{
-              tags: previousValues?.publicElem?.split(',') || ([] as string[]),
+              tags: previousValues?.publicElem?.split(' ') || ([] as string[]),
               input: '',
             }}
             question="Which elements do you consider as public in this image? (3 words)"
@@ -256,7 +245,7 @@ const WordImageSurveyComponent = ({
           <OpenEndedInputTagField
             placeholder="Answer here"
             value={{
-              tags: previousValues?.privateElem?.split(',') || ([] as string[]),
+              tags: previousValues?.privateElem?.split(' ') || ([] as string[]),
               input: '',
             }}
             question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"

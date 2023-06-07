@@ -44,7 +44,6 @@ export const QUERY = gql`
       privateRank
       privateElem
       publicElem
-      submittedAt
     }
   }
 `
@@ -56,7 +55,6 @@ const CREATE_IMAGE_SURVEY = gql`
       privateRank
       privateElem
       publicElem
-      submittedAt
     }
   }
 `
@@ -72,7 +70,6 @@ const UPDATE_IMAGE_SURVEY = gql`
       privateRank
       publicElem
       privateElem
-      submittedAt
     }
   }
 `
@@ -88,8 +85,8 @@ const UPDATE_USER_IMAGE_SURVEY_ = gql`
 
 interface PlainImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_A]: string
-  [PUBLIC_ELEMENTS_QUESTION_GROUP_A]: string
-  [PRIVATE_ELEMENTS_QUESTION_GROUP_A]: string
+  [PUBLIC_ELEMENTS_QUESTION_GROUP_A]: { tags: string[]; input: string }
+  [PRIVATE_ELEMENTS_QUESTION_GROUP_A]: { tags: string[]; input: string }
 }
 
 export const Loading = () => <div>Loading...</div>
@@ -121,31 +118,16 @@ const ImageSurveyComponent = ({
   >(UPDATE_IMAGE_SURVEY)
 
   const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY_)
-  // let valueUpdate = false
-  // const [updateUser, { mutateAsync: verifyCodeMutation }] = useMutation(
-  //   UPDATE_USER_IMAGE_SURVEY_,
-  //   verifyCode,
-  //   {
-  //     onSuccess: ({ data }) => {
-  //       valueUpdate = true
-  //     },
-  //   }
-  // )
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
 
     // The data returns an object with tags and input, we need a single string with the tags.
     // https://stackoverflow.com/questions/52936112/react-js-need-to-split-the-state-object-being-retrieved
-    const publicElement = Object.values(
-      data[PUBLIC_ELEMENTS_QUESTION_GROUP_A]
-    )[0].toString()
+    const publicElement = data[PUBLIC_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
 
-    const privateElement = Object.values(
-      data[PRIVATE_ELEMENTS_QUESTION_GROUP_A]
-    )[0].toString()
-
-    const date = new Date()
+    const privateElement =
+      data[PRIVATE_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
 
     if (imageSurvey && imageSurvey.id) {
       update({
@@ -155,7 +137,6 @@ const ImageSurveyComponent = ({
             privateRank: privateRank,
             privateElem: privateElement,
             publicElem: publicElement,
-            submittedAt: date,
           },
         },
       })
@@ -169,7 +150,6 @@ const ImageSurveyComponent = ({
             privateRank: privateRank,
             privateElem: privateElement,
             publicElem: publicElement,
-            submittedAt: date,
           },
         },
       })
@@ -217,7 +197,7 @@ const ImageSurveyComponent = ({
           <OpenEndedInputTagField
             placeholder="Answer here"
             value={{
-              tags: imageSurvey?.publicElem?.split(',') || ([] as string[]),
+              tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
               input: '',
             }}
             question="Which elements do you consider as public in this image? (3 words)"
@@ -228,7 +208,7 @@ const ImageSurveyComponent = ({
           <OpenEndedInputTagField
             placeholder="Answer here"
             value={{
-              tags: imageSurvey?.privateElem?.split(',') || ([] as string[]),
+              tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
               input: '',
             }}
             question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
