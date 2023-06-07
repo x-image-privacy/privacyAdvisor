@@ -24,6 +24,7 @@ const GroupBPage = () => {
     }
 
     setStep((s) => s + 1)
+    console.log(step)
   }
 
   const handlePreviousStep = () => {
