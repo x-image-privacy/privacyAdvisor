@@ -14,7 +14,7 @@ import { useAuth } from 'src/auth'
 import QMLogo from 'src/components/Logos/QMLogo'
 import ParticipateButton from 'src/components/ParticipateButton/ParticipateButton'
 
-const LOGO_HEIGHT = '60px'
+const LOGO_HEIGHT = '50px'
 
 type NavigationLayoutProps = {
   children?: React.ReactNode
@@ -24,7 +24,7 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   const { currentUser, logOut } = useAuth()
   return (
     <>
-      <Box w="100%" p={2} h="200px">
+      <Box w="100%" p={2}>
         <Flex justifyContent="flex-end" alignItems="center" gap={2}>
           {currentUser ? (
             <>
@@ -39,17 +39,17 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
             <ParticipateButton />
           )}
         </Flex>
-        <Flex minWidth="max-content" alignItems="center">
+        <Flex alignItems="center" maxWidth="100%">
           <Box>
-            <Image h={LOGO_HEIGHT} src="/data/CIS_logo.svg" />
+            <Image h={[10, LOGO_HEIGHT]} src="/data/CIS_logo.svg" />
           </Box>
           <Spacer />
-          <Box h={LOGO_HEIGHT}>
+          <Box h={[10, LOGO_HEIGHT]}>
             <QMLogo fill="#000000" />
           </Box>
         </Flex>
         <Center>
-          <Heading as="h1" size="4xl">
+          <Heading as="h1" fontSize={{ base: '24px', sm: '50px' }}>
             Privacy advisor
           </Heading>
         </Center>

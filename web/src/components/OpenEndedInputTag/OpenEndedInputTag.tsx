@@ -1,6 +1,6 @@
 /*
 
-The idea of this implementation of the input field with tags comes 
+The idea of this implementation of the input field with tags comes
 from: https://codesandbox.io/s/chakra-tag-input-d04s0?file=/src/ChakraTagInput/Tag.tsx
 
  */
@@ -8,23 +8,8 @@ from: https://codesandbox.io/s/chakra-tag-input-d04s0?file=/src/ChakraTagInput/T
 import { KeyboardEvent, ForwardedRef, useCallback } from 'react'
 
 import { Input, InputProps } from '@chakra-ui/input'
-import {
-  Circle,
-  Stack,
-  Wrap,
-  WrapItem,
-  WrapItemProps,
-  WrapProps,
-  Text,
-} from '@chakra-ui/layout'
-import { TagCloseButtonProps, TagLabelProps, TagProps } from '@chakra-ui/tag'
-
-import TagInput from '../TagInput/TagInput'
-
-import { maybeCall, MaybeFunc } from './../../maybe'
-
-type MaybeIsInputProps<P> = MaybeFunc<[isInput: boolean, index?: number], P>
-type MaybeTagProps<P> = MaybeFunc<[tag: string, index?: number], P>
+import { Circle, Stack, Wrap, WrapItem, Text } from '@chakra-ui/layout'
+import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react'
 
 export type OpenEndedInputTagProps = Omit<InputProps, 'value'> & {
   addKeys?: string[]
@@ -34,12 +19,6 @@ export type OpenEndedInputTagProps = Omit<InputProps, 'value'> & {
 
   placeholder: string
   value: { tags: string[]; input: string }
-
-  wrapProps?: WrapProps
-  wrapItemProps?: MaybeIsInputProps<WrapItemProps>
-  tagProps?: MaybeTagProps<TagProps>
-  tagLabelProps?: MaybeTagProps<TagLabelProps>
-  tagCloseButtonProps?: MaybeTagProps<TagCloseButtonProps>
 }
 
 const OpenEndedInputTag = (
@@ -49,32 +28,22 @@ const OpenEndedInputTag = (
     onChange,
     placeholder,
     value,
-    wrapProps,
-    wrapItemProps,
-    tagProps,
-    tagLabelProps,
-    tagCloseButtonProps,
-    ...props
   }: OpenEndedInputTagProps,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const handleRemoveTag = useCallback(
-    (index: number) => () => {
-      const newValue = {
+    (index: number) => {
+      onChange({
         ...value,
         tags: [...value.tags.slice(0, index), ...value.tags.slice(index + 1)],
-      }
-
-      onChange(newValue)
+      })
     },
     [onChange, value]
   )
 
-  const onKeyDown = props.onKeyDown
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      onKeyDown?.(event)
-
+      console.log('key down', event.currentTarget.value)
       if (event.isDefaultPrevented()) return
       if (event.isPropagationStopped()) return
 
@@ -100,53 +69,33 @@ const OpenEndedInputTag = (
         selectionStart === 0 &&
         selectionEnd === 0
       ) {
-        // removeTag(value.tags.length - 1)
-        const newValue = {
-          ...value,
-          tags: [
-            ...value.tags.slice(0, value.tags.length - 1),
-            ...value.tags.slice(value.tags.length - 1 + 1),
-          ],
-        }
-
-        onChange(newValue)
+        handleRemoveTag(value.tags.length - 1)
       }
     },
-    [onKeyDown, addKeys, value, onChange]
+    [addKeys, value, onChange, handleRemoveTag]
   )
   return (
-    <Stack alignItems="start" direction="row" gap={2}>
+    <Stack alignItems="start" direction="row" gap={2} w="100%">
       {question && (
         <Stack alignItems="start" direction="column">
           <Circle size="17px" bg="grayIcon" data-testid="square" />
         </Stack>
       )}
-      <Stack alignItems="start" direction="column">
+      <Stack alignItems="start" direction="column" w="100%">
         {question && <Text data-testid="question">{question}</Text>}
 
-        <Wrap align="center" {...wrapProps}>
+        <Wrap align="center">
           {value.tags.map((tag, index) => (
-            <WrapItem {...maybeCall(wrapItemProps, false, index)} key={index}>
-              <TagInput
-                onRemove={handleRemoveTag(index)}
-                tagLabelProps={maybeCall(tagLabelProps, tag, index)}
-                tagCloseButtonProps={maybeCall(tagCloseButtonProps, tag, index)}
-                colorScheme={props.colorScheme}
-                size={props.size}
-                {...maybeCall(tagProps, tag, index)}
-              >
-                {tag}
-              </TagInput>
+            <WrapItem key={index}>
+              <Tag>
+                <TagLabel>{tag}</TagLabel>
+                <TagCloseButton onClick={() => handleRemoveTag(index)} />
+              </Tag>
             </WrapItem>
           ))}
-          <WrapItem
-            flexGrow={1}
-            {...maybeCall(wrapItemProps, true, value.tags.length)}
-          />
         </Wrap>
 
         <Input
-          {...props}
           onKeyDown={handleKeyDown}
           ref={ref}
           placeholder={placeholder}
