@@ -1,4 +1,4 @@
-import { Button, Flex, Stack } from '@chakra-ui/react'
+import { Flex, Stack } from '@chakra-ui/react'
 import {
   FindUserByIdEmail,
   UpdateUserMutationVariables,
@@ -8,8 +8,10 @@ import { USER_EMAIL } from 'web/config/constants'
 
 import { Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellFailureProps, CellSuccessProps, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/dist/toast'
 
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
+import SubmitButtons from '../SubmitButtons'
 
 type PrizeProps = {
   id: number
@@ -50,9 +52,14 @@ export const Success = (
 ) => <PrizeComponent {...props} />
 
 const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
-  const [update] = useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
-    UPDATE_USER
-  )
+  const [update, { loading: loadingCreate }] = useMutation<
+    UpdateUserMutation,
+    UpdateUserMutationVariables
+  >(UPDATE_USER, {
+    onError: () => {
+      toast.error('Email user fail')
+    },
+  })
 
   const onSubmit: SubmitHandler<PrizeValues> = (data) => {
     update({
@@ -78,7 +85,7 @@ const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
               />
             </Stack>
             <Stack alignItems="end" mb={2}>
-              <Button type="submit">Submit</Button>
+              <SubmitButtons isLoading={loadingCreate} name="Submit" />
             </Stack>
           </>
         )}

@@ -1,17 +1,26 @@
-import { Box, Button, Flex, Stack } from '@chakra-ui/react'
-import type { FindDemographicQueryByUser } from 'types/graphql'
+import { Box, Flex, Stack } from '@chakra-ui/react'
+import type {
+  CreateDemographic,
+  CreateDemographicVariables,
+  FindDemographicQueryByUser,
+  UpdateDemographic,
+  UpdateDemographicVariables,
+  UpdateUserDemographic,
+  UpdateUserDemographicVariables,
+} from 'types/graphql'
 import {
   DEMOGRAPHIC_AGE,
   DEMOGRAPHIC_EDUCATION,
   DEMOGRAPHIC_TECHNOLOGY,
   DEMOGRAPHIC_PRIVACY,
-  MILESTONE_END,
 } from 'web/config/constants'
 
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/dist/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
+import SubmitButtons from '../SubmitButtons'
 
 type DemographicProps = {
   userId: number
@@ -93,9 +102,32 @@ const DemographicComponent = ({
   userId,
   onFinished,
 }: FindDemographicQueryByUser & DemographicProps) => {
-  const [create] = useMutation(CREATE_DEMOGRAPHIC_SURVEY)
-  const [update] = useMutation(UPDATE_DEMOGRAPHIC_SURVEY)
-  const [updateUser] = useMutation(UPDATE_USER_DEMOGRAPHIC)
+  const [create, { loading: loadingDemoCreate, error: errorDemoCreate }] =
+    useMutation<CreateDemographic, CreateDemographicVariables>(
+      CREATE_DEMOGRAPHIC_SURVEY,
+      {
+        onError: () => {
+          toast.error('Create demographic error')
+        },
+      }
+    )
+  const [update, { loading: loadingDemoUpdate, error: errorDemoUpdate }] =
+    useMutation<UpdateDemographic, UpdateDemographicVariables>(
+      UPDATE_DEMOGRAPHIC_SURVEY,
+      {
+        onError: () => {
+          toast.error('Update demographic error')
+        },
+      }
+    )
+  const [updateUser, { loading: loadingUser, error: errorUser }] = useMutation<
+    UpdateUserDemographic,
+    UpdateUserDemographicVariables
+  >(UPDATE_USER_DEMOGRAPHIC, {
+    onError: () => {
+      toast.error('Demographic update user error')
+    },
+  })
 
   const onSubmit: SubmitHandler<DemographicValues> = async (data) => {
     const ageRank = parseInt(data[DEMOGRAPHIC_AGE])
@@ -140,7 +172,9 @@ const DemographicComponent = ({
       },
     })
 
-    onFinished()
+    if (!errorDemoCreate && !errorDemoUpdate && !errorUser) {
+      onFinished()
+    }
   }
 
   return (
@@ -248,7 +282,10 @@ const DemographicComponent = ({
           </Box>
         </Stack>
         <Stack alignItems="end" mb={5}>
-          <Button type="submit">Next</Button>
+          <SubmitButtons
+            isLoading={loadingDemoCreate || loadingDemoUpdate || loadingUser}
+            name="Finish!"
+          />
         </Stack>
       </Flex>
     </Form>

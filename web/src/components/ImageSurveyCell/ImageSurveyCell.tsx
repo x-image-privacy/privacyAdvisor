@@ -1,5 +1,7 @@
 import { Box, Flex, Stack, StackDivider } from '@chakra-ui/react'
 import {
+  CreateImageSurveyMutation,
+  CreateImageSurveyMutationVariables,
   FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
   UpdateImageSurveyMutationVariables,
@@ -12,6 +14,7 @@ import {
 
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellFailureProps, CellSuccessProps, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
@@ -95,11 +98,22 @@ const ImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
-  const [create, { loading: loadingCreate }] = useMutation(CREATE_IMAGE_SURVEY)
-  const [update, { loading: loadingUpdate }] = useMutation<
+  const [create, { loading: loadingCreate, error: errorCreate }] = useMutation<
+    CreateImageSurveyMutation,
+    CreateImageSurveyMutationVariables
+  >(CREATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Image survey create error')
+    },
+  })
+  const [update, { loading: loadingUpdate, error: errorUpdate }] = useMutation<
     UpdateImageSurveyMutation,
     UpdateImageSurveyMutationVariables
-  >(UPDATE_IMAGE_SURVEY)
+  >(UPDATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Image survey update error')
+    },
+  })
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
@@ -137,8 +151,9 @@ const ImageSurveyComponent = ({
       })
     }
 
-    // if (valueUpdate)
-    onFinished()
+    if (!errorCreate && !errorUpdate) {
+      onFinished()
+    }
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
@@ -227,6 +242,7 @@ const ImageSurveyComponent = ({
         <SubmitButtons
           onPrevious={onPrevious}
           isLoading={loadingCreate || loadingUpdate}
+          name="Next"
         />
       </Flex>
     </Form>

@@ -1,8 +1,14 @@
-import { Box, Button, Flex, Stack } from '@chakra-ui/react'
+import { Box, Flex, Stack } from '@chakra-ui/react'
 import type {
+  CreateCustomerSatisfactionSurvey,
+  CreateCustomerSatisfactionSurveyVariables,
   CreateNetPromoterScore,
   CreateNetPromoterScoreVariables,
   FindNpsSurveyByUserId,
+  UpdateCustomerSatisfactionSurvey,
+  UpdateCustomerSatisfactionSurveyVariables,
+  UpdateNetPromoterScore,
+  UpdateNetPromoterScoreVariables,
 } from 'types/graphql'
 import { NPS_OPEN_QUESTION, NPS_RANK_QUESTION } from 'web/config/constants'
 
@@ -12,6 +18,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
+import SubmitButtons from '../SubmitButtons'
 
 type NpsProps = {
   userId: number
@@ -111,23 +118,49 @@ const NpsSurveyComponent = ({
   userId,
   onFinished,
 }: FindNpsSurveyByUserId & NpsProps) => {
-  const [createCustomerSurvey, { error }] = useMutation(
-    CREATE_CUSTOMER_SATISFACTION_SURVEY,
-    {
-      onError: () => {
-        toast.error('Create nps survey fails.')
-      },
-    }
-  )
-  const [updateCustomerSurvey] = useMutation(
-    UPDATE_CUSTOMER_SATISFACTION_SURVEY
-  )
+  const [
+    createCustomerSurvey,
+    { loading: loadingSurveyCreate, error: errorSurveyCreate },
+  ] = useMutation<
+    CreateCustomerSatisfactionSurvey,
+    CreateCustomerSatisfactionSurveyVariables
+  >(CREATE_CUSTOMER_SATISFACTION_SURVEY, {
+    onError: () => {
+      toast.error('Create survey fails.')
+    },
+  })
 
-  const [createNps] = useMutation<
-    CreateNetPromoterScore,
-    CreateNetPromoterScoreVariables
-  >(CREATE_NPS_SCORE)
-  const [updateNps] = useMutation(UPDATE_NPS_SCORE)
+  const [
+    updateCustomerSurvey,
+    { loading: loadingSurveyUpdate, error: errorSurveyUpdate },
+  ] = useMutation<
+    UpdateCustomerSatisfactionSurvey,
+    UpdateCustomerSatisfactionSurveyVariables
+  >(UPDATE_CUSTOMER_SATISFACTION_SURVEY, {
+    onError: () => {
+      toast.error('Update survey fails.')
+    },
+  })
+
+  const [createNps, { loading: loadingNPSCreate, error: errorNPSCreate }] =
+    useMutation<CreateNetPromoterScore, CreateNetPromoterScoreVariables>(
+      CREATE_NPS_SCORE,
+      {
+        onError: () => {
+          toast.error('Create NPS fail')
+        },
+      }
+    )
+
+  const [updateNps, { loading: loadingNPSUpdate, error: errorNPSUpdate }] =
+    useMutation<UpdateNetPromoterScore, UpdateNetPromoterScoreVariables>(
+      UPDATE_NPS_SCORE,
+      {
+        onError: () => {
+          toast.error('Update NPS fail')
+        },
+      }
+    )
 
   const onSubmit: SubmitHandler<NpsValues> = async (data) => {
     const npsRank = parseInt(data[NPS_RANK_QUESTION])
@@ -182,7 +215,12 @@ const NpsSurveyComponent = ({
       })
     }
 
-    if (!error) {
+    if (
+      !errorNPSCreate &&
+      !errorNPSUpdate &&
+      !errorSurveyCreate &&
+      !errorSurveyUpdate
+    ) {
       onFinished()
     }
   }
@@ -226,8 +264,16 @@ const NpsSurveyComponent = ({
             <FieldError name={NPS_OPEN_QUESTION} className="rw-field-error" />
           </Box>
         </Stack>
-        <Stack alignItems="end" mb={5}>
-          <Button type="submit">Next</Button>
+        <Stack alignItems="end">
+          <SubmitButtons
+            isLoading={
+              loadingNPSCreate ||
+              loadingNPSUpdate ||
+              loadingSurveyCreate ||
+              loadingSurveyUpdate
+            }
+            name="Next"
+          />
         </Stack>
       </Flex>
     </Form>

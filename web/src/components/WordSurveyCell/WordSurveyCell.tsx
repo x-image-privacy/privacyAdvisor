@@ -1,5 +1,11 @@
 import { Box, Flex, Stack, StackDivider } from '@chakra-ui/react'
-import type { FindImageSurveyByUserAndImageIdWord } from 'types/graphql'
+import type {
+  CreateWordSurveyMutation,
+  CreateWordSurveyMutationVariables,
+  FindImageSurveyByUserAndImageIdWord,
+  UpdateWordSurveyMutation,
+  UpdateWordSurveyMutationVariables,
+} from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
   PRIVATE_ELEMENTS_QUESTION_GROUP_B,
@@ -10,6 +16,7 @@ import {
 
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/dist/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
@@ -109,8 +116,22 @@ const WordImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdWord & WordImageSurveyProps) => {
-  const [create, { loading: loadingCreate }] = useMutation(CREATE_IMAGE_SURVEY)
-  const [update, { loading: loadingUpdate }] = useMutation(UPDATE_IMAGE_SURVEY)
+  const [create, { loading: loadingCreate, error: errorCreate }] = useMutation<
+    CreateWordSurveyMutation,
+    CreateWordSurveyMutationVariables
+  >(CREATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Word survey create error')
+    },
+  })
+  const [update, { loading: loadingUpdate, error: errorUpdate }] = useMutation<
+    UpdateWordSurveyMutation,
+    UpdateWordSurveyMutationVariables
+  >(UPDATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Word survey update error')
+    },
+  })
 
   const onSubmit: SubmitHandler<WordImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
@@ -152,7 +173,9 @@ const WordImageSurveyComponent = ({
       })
     }
 
-    onFinished()
+    if (!errorCreate && !errorUpdate) {
+      onFinished()
+    }
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
@@ -279,6 +302,7 @@ const WordImageSurveyComponent = ({
         <SubmitButtons
           onPrevious={onPrevious}
           isLoading={loadingCreate || loadingUpdate}
+          name="Next"
         />
       </Flex>
     </Form>
