@@ -63,7 +63,6 @@ const UPDATE_USER_DEMOGRAPHIC = gql`
     updateUser(id: $id, input: $input) {
       id
       submittedAt
-      milestone
     }
   }
 `
@@ -137,7 +136,6 @@ const DemographicComponent = ({
         id: userId,
         input: {
           submittedAt: date,
-          milestone: MILESTONE_END,
         },
       },
     })
