@@ -1,14 +1,10 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  Stack,
-  StackDivider,
-} from '@chakra-ui/react'
+import { Box, Flex, Stack, StackDivider } from '@chakra-ui/react'
 import type {
+  CreateWordSurveyMutation,
+  CreateWordSurveyMutationVariables,
   FindImageSurveyByUserAndImageIdWord,
-  FindImageSurveyByUserImageIdAndHasInterface,
+  UpdateWordSurveyMutation,
+  UpdateWordSurveyMutationVariables,
 } from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
@@ -16,16 +12,16 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_B,
   GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B,
   JUSTIFY_VISUALISATION_GROUP_B,
-  NUMBER_OF_IMAGE,
-  MILESTONE_SURVEY,
 } from 'web/config/constants'
 
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/dist/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
+import SubmitButtons from '../SubmitButtons'
 
 type WordImageSurveyProps = {
   imageId: number
@@ -36,7 +32,11 @@ type WordImageSurveyProps = {
 
 export const QUERY = gql`
   query FindImageSurveyByUserAndImageIdWord($userId: Int!, $imageId: Int!) {
-    imageSurvey: imageSurveyByUserAndImage(userId: $userId, imageId: $imageId) {
+    imageSurvey: imageSurveyByUserImageAndHasInterface(
+      userId: $userId
+      imageId: $imageId
+      hasInterface: true
+    ) {
       id
       user {
         id
@@ -44,27 +44,8 @@ export const QUERY = gql`
       image {
         id
       }
-      hasInterface
-      privateRank
-      privateElem
-      publicElem
-      satisfactionRank
-      satisfactionElem
-    }
-  }
-`
-
-export const QUERY_PREVIOUS_DATA = gql`
-  query FindImageSurveyByUserImageIdAndHasInterface(
-    $userId: Int!
-    $imageId: Int!
-  ) {
-    previousValues: imageSurveyByUserImageAndHasInterface(
-      userId: $userId
-      imageId: $imageId
-      hasInterface: true
-    ) {
       id
+      hasInterface
       privateRank
       privateElem
       publicElem
@@ -105,15 +86,6 @@ const UPDATE_IMAGE_SURVEY = gql`
   }
 `
 
-const UPDATE_USER_WORD_SURVEY_ = gql`
-  mutation UpdateUserWordSurvey($id: Int!, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
-      id
-      milestone
-    }
-  }
-`
-
 interface WordImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_B]: string
   [PUBLIC_ELEMENTS_QUESTION_GROUP_B]: { tags: string[]; input: string }
@@ -133,26 +105,33 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = (
-  props: CellSuccessProps<
-    FindImageSurveyByUserAndImageIdWord,
-    FindImageSurveyByUserImageIdAndHasInterface
-  > &
+  props: CellSuccessProps<FindImageSurveyByUserAndImageIdWord> &
     WordImageSurveyProps
 ) => <WordImageSurveyComponent {...props} />
 
 const WordImageSurveyComponent = ({
   imageSurvey,
-  previousValues,
   userId,
   imageId,
   onPrevious,
   onFinished,
-}: FindImageSurveyByUserAndImageIdWord &
-  FindImageSurveyByUserImageIdAndHasInterface &
-  WordImageSurveyProps) => {
-  const [create] = useMutation(CREATE_IMAGE_SURVEY)
-  const [update] = useMutation(UPDATE_IMAGE_SURVEY)
-  const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
+}: FindImageSurveyByUserAndImageIdWord & WordImageSurveyProps) => {
+  const [create, { loading: loadingCreate, error: errorCreate }] = useMutation<
+    CreateWordSurveyMutation,
+    CreateWordSurveyMutationVariables
+  >(CREATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Word survey create error')
+    },
+  })
+  const [update, { loading: loadingUpdate, error: errorUpdate }] = useMutation<
+    UpdateWordSurveyMutation,
+    UpdateWordSurveyMutationVariables
+  >(UPDATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Word survey update error')
+    },
+  })
 
   const onSubmit: SubmitHandler<WordImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
@@ -165,7 +144,7 @@ const WordImageSurveyComponent = ({
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
-      update({
+      await update({
         variables: {
           id: imageSurvey.id,
           input: {
@@ -178,7 +157,7 @@ const WordImageSurveyComponent = ({
         },
       })
     } else {
-      create({
+      await create({
         variables: {
           input: {
             userId,
@@ -194,18 +173,9 @@ const WordImageSurveyComponent = ({
       })
     }
 
-    if (imageId >= NUMBER_OF_IMAGE) {
-      await updateUser({
-        variables: {
-          id: userId,
-          input: {
-            milestone: MILESTONE_SURVEY,
-          },
-        },
-      })
+    if (!errorCreate && !errorUpdate) {
+      onFinished()
     }
-
-    onFinished()
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
@@ -229,7 +199,7 @@ const WordImageSurveyComponent = ({
                 'Public',
               ]}
               direction="column"
-              value={previousValues?.privateRank.toString() || ''}
+              value={imageSurvey?.privateRank.toString() || ''}
               validation={{
                 required: {
                   value: true,
@@ -245,10 +215,9 @@ const WordImageSurveyComponent = ({
           </Box>
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
-                tags:
-                  previousValues?.publicElem?.split(' ') || ([] as string[]),
+                tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
                 input: '',
               }}
               question="Which elements do you consider as public in this image? (3 words)"
@@ -268,10 +237,9 @@ const WordImageSurveyComponent = ({
           </Box>
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
-                tags:
-                  previousValues?.privateElem?.split(' ') || ([] as string[]),
+                tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
                 input: '',
               }}
               question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
@@ -289,55 +257,53 @@ const WordImageSurveyComponent = ({
               className="rw-field-error"
             />
           </Box>
-
-          <Stack direction="column" spacing={4} justifyContent="start">
-            <Box>
-              <LikertScaleQuestionField
-                name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
-                n={5}
-                question="Is the word cloud helps you review your evaluation?"
-                leftHand="Yes"
-                rightHand="No"
-                direction="row"
-                value={previousValues?.satisfactionRank?.toString() || ''}
-                validation={{
-                  required: {
-                    value: true,
-                    message: 'Word cloud question is required',
-                  },
-                }}
-                errorClassName="rw-input rw-input-error"
-              />
-              <FieldError
-                name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
-                className="rw-field-error"
-              />
-            </Box>
-            <Box>
-              <OpenEndedQuestionField
-                question="Justify your previous answer:"
-                placeholder="Justify here..."
-                name={JUSTIFY_VISUALISATION_GROUP_B}
-                value={previousValues?.satisfactionElem || ''}
-                validation={{
-                  required: {
-                    value: true,
-                    message: 'Justify question is required',
-                  },
-                }}
-                errorClassName="rw-input rw-input-error"
-              />
-              <FieldError
-                name={JUSTIFY_VISUALISATION_GROUP_B}
-                className="rw-field-error"
-              />
-            </Box>
-          </Stack>
+          <Box>
+            <LikertScaleQuestionField
+              name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+              n={5}
+              question="Is the word cloud helps you review your evaluation?"
+              leftHand="Yes"
+              rightHand="No"
+              direction="row"
+              value={imageSurvey?.satisfactionRank?.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Word cloud question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+              className="rw-field-error"
+            />
+          </Box>
+          <Box>
+            <OpenEndedQuestionField
+              question="Justify your previous answer:"
+              placeholder="Justify here..."
+              name={JUSTIFY_VISUALISATION_GROUP_B}
+              value={imageSurvey?.satisfactionElem || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Justify question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={JUSTIFY_VISUALISATION_GROUP_B}
+              className="rw-field-error"
+            />
+          </Box>
         </Stack>
-        <ButtonGroup spacing={4}>
-          <Button onClick={onPrevious}>Previous</Button>
-          <Button type="submit">Next</Button>
-        </ButtonGroup>
+        <SubmitButtons
+          onPrevious={onPrevious}
+          isLoading={loadingCreate || loadingUpdate}
+          name="Next"
+        />
       </Flex>
     </Form>
   )

@@ -1,29 +1,24 @@
+import { Box, Flex, Stack, StackDivider } from '@chakra-ui/react'
 import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  Stack,
-  StackDivider,
-} from '@chakra-ui/react'
-import {
+  CreateImageSurveyMutation,
+  CreateImageSurveyMutationVariables,
   FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
   UpdateImageSurveyMutationVariables,
 } from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_A,
-  MILESTONE_GROUP_B,
-  NUMBER_OF_IMAGE,
   PRIVATE_ELEMENTS_QUESTION_GROUP_A,
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
-import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+import { CellFailureProps, CellSuccessProps, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
+import SubmitButtons from '../SubmitButtons'
 
 type ImageSurveyProps = {
   imageId: number
@@ -75,15 +70,6 @@ const UPDATE_IMAGE_SURVEY = gql`
   }
 `
 
-const UPDATE_USER_IMAGE_SURVEY_ = gql`
-  mutation UpdateUserImageSurvey($id: Int!, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
-      id
-      milestone
-    }
-  }
-`
-
 interface PlainImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_A]: string
   [PUBLIC_ELEMENTS_QUESTION_GROUP_A]: { tags: string[]; input: string }
@@ -112,13 +98,22 @@ const ImageSurveyComponent = ({
   onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
-  const [create] = useMutation(CREATE_IMAGE_SURVEY)
-  const [update] = useMutation<
+  const [create, { loading: loadingCreate, error: errorCreate }] = useMutation<
+    CreateImageSurveyMutation,
+    CreateImageSurveyMutationVariables
+  >(CREATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Image survey create error')
+    },
+  })
+  const [update, { loading: loadingUpdate, error: errorUpdate }] = useMutation<
     UpdateImageSurveyMutation,
     UpdateImageSurveyMutationVariables
-  >(UPDATE_IMAGE_SURVEY)
-
-  const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY_)
+  >(UPDATE_IMAGE_SURVEY, {
+    onError: () => {
+      toast.error('Image survey update error')
+    },
+  })
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
@@ -131,7 +126,7 @@ const ImageSurveyComponent = ({
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
 
     if (imageSurvey && imageSurvey.id) {
-      update({
+      await update({
         variables: {
           id: imageSurvey.id,
           input: {
@@ -142,7 +137,7 @@ const ImageSurveyComponent = ({
         },
       })
     } else {
-      create({
+      await create({
         variables: {
           input: {
             userId,
@@ -156,19 +151,9 @@ const ImageSurveyComponent = ({
       })
     }
 
-    if (imageId >= NUMBER_OF_IMAGE) {
-      await updateUser({
-        variables: {
-          id: userId,
-          input: {
-            milestone: MILESTONE_GROUP_B,
-          },
-        },
-      })
+    if (!errorCreate && !errorUpdate) {
+      onFinished()
     }
-
-    // if (valueUpdate)
-    onFinished()
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
@@ -209,7 +194,7 @@ const ImageSurveyComponent = ({
 
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
                 tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
                 input: '',
@@ -232,7 +217,7 @@ const ImageSurveyComponent = ({
 
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
                 tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
                 input: '',
@@ -254,10 +239,11 @@ const ImageSurveyComponent = ({
           </Box>
         </Stack>
 
-        <ButtonGroup spacing={4}>
-          <Button onClick={onPrevious}>Previous</Button>
-          <Button type="submit">Next</Button>
-        </ButtonGroup>
+        <SubmitButtons
+          onPrevious={onPrevious}
+          isLoading={loadingCreate || loadingUpdate}
+          name="Next"
+        />
       </Flex>
     </Form>
   )

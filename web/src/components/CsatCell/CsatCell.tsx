@@ -1,8 +1,14 @@
-import { Box, Button, Flex, Stack } from '@chakra-ui/react'
+import { Box, Flex, Stack } from '@chakra-ui/react'
 import type {
   CreateCustomerSatisfactionScore,
   CreateCustomerSatisfactionScoreVariables,
+  CreateCustomerSatisfactionSurvey,
+  CreateCustomerSatisfactionSurveyVariables,
   FindCsatSurveyByUserId,
+  UpdateCustomerSatisfactionScore,
+  UpdateCustomerSatisfactionScoreVariables,
+  UpdateCustomerSatisfactionSurvey,
+  UpdateCustomerSatisfactionSurveyVariables,
 } from 'types/graphql'
 import { CSAT_OPEN_QUESTION, CSAT_RANK_QUESTION } from 'web/config/constants'
 
@@ -12,6 +18,7 @@ import { toast } from '@redwoodjs/web/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
+import SubmitButtons from '../SubmitButtons'
 
 type CsatProps = {
   userId: number
@@ -112,22 +119,48 @@ const CsatSurveyComponent = ({
   userId,
   onFinished,
 }: FindCsatSurveyByUserId & CsatProps) => {
-  const [createCustomerSurvey] = useMutation(
-    CREATE_CUSTOMER_SATISFACTION_SURVEY
-  )
-  const [updateCustomerSurvey] = useMutation(
-    UPDATE_CUSTOMER_SATISFACTION_SURVEY
-  )
-
-  const [createCsat, { error }] = useMutation<
-    CreateCustomerSatisfactionScore,
-    CreateCustomerSatisfactionScoreVariables
-  >(CREATE_CUSTOMER_SATISFACTION_SCORE, {
+  const [
+    createCustomerSurvey,
+    { loading: loadingSurveyCreate, error: errorSurveyCreate },
+  ] = useMutation<
+    CreateCustomerSatisfactionSurvey,
+    CreateCustomerSatisfactionSurveyVariables
+  >(CREATE_CUSTOMER_SATISFACTION_SURVEY, {
     onError: () => {
-      toast.error('fail')
+      toast.error('Customer survey create error')
     },
   })
-  const [updateCsat] = useMutation(UPDATE_CUSTOMER_SATISFACTION_SCORE)
+
+  const [
+    updateCustomerSurvey,
+    { loading: loadingSurveyUpdate, error: errorSurveyUpdate },
+  ] = useMutation<
+    UpdateCustomerSatisfactionSurvey,
+    UpdateCustomerSatisfactionSurveyVariables
+  >(UPDATE_CUSTOMER_SATISFACTION_SURVEY, {
+    onError: () => {
+      toast.error('Customer survey update error')
+    },
+  })
+
+  const [createCsat, { loading: loadingCSATCreate, error: errorCSATCreate }] =
+    useMutation<
+      CreateCustomerSatisfactionScore,
+      CreateCustomerSatisfactionScoreVariables
+    >(CREATE_CUSTOMER_SATISFACTION_SCORE, {
+      onError: () => {
+        toast.error('CSAT create fail')
+      },
+    })
+  const [updateCsat, { loading: loadingCSATUpdate, error: errorCSATUpdate }] =
+    useMutation<
+      UpdateCustomerSatisfactionScore,
+      UpdateCustomerSatisfactionScoreVariables
+    >(UPDATE_CUSTOMER_SATISFACTION_SCORE, {
+      onError: () => {
+        toast.error('CSAT create fail')
+      },
+    })
 
   const onSubmit: SubmitHandler<CsatValues> = async (data) => {
     const csatRank = parseInt(data[CSAT_RANK_QUESTION])
@@ -182,7 +215,12 @@ const CsatSurveyComponent = ({
       })
     }
 
-    if (!error) {
+    if (
+      !errorCSATCreate &&
+      !errorCSATUpdate &&
+      !errorSurveyCreate &&
+      !errorSurveyUpdate
+    ) {
       onFinished()
     }
   }
@@ -232,9 +270,16 @@ const CsatSurveyComponent = ({
             <FieldError name={CSAT_OPEN_QUESTION} className="rw-field-error" />
           </Box>
         </Stack>
-
-        <Stack alignItems="end" mb={5}>
-          <Button type="submit">Next</Button>
+        <Stack alignItems="end">
+          <SubmitButtons
+            isLoading={
+              loadingSurveyUpdate ||
+              loadingSurveyCreate ||
+              loadingCSATCreate ||
+              loadingCSATUpdate
+            }
+            name="Next"
+          />
         </Stack>
       </Flex>
     </Form>

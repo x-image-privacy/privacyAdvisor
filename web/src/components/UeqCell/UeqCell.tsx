@@ -1,8 +1,12 @@
-import { Box, Button, Flex, Square, Stack, Text } from '@chakra-ui/react'
+import { Box, Flex, Square, Stack, Text } from '@chakra-ui/react'
 import {
+  CreateCustomerSatisfactionSurvey,
+  CreateCustomerSatisfactionSurveyVariables,
   CreateUserExperienceQuestionaireScore,
   CreateUserExperienceQuestionaireScoreVariables,
   FindUeqSurveyByUserId,
+  UpdateCustomerSatisfactionSurvey,
+  UpdateCustomerSatisfactionSurveyVariables,
 } from 'types/graphql'
 import {
   UEQ_CLARITY,
@@ -20,6 +24,7 @@ import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
+import SubmitButtons from '../SubmitButtons'
 
 type UeqProps = {
   userId: number
@@ -157,23 +162,45 @@ const UeqSurveyComponent = ({
   userId,
   onFinished,
 }: FindUeqSurveyByUserId & UeqProps) => {
-  const [createCustomerSurvey, { error }] = useMutation(
-    CREATE_CUSTOMER_SATISFACTION_SURVEY,
-    {
-      onError: () => {
-        toast.error('fail')
-      },
-    }
-  )
-  const [updateCustomerSurvey] = useMutation(
-    UPDATE_CUSTOMER_SATISFACTION_SURVEY
-  )
+  const [
+    createCustomerSurvey,
+    { loading: loadingSurveyCreate, error: errorSurveyCreate },
+  ] = useMutation<
+    CreateCustomerSatisfactionSurvey,
+    CreateCustomerSatisfactionSurveyVariables
+  >(CREATE_CUSTOMER_SATISFACTION_SURVEY, {
+    onError: () => {
+      toast.error('Create survey fails.')
+    },
+  })
 
-  const [createUeq] = useMutation<
-    CreateUserExperienceQuestionaireScore,
-    CreateUserExperienceQuestionaireScoreVariables
-  >(CREATE_UEQ_SCORE)
-  const [updateUeq] = useMutation(UPDATE_UEQ_SCORE)
+  const [
+    updateCustomerSurvey,
+    { loading: loadingSurveyUpdate, error: errorSurveyUpdate },
+  ] = useMutation<
+    UpdateCustomerSatisfactionSurvey,
+    UpdateCustomerSatisfactionSurveyVariables
+  >(UPDATE_CUSTOMER_SATISFACTION_SURVEY, {
+    onError: () => {
+      toast.error('Update survey fails.')
+    },
+  })
+
+  const [createUeq, { loading: loadingUEQCreate, error: errorUEQCreate }] =
+    useMutation<
+      CreateUserExperienceQuestionaireScore,
+      CreateUserExperienceQuestionaireScoreVariables
+    >(CREATE_UEQ_SCORE, {
+      onError: () => {
+        toast.error('Create UEQ fails.')
+      },
+    })
+  const [updateUeq, { loading: loadingUEQUpdate, error: errorUEQUpdate }] =
+    useMutation(UPDATE_UEQ_SCORE, {
+      onError: () => {
+        toast.error('Update UEQ fails.')
+      },
+    })
 
   const onSubmit: SubmitHandler<UeqValues> = async (data) => {
     const supportRank = parseInt(data[UEQ_SUPPORT])
@@ -253,7 +280,12 @@ const UeqSurveyComponent = ({
       })
     }
 
-    if (!error) {
+    if (
+      !errorSurveyCreate &&
+      !errorSurveyUpdate &&
+      !errorUEQCreate &&
+      !errorUEQUpdate
+    ) {
       onFinished()
     }
   }
@@ -412,7 +444,15 @@ const UeqSurveyComponent = ({
           </Flex>
         </Stack>
         <Stack alignItems="end">
-          <Button type="submit">Next</Button>
+          <SubmitButtons
+            isLoading={
+              loadingSurveyCreate ||
+              loadingSurveyUpdate ||
+              loadingUEQCreate ||
+              loadingUEQUpdate
+            }
+            name="Next"
+          />
         </Stack>
       </Flex>
     </Form>

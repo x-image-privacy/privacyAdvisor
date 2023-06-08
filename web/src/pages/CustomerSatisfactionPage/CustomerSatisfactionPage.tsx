@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Container, Stack, Text } from '@chakra-ui/react'
-import { PAGE_SURVEY } from 'web/config/constants'
+import { MILESTONE_END, PAGE_SURVEY } from 'web/config/constants'
 
-import { navigate, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
 import CsatCell from 'src/components/CsatCell'
@@ -12,19 +12,41 @@ import NpsCell from 'src/components/NpsCell'
 import UeqCell from 'src/components/UeqCell'
 import { isMilestone } from 'src/milestone'
 
-const CustomerSatisfactionPage = () => {
-  const { currentUser } = useAuth()
-  const [step, setStep] = useState(1)
+const UPDATE_USER_IMAGE_SURVEY = gql`
+  mutation UpdateUserImageSurvey($id: Int!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+      milestone
+    }
+  }
+`
 
-  isMilestone(PAGE_SURVEY, currentUser?.milestone as string)
+const CustomerSatisfactionPage = () => {
+  const { currentUser, reauthenticate } = useAuth()
+  const [step, setStep] = useState(1)
+  const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY, {
+    onCompleted: reauthenticate,
+  })
 
   const handleNextStep = () => {
+    // Change page
     if (step >= 4) {
-      navigate(routes.endSurvey(), { replace: true })
+      updateUser({
+        variables: {
+          id: currentUser?.id,
+          input: {
+            milestone: MILESTONE_END,
+          },
+        },
+      })
       return
     }
     setStep((s) => s + 1)
   }
+
+  useEffect(() => {
+    isMilestone(PAGE_SURVEY, currentUser?.milestone as string)
+  })
   return (
     <Container maxW="8xl">
       <Stack direction="column" gap={8} alignItems="center">
