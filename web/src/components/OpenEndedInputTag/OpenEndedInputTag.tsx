@@ -43,7 +43,6 @@ const OpenEndedInputTag = (
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
-      console.log('key down', event.currentTarget.value)
       if (event.isDefaultPrevented()) return
       if (event.isPropagationStopped()) return
 

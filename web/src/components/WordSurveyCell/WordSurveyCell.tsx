@@ -1,16 +1,11 @@
 import { Box, Flex, Stack, StackDivider } from '@chakra-ui/react'
-import type {
-  FindImageSurveyByUserAndImageIdWord,
-  FindImageSurveyByUserImageIdAndHasInterface,
-} from 'types/graphql'
+import type { FindImageSurveyByUserAndImageIdWord } from 'types/graphql'
 import {
   IS_PRIVATE_QUESTION_GROUP_B,
   PRIVATE_ELEMENTS_QUESTION_GROUP_B,
   PUBLIC_ELEMENTS_QUESTION_GROUP_B,
   GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B,
   JUSTIFY_VISUALISATION_GROUP_B,
-  NUMBER_OF_IMAGE,
-  MILESTONE_SURVEY,
 } from 'web/config/constants'
 
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
@@ -84,15 +79,6 @@ const UPDATE_IMAGE_SURVEY = gql`
   }
 `
 
-const UPDATE_USER_WORD_SURVEY_ = gql`
-  mutation UpdateUserWordSurvey($id: Int!, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
-      id
-      milestone
-    }
-  }
-`
-
 interface WordImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_B]: string
   [PUBLIC_ELEMENTS_QUESTION_GROUP_B]: { tags: string[]; input: string }
@@ -112,10 +98,7 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = (
-  props: CellSuccessProps<
-    FindImageSurveyByUserAndImageIdWord,
-    FindImageSurveyByUserImageIdAndHasInterface
-  > &
+  props: CellSuccessProps<FindImageSurveyByUserAndImageIdWord> &
     WordImageSurveyProps
 ) => <WordImageSurveyComponent {...props} />
 
@@ -125,12 +108,9 @@ const WordImageSurveyComponent = ({
   imageId,
   onPrevious,
   onFinished,
-}: FindImageSurveyByUserAndImageIdWord &
-  FindImageSurveyByUserImageIdAndHasInterface &
-  WordImageSurveyProps) => {
-  const [create] = useMutation(CREATE_IMAGE_SURVEY)
-  const [update] = useMutation(UPDATE_IMAGE_SURVEY)
-  const [updateUser] = useMutation(UPDATE_USER_WORD_SURVEY_)
+}: FindImageSurveyByUserAndImageIdWord & WordImageSurveyProps) => {
+  const [create, { loading: loadingCreate }] = useMutation(CREATE_IMAGE_SURVEY)
+  const [update, { loading: loadingUpdate }] = useMutation(UPDATE_IMAGE_SURVEY)
 
   const onSubmit: SubmitHandler<WordImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_B])
@@ -143,7 +123,7 @@ const WordImageSurveyComponent = ({
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
-      update({
+      await update({
         variables: {
           id: imageSurvey.id,
           input: {
@@ -156,7 +136,7 @@ const WordImageSurveyComponent = ({
         },
       })
     } else {
-      create({
+      await create({
         variables: {
           input: {
             userId,
@@ -167,17 +147,6 @@ const WordImageSurveyComponent = ({
             publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
-          },
-        },
-      })
-    }
-
-    if (imageId >= NUMBER_OF_IMAGE) {
-      await updateUser({
-        variables: {
-          id: userId,
-          input: {
-            milestone: MILESTONE_SURVEY,
           },
         },
       })
@@ -307,7 +276,10 @@ const WordImageSurveyComponent = ({
             />
           </Box>
         </Stack>
-        <SubmitButtons onPrevious={onPrevious} />
+        <SubmitButtons
+          onPrevious={onPrevious}
+          isLoading={loadingCreate || loadingUpdate}
+        />
       </Flex>
     </Form>
   )

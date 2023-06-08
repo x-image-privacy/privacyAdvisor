@@ -1,25 +1,46 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Container, Stack, Text } from '@chakra-ui/react'
-import { NUMBER_OF_IMAGE, PAGE_GROUP_A } from 'web/config/constants'
+import {
+  MILESTONE_GROUP_B,
+  NUMBER_OF_IMAGE,
+  PAGE_GROUP_A,
+} from 'web/config/constants'
 
-import { navigate, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
 import ImageCell from 'src/components/ImageCell'
 import ImageSurveyCell from 'src/components/ImageSurveyCell'
 import { isMilestone } from 'src/milestone'
 
-const GroupAPage = () => {
-  const { currentUser } = useAuth()
-  const [step, setStep] = useState(1)
+const UPDATE_USER_IMAGE_SURVEY = gql`
+  mutation UpdateUserImageSurvey($id: Int!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+      milestone
+    }
+  }
+`
 
-  isMilestone(PAGE_GROUP_A, currentUser?.milestone as string)
+const GroupAPage = () => {
+  const { currentUser, reauthenticate } = useAuth()
+  const [step, setStep] = useState(1)
+  const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY, {
+    onCompleted: reauthenticate,
+  })
 
   const handleNextStep = () => {
     // Change page
     if (step >= NUMBER_OF_IMAGE) {
-      navigate(routes.groupB(), { replace: true })
+      updateUser({
+        variables: {
+          id: currentUser?.id,
+          input: {
+            milestone: MILESTONE_GROUP_B,
+          },
+        },
+      })
       return
     }
 
@@ -31,6 +52,10 @@ const GroupAPage = () => {
       setStep((s) => s - 1)
     }
   }
+
+  useEffect(() => {
+    isMilestone(PAGE_GROUP_A, currentUser?.milestone as string)
+  })
 
   return (
     <Container maxW="8xl">
