@@ -1,4 +1,11 @@
-import { Button, Stack, StackDivider } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  Stack,
+  StackDivider,
+} from '@chakra-ui/react'
 import type {
   FindImageSurveyByUserAndImageIdWord,
   FindImageSurveyByUserImageIdAndHasInterface,
@@ -13,10 +20,11 @@ import {
   MILESTONE_SURVEY,
 } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
+import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
 
 type WordImageSurveyProps = {
@@ -108,8 +116,8 @@ const UPDATE_USER_WORD_SURVEY_ = gql`
 
 interface WordImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_B]: string
-  [PUBLIC_ELEMENTS_QUESTION_GROUP_B]: string
-  [PRIVATE_ELEMENTS_QUESTION_GROUP_B]: string
+  [PUBLIC_ELEMENTS_QUESTION_GROUP_B]: { tags: string[]; input: string }
+  [PRIVATE_ELEMENTS_QUESTION_GROUP_B]: { tags: string[]; input: string }
   [GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]: string
   [JUSTIFY_VISUALISATION_GROUP_B]: string
 }
@@ -151,6 +159,10 @@ const WordImageSurveyComponent = ({
     const satisfactionRank = parseInt(
       data[GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B]
     )
+    const publicElement = data[PUBLIC_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
+
+    const privateElement =
+      data[PRIVATE_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       update({
@@ -158,8 +170,8 @@ const WordImageSurveyComponent = ({
           id: imageSurvey.id,
           input: {
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_B],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_B],
+            privateElem: privateElement,
+            publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
           },
@@ -173,8 +185,8 @@ const WordImageSurveyComponent = ({
             imageId,
             hasInterface: true,
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_B],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_B],
+            privateElem: privateElement,
+            publicElem: publicElement,
             satisfactionRank,
             satisfactionElem: data[JUSTIFY_VISUALISATION_GROUP_B],
           },
@@ -197,57 +209,136 @@ const WordImageSurveyComponent = ({
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack
-        direction="row"
-        spacing={5}
-        justifyContent="start"
-        divider={<StackDivider borderColor="grayIcon" />}
-      >
-        <Button onClick={onPrevious}>Previous</Button>
-        <LikertScaleQuestionField
-          name={IS_PRIVATE_QUESTION_GROUP_B}
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-          direction="row"
-          value={previousValues?.privateRank.toString() || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements do you consider as public in this image?"
-          name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
-          placeholder="Answer here..."
-          value={previousValues?.publicElem || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements would you feel uncomfortable disclosing in this image?"
-          name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
-          placeholder="Answer here..."
-          value={previousValues?.privateElem || ''}
-          validation={{ required: true }}
-        />
-        <Stack direction="column" spacing={4} justifyContent="start">
-          <LikertScaleQuestionField
-            name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
-            n={5}
-            question="Is this visualisation efficient to help you form an opinion?"
-            leftHand="No"
-            rightHand="Yes"
-            direction="row"
-            value={previousValues?.satisfactionRank?.toString() || ''}
-            validation={{ required: true }}
-          />
-          <OpenEndedQuestionField
-            placeholder="Justify here..."
-            name={JUSTIFY_VISUALISATION_GROUP_B}
-            value={previousValues?.satisfactionElem || ''}
-            validation={{ required: true }}
-          />
+      <Flex direction="column" gap={4} alignItems="center">
+        <Stack
+          direction="column"
+          spacing={4}
+          alignItems="start"
+          divider={<StackDivider borderColor="grayIcon" />}
+        >
+          <Box>
+            <LikertScaleQuestionField
+              name={IS_PRIVATE_QUESTION_GROUP_B}
+              n={5}
+              question="Would you consider this image as:"
+              text={[
+                'Private',
+                'Likely private',
+                'Undecided',
+                'Likely public',
+                'Public',
+              ]}
+              direction="column"
+              value={previousValues?.privateRank.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Image privacy question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={IS_PRIVATE_QUESTION_GROUP_B}
+              className="rw-field-error"
+            />
+          </Box>
+          <Box>
+            <OpenEndedInputTagField
+              placeholder="Answer here"
+              value={{
+                tags:
+                  previousValues?.publicElem?.split(' ') || ([] as string[]),
+                input: '',
+              }}
+              question="Which elements do you consider as public in this image? (3 words)"
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Public elements question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
+              className="rw-field-error"
+            />
+          </Box>
+          <Box>
+            <OpenEndedInputTagField
+              placeholder="Answer here"
+              value={{
+                tags:
+                  previousValues?.privateElem?.split(' ') || ([] as string[]),
+                input: '',
+              }}
+              question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Private elements question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
+              className="rw-field-error"
+            />
+          </Box>
+
+          <Stack direction="column" spacing={4} justifyContent="start">
+            <Box>
+              <LikertScaleQuestionField
+                name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+                n={5}
+                question="Is the word cloud helps you review your evaluation?"
+                leftHand="Yes"
+                rightHand="No"
+                direction="row"
+                value={previousValues?.satisfactionRank?.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Word cloud question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError
+                name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+                className="rw-field-error"
+              />
+            </Box>
+            <Box>
+              <OpenEndedQuestionField
+                question="Justify your previous answer:"
+                placeholder="Justify here..."
+                name={JUSTIFY_VISUALISATION_GROUP_B}
+                value={previousValues?.satisfactionElem || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Justify question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError
+                name={JUSTIFY_VISUALISATION_GROUP_B}
+                className="rw-field-error"
+              />
+            </Box>
+          </Stack>
         </Stack>
-        <Button type="submit">Next</Button>
-      </Stack>
+        <ButtonGroup spacing={4}>
+          <Button onClick={onPrevious}>Previous</Button>
+          <Button type="submit">Next</Button>
+        </ButtonGroup>
+      </Flex>
     </Form>
   )
 }

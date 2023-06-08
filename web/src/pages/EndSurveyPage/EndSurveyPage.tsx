@@ -17,7 +17,7 @@ const EndSurveyPage = () => {
 
       <Container size="lg">
         <Stack direction="column" gap={4} alignItems="center">
-          <Text align="center">
+          <Text textAlign="justify">
             This study has been completed. If you would like to be in with a
             chance of winning one of the prizes, please enter your email address
             here:

@@ -1,4 +1,4 @@
-import { Radio, RadioGroup, Square, Stack, Text } from '@chakra-ui/react'
+import { Circle, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react'
 
 export type LikertScaleQuestionProps = {
   n: 5 | 7 | 11 | 6 | 4
@@ -28,7 +28,7 @@ const LikertScaleQuestion = ({
     <Stack alignItems="start" direction="row" gap={2}>
       {question && (
         <Stack alignItems="start" direction="column">
-          <Square size="20px" bg="grayIcon" data-testid="square" />
+          <Circle size="17px" bg="grayIcon" data-testid="square" />
         </Stack>
       )}
       <Stack direction="column" alignItems="start">

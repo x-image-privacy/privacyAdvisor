@@ -68,16 +68,20 @@ const PrizeComponent = ({ userPrize, id }: FindUserByIdEmail & PrizeProps) => {
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
       <Flex flexDirection="column" gap={5}>
-        <Stack direction="column" gap={4} alignItems="start">
-          <OpenEndedQuestionField
-            name={USER_EMAIL}
-            placeholder="Answer here..."
-            value={userPrize?.email || ''}
-          />
-        </Stack>
-        <Stack alignItems="end" mb={2}>
-          <Button type="submit">Submit</Button>
-        </Stack>
+        {userPrize?.email == null && (
+          <>
+            <Stack direction="column" gap={4} alignItems="start">
+              <OpenEndedQuestionField
+                name={USER_EMAIL}
+                placeholder="Answer here..."
+                value={userPrize?.email || ''}
+              />
+            </Stack>
+            <Stack alignItems="end" mb={2}>
+              <Button type="submit">Submit</Button>
+            </Stack>
+          </>
+        )}
       </Flex>
     </Form>
   )

@@ -1,5 +1,11 @@
-import { asyncMap } from '@apollo/client/utilities'
-import { Button, Stack, StackDivider } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  Stack,
+  StackDivider,
+} from '@chakra-ui/react'
 import {
   FindImageSurveyByUserAndImageIdImage,
   UpdateImageSurveyMutation,
@@ -13,17 +19,17 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
-import { Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
-import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
+import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
 
 type ImageSurveyProps = {
   imageId: number
   userId: number
-  onFinished?: () => void
-  onPrevious?: () => void
+  onFinished: () => void
+  onPrevious: () => void
 }
 
 export const QUERY = gql`
@@ -80,8 +86,8 @@ const UPDATE_USER_IMAGE_SURVEY_ = gql`
 
 interface PlainImageSurveyValues {
   [IS_PRIVATE_QUESTION_GROUP_A]: string
-  [PUBLIC_ELEMENTS_QUESTION_GROUP_A]: string
-  [PRIVATE_ELEMENTS_QUESTION_GROUP_A]: string
+  [PUBLIC_ELEMENTS_QUESTION_GROUP_A]: { tags: string[]; input: string }
+  [PRIVATE_ELEMENTS_QUESTION_GROUP_A]: { tags: string[]; input: string }
 }
 
 export const Loading = () => <div>Loading...</div>
@@ -111,18 +117,27 @@ const ImageSurveyComponent = ({
     UpdateImageSurveyMutation,
     UpdateImageSurveyMutationVariables
   >(UPDATE_IMAGE_SURVEY)
+
   const [updateUser] = useMutation(UPDATE_USER_IMAGE_SURVEY_)
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
+
+    // The data returns an object with tags and input, we need a single string with the tags.
+    // https://stackoverflow.com/questions/52936112/react-js-need-to-split-the-state-object-being-retrieved
+    const publicElement = data[PUBLIC_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
+
+    const privateElement =
+      data[PRIVATE_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
+
     if (imageSurvey && imageSurvey.id) {
       update({
         variables: {
           id: imageSurvey.id,
           input: {
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+            privateElem: privateElement,
+            publicElem: publicElement,
           },
         },
       })
@@ -134,8 +149,8 @@ const ImageSurveyComponent = ({
             imageId,
             hasInterface: false,
             privateRank: privateRank,
-            privateElem: data[PRIVATE_ELEMENTS_QUESTION_GROUP_A],
-            publicElem: data[PUBLIC_ELEMENTS_QUESTION_GROUP_A],
+            privateElem: privateElement,
+            publicElem: publicElement,
           },
         },
       })
@@ -151,44 +166,99 @@ const ImageSurveyComponent = ({
         },
       })
     }
-    onFinished?.()
+
+    // if (valueUpdate)
+    onFinished()
   }
   return (
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-      <Stack
-        direction="row"
-        spacing={4}
-        justifyContent="start"
-        divider={<StackDivider borderColor="grayIcon" />}
-      >
-        {/* // todo: overwrite the  */}
-        <Button onClick={onPrevious}>Previous</Button>
-        <LikertScaleQuestionField
-          name={IS_PRIVATE_QUESTION_GROUP_A}
-          n={5}
-          question="Is this image private?"
-          leftHand="No"
-          rightHand="Yes"
-          direction="row"
-          value={imageSurvey?.privateRank.toString() || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements do you consider as public in this image?"
-          name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
-          placeholder="Answer here..."
-          value={imageSurvey?.publicElem || ''}
-          validation={{ required: true }}
-        />
-        <OpenEndedQuestionField
-          question="Which elements would you feel uncomfortable disclosing in this image?"
-          name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
-          placeholder="Answer here..."
-          value={imageSurvey?.privateElem || ''}
-          validation={{ required: true }}
-        />
-        <Button type="submit">Next</Button>
-      </Stack>
+      <Flex direction="column" gap={4} alignItems="center">
+        <Stack
+          direction="column"
+          spacing={4}
+          alignItems="start"
+          divider={<StackDivider borderColor="grayIcon" />}
+        >
+          <Box>
+            <LikertScaleQuestionField
+              name={IS_PRIVATE_QUESTION_GROUP_A}
+              n={5}
+              question="Would you consider this image as:"
+              text={[
+                'Private',
+                'Likely private',
+                'Undecided',
+                'Likely public',
+                'Public',
+              ]}
+              direction="column"
+              value={imageSurvey?.privateRank.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Image privacy question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={IS_PRIVATE_QUESTION_GROUP_A}
+              className="rw-field-error"
+            />
+          </Box>
+
+          <Box>
+            <OpenEndedInputTagField
+              placeholder="Answer here"
+              value={{
+                tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
+                input: '',
+              }}
+              question="Which elements do you consider as public in this image? (3 words)"
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Public elements question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
+              className="rw-field-error"
+            />
+          </Box>
+
+          <Box>
+            <OpenEndedInputTagField
+              placeholder="Answer here"
+              value={{
+                tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
+                input: '',
+              }}
+              question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Private elements question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
+              className="rw-field-error"
+            />
+          </Box>
+        </Stack>
+
+        <ButtonGroup spacing={4}>
+          <Button onClick={onPrevious}>Previous</Button>
+          <Button type="submit">Next</Button>
+        </ButtonGroup>
+      </Flex>
     </Form>
   )
 }

@@ -3,6 +3,8 @@ import { db } from 'api/src/lib/db'
 
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
+import { NUMBER_OF_IMAGE } from '$web/config/constants'
+
 export default async () => {
   try {
     //
@@ -57,7 +59,7 @@ export default async () => {
     }
 
     const imageData: Prisma.ImageCreateArgs['data'][] = Array.from(
-      Array(12)
+      Array(NUMBER_OF_IMAGE)
     ).map((_, idx) => ({
       imageNumber: idx + 1,
       imageLocation: `/images/img_${idx + 1}.jpg`,

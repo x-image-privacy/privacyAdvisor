@@ -33,11 +33,21 @@ const GroupAPage = () => {
   }
 
   return (
-    <Container maxW="6xl">
+    <Container maxW="8xl">
       <Stack direction="column" gap={8} alignItems="center" mb={10}>
-        <Text data-testid="instruction">
-          You are shown a picture and please answer some questions
-        </Text>
+        <Container maxW="xl">
+          <Stack gap={4} alignItems="center">
+            <Text textAlign="center">
+              You are shown an image with question on this image.
+            </Text>
+            <Text textAlign="center">
+              Consider that you are publishing this image on a public social
+              media.
+            </Text>
+            <Text textAlign="center"> Please answer some questions.</Text>
+          </Stack>
+        </Container>
+
         <ImageCell imageNumber={step} />
         <ImageSurveyCell
           userId={currentUser?.id as number}

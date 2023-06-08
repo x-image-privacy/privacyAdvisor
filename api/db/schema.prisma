@@ -34,17 +34,19 @@ model Image {
 }
 
 model ImageSurvey {
-  id               Int     @id @default(autoincrement())
+  id               Int        @id @default(autoincrement())
   privateRank      Int
   publicElem       String
   privateElem      String
   satisfactionRank Int?
   satisfactionElem String?
-  user             User?   @relation(fields: [userId], references: [id])
+  user             User?      @relation(fields: [userId], references: [id])
   userId           Int?
-  image            Image?  @relation(fields: [imageId], references: [id])
+  image            Image?     @relation(fields: [imageId], references: [id])
   imageId          Int?
   hasInterface     Boolean
+  createdAt        DateTime   @default(now())
+  submittedAt      DateTime?  @updatedAt
 
   @@unique([userId, imageId, hasInterface])
 }
