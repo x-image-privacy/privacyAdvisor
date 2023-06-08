@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  Stack,
-  StackDivider,
-} from '@chakra-ui/react'
+import { Box, Flex, Stack, StackDivider } from '@chakra-ui/react'
 import type {
   FindImageSurveyByUserAndImageIdWord,
   FindImageSurveyByUserImageIdAndHasInterface,
@@ -26,6 +19,7 @@ import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
 import OpenEndedInputTagField from '../OpenEndedInputTagField/OpenEndedInputTagField'
 import OpenEndedQuestionField from '../OpenEndedQuestionField/OpenEndedQuestionField'
+import SubmitButtons from '../SubmitButtons'
 
 type WordImageSurveyProps = {
   imageId: number
@@ -313,10 +307,7 @@ const WordImageSurveyComponent = ({
             />
           </Box>
         </Stack>
-        <ButtonGroup spacing={4}>
-          <Button onClick={onPrevious}>Previous</Button>
-          <Button type="submit">Next</Button>
-        </ButtonGroup>
+        <SubmitButtons onPrevious={onPrevious} />
       </Flex>
     </Form>
   )
