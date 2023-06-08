@@ -36,7 +36,11 @@ type WordImageSurveyProps = {
 
 export const QUERY = gql`
   query FindImageSurveyByUserAndImageIdWord($userId: Int!, $imageId: Int!) {
-    imageSurvey: imageSurveyByUserAndImage(userId: $userId, imageId: $imageId) {
+    imageSurvey: imageSurveyByUserImageAndHasInterface(
+      userId: $userId
+      imageId: $imageId
+      hasInterface: true
+    ) {
       id
       user {
         id
@@ -44,27 +48,8 @@ export const QUERY = gql`
       image {
         id
       }
-      hasInterface
-      privateRank
-      privateElem
-      publicElem
-      satisfactionRank
-      satisfactionElem
-    }
-  }
-`
-
-export const QUERY_PREVIOUS_DATA = gql`
-  query FindImageSurveyByUserImageIdAndHasInterface(
-    $userId: Int!
-    $imageId: Int!
-  ) {
-    previousValues: imageSurveyByUserImageAndHasInterface(
-      userId: $userId
-      imageId: $imageId
-      hasInterface: true
-    ) {
       id
+      hasInterface
       privateRank
       privateElem
       publicElem
@@ -142,7 +127,6 @@ export const Success = (
 
 const WordImageSurveyComponent = ({
   imageSurvey,
-  previousValues,
   userId,
   imageId,
   onPrevious,
@@ -229,7 +213,7 @@ const WordImageSurveyComponent = ({
                 'Public',
               ]}
               direction="column"
-              value={previousValues?.privateRank.toString() || ''}
+              value={imageSurvey?.privateRank.toString() || ''}
               validation={{
                 required: {
                   value: true,
@@ -245,10 +229,9 @@ const WordImageSurveyComponent = ({
           </Box>
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
-                tags:
-                  previousValues?.publicElem?.split(' ') || ([] as string[]),
+                tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
                 input: '',
               }}
               question="Which elements do you consider as public in this image? (3 words)"
@@ -268,10 +251,9 @@ const WordImageSurveyComponent = ({
           </Box>
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
-                tags:
-                  previousValues?.privateElem?.split(' ') || ([] as string[]),
+                tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
                 input: '',
               }}
               question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
@@ -289,50 +271,47 @@ const WordImageSurveyComponent = ({
               className="rw-field-error"
             />
           </Box>
-
-          <Stack direction="column" spacing={4} justifyContent="start">
-            <Box>
-              <LikertScaleQuestionField
-                name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
-                n={5}
-                question="Is the word cloud helps you review your evaluation?"
-                leftHand="Yes"
-                rightHand="No"
-                direction="row"
-                value={previousValues?.satisfactionRank?.toString() || ''}
-                validation={{
-                  required: {
-                    value: true,
-                    message: 'Word cloud question is required',
-                  },
-                }}
-                errorClassName="rw-input rw-input-error"
-              />
-              <FieldError
-                name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
-                className="rw-field-error"
-              />
-            </Box>
-            <Box>
-              <OpenEndedQuestionField
-                question="Justify your previous answer:"
-                placeholder="Justify here..."
-                name={JUSTIFY_VISUALISATION_GROUP_B}
-                value={previousValues?.satisfactionElem || ''}
-                validation={{
-                  required: {
-                    value: true,
-                    message: 'Justify question is required',
-                  },
-                }}
-                errorClassName="rw-input rw-input-error"
-              />
-              <FieldError
-                name={JUSTIFY_VISUALISATION_GROUP_B}
-                className="rw-field-error"
-              />
-            </Box>
-          </Stack>
+          <Box>
+            <LikertScaleQuestionField
+              name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+              n={5}
+              question="Is the word cloud helps you review your evaluation?"
+              leftHand="Yes"
+              rightHand="No"
+              direction="row"
+              value={imageSurvey?.satisfactionRank?.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Word cloud question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
+              className="rw-field-error"
+            />
+          </Box>
+          <Box>
+            <OpenEndedQuestionField
+              question="Justify your previous answer:"
+              placeholder="Justify here..."
+              name={JUSTIFY_VISUALISATION_GROUP_B}
+              value={imageSurvey?.satisfactionElem || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Justify question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={JUSTIFY_VISUALISATION_GROUP_B}
+              className="rw-field-error"
+            />
+          </Box>
         </Stack>
         <ButtonGroup spacing={4}>
           <Button onClick={onPrevious}>Previous</Button>

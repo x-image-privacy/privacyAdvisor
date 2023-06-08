@@ -19,7 +19,7 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
-import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
+import { FieldError, Form, SubmitHandler, useForm } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import LikertScaleQuestionField from '../LikertScaleQuestionField/LikertScaleQuestionField'
@@ -209,7 +209,7 @@ const ImageSurveyComponent = ({
 
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
                 tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
                 input: '',
@@ -232,7 +232,7 @@ const ImageSurveyComponent = ({
 
           <Box>
             <OpenEndedInputTagField
-              placeholder="Answer here"
+              placeholder="Press enter or space to add an answer"
               value={{
                 tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
                 input: '',
