@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Flex,
@@ -178,54 +179,81 @@ const ImageSurveyComponent = ({
           alignItems="start"
           divider={<StackDivider borderColor="grayIcon" />}
         >
-          <LikertScaleQuestionField
-            name={IS_PRIVATE_QUESTION_GROUP_A}
-            n={5}
-            question="Would you consider this image as:"
-            text={[
-              'Private',
-              'Likely private',
-              'Undecided',
-              'Likely public',
-              'Public',
-            ]}
-            direction="column"
-            value={imageSurvey?.privateRank.toString() || ''}
-            validation={{ required: 'Image privacy question is required' }}
-            errorClassName="error"
-          />
-          <OpenEndedInputTagField
-            placeholder="Answer here"
-            value={{
-              tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
-              input: '',
-            }}
-            question="Which elements do you consider as public in this image? (3 words)"
-            name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
-            validation={{ required: 'Public elements question is required' }}
-            errorClassName="error"
-          />
-          <OpenEndedInputTagField
-            placeholder="Answer here"
-            value={{
-              tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
-              input: '',
-            }}
-            question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
-            name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
-            validation={{ required: 'Private elements question is required' }}
-            errorClassName="error"
-          />
+          <Box>
+            <LikertScaleQuestionField
+              name={IS_PRIVATE_QUESTION_GROUP_A}
+              n={5}
+              question="Would you consider this image as:"
+              text={[
+                'Private',
+                'Likely private',
+                'Undecided',
+                'Likely public',
+                'Public',
+              ]}
+              direction="column"
+              value={imageSurvey?.privateRank.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Image privacy question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={IS_PRIVATE_QUESTION_GROUP_A}
+              className="rw-field-error"
+            />
+          </Box>
+
+          <Box>
+            <OpenEndedInputTagField
+              placeholder="Answer here"
+              value={{
+                tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
+                input: '',
+              }}
+              question="Which elements do you consider as public in this image? (3 words)"
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Public elements question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={PUBLIC_ELEMENTS_QUESTION_GROUP_A}
+              className="rw-field-error"
+            />
+          </Box>
+
+          <Box>
+            <OpenEndedInputTagField
+              placeholder="Answer here"
+              value={{
+                tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
+                input: '',
+              }}
+              question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Private elements question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
+              className="rw-field-error"
+            />
+          </Box>
         </Stack>
-        <FieldError
-          name={IS_PRIVATE_QUESTION_GROUP_A}
-          className="error-message"
-        />
-        <FieldError name={PUBLIC_ELEMENTS_QUESTION_GROUP_A} className="error" />
-        <FieldError
-          name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
-          className="error"
-        />
+
         <ButtonGroup spacing={4}>
           <Button onClick={onPrevious}>Previous</Button>
           <Button type="submit">Next</Button>

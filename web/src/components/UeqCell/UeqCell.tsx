@@ -1,4 +1,4 @@
-import { Button, Flex, Square, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Square, Stack, Text } from '@chakra-ui/react'
 import {
   CreateUserExperienceQuestionaireScore,
   CreateUserExperienceQuestionaireScoreVariables,
@@ -266,95 +266,150 @@ const UeqSurveyComponent = ({
             <Text>You find the interface:</Text>
           </Stack>
           <Flex direction="column" alignItems="center" gap={5}>
-            <LikertScaleQuestionField
-              name={UEQ_SUPPORT}
-              leftHand="Obstructive"
-              rightHand="Supportive"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.support.toString() || ''}
-              validation={{ required: 'Support question is required' }}
-              errorClassName="error"
-            />
-            <LikertScaleQuestionField
-              name={UEQ_COMPLEXITY}
-              leftHand="Complicated"
-              rightHand="Easy"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.complexity.toString() || ''}
-              validation={{ required: 'Complicated question is required' }}
-              errorClassName="error"
-            />
-            <LikertScaleQuestionField
-              name={UEQ_EFFICIENCY}
-              leftHand="Inefficient"
-              rightHand="Efficient"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.efficiency.toString() || ''}
-              validation={{ required: 'Efficiency question is required' }}
-              errorClassName="error"
-            />
-            <LikertScaleQuestionField
-              name={UEQ_CLARITY}
-              leftHand="Confusing"
-              rightHand="Clear"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.clarity.toString() || ''}
-              validation={{ required: 'Clarity question is required' }}
-              errorClassName="error"
-            />
-            <LikertScaleQuestionField
-              name={UEQ_MOTIVATION}
-              leftHand="Boring"
-              rightHand="Exciting"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.motivation.toString() || ''}
-              validation={{ required: 'Motivation question is required' }}
-              errorClassName="error"
-            />
-            <LikertScaleQuestionField
-              name={UEQ_INTEREST}
-              leftHand="Not interesting"
-              rightHand="Interesting"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.interest.toString() || ''}
-              validation={{ required: 'Interest question is required' }}
-              errorClassName="error"
-            />
-            <LikertScaleQuestionField
-              name={UEQ_NORM}
-              leftHand="Conventional"
-              rightHand="Inventive"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.norm.toString() || ''}
-              validation={{ required: 'Norm question is required' }}
-              errorClassName="error"
-            />
-            <LikertScaleQuestionField
-              name={UEQ_ORIGINALITY}
-              leftHand="Usual"
-              rightHand="Leading edge"
-              direction="row"
-              n={7}
-              value={ueqSurvey?.ueq?.originality.toString() || ''}
-              validation={{ required: 'Originality is required' }}
-              errorClassName="error"
-            />
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_SUPPORT}
+                leftHand="Obstructive"
+                rightHand="Supportive"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.support.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Support question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_SUPPORT} className="rw-field-error" />
+            </Box>
+
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_COMPLEXITY}
+                leftHand="Complicated"
+                rightHand="Easy"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.complexity.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Complicated question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_COMPLEXITY} className="rw-field-error" />
+            </Box>
+
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_EFFICIENCY}
+                leftHand="Inefficient"
+                rightHand="Efficient"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.efficiency.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Efficiency question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_EFFICIENCY} className="rw-field-error" />
+            </Box>
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_CLARITY}
+                leftHand="Confusing"
+                rightHand="Clear"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.clarity.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Clarity question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_CLARITY} className="rw-field-error" />
+            </Box>
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_MOTIVATION}
+                leftHand="Boring"
+                rightHand="Exciting"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.motivation.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Motivation question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_MOTIVATION} className="rw-field-error" />
+            </Box>
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_INTEREST}
+                leftHand="Not interesting"
+                rightHand="Interesting"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.interest.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Interest question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_INTEREST} className="rw-field-error" />
+            </Box>
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_NORM}
+                leftHand="Conventional"
+                rightHand="Inventive"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.norm.toString() || ''}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Norm question is required',
+                  },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_NORM} className="rw-field-error" />
+            </Box>
+            <Box>
+              <LikertScaleQuestionField
+                name={UEQ_ORIGINALITY}
+                leftHand="Usual"
+                rightHand="Leading edge"
+                direction="row"
+                n={7}
+                value={ueqSurvey?.ueq?.originality.toString() || ''}
+                validation={{
+                  required: { value: true, message: 'Originality is required' },
+                }}
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name={UEQ_ORIGINALITY} className="rw-field-error" />
+            </Box>
           </Flex>
-          <FieldError name={UEQ_SUPPORT} className="error-message" />
-          <FieldError name={UEQ_COMPLEXITY} className="error" />
-          <FieldError name={UEQ_EFFICIENCY} className="error" />
-          <FieldError name={UEQ_CLARITY} className="error-message" />
-          <FieldError name={UEQ_MOTIVATION} className="error" />
-          <FieldError name={UEQ_INTEREST} className="error" />
-          <FieldError name={UEQ_NORM} className="error" />
-          <FieldError name={UEQ_ORIGINALITY} className="error" />
         </Stack>
         <Stack alignItems="end">
           <Button type="submit">Next</Button>

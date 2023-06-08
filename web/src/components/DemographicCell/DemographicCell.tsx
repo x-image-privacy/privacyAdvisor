@@ -1,4 +1,4 @@
-import { Button, Flex, Stack } from '@chakra-ui/react'
+import { Box, Button, Flex, Stack } from '@chakra-ui/react'
 import type { FindDemographicQueryByUser } from 'types/graphql'
 import {
   DEMOGRAPHIC_AGE,
@@ -149,74 +149,105 @@ const DemographicComponent = ({
     <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
       <Flex flexDirection="column" gap={12}>
         <Stack direction="column" gap={8} alignItems="start">
-          <LikertScaleQuestionField
-            name={DEMOGRAPHIC_AGE}
-            n={6}
-            question="What is your age?"
-            text={[
-              '0-15 years old',
-              '15-30 years old',
-              '30-45 years old',
-              '45-60 years old',
-              '60+',
-              'Prefer not to say',
-            ]}
-            direction="column"
-            value={demographic?.age.toString() || ''}
-            validation={{ required: 'Age question is required' }}
-            errorClassName="error"
-          />
-          <LikertScaleQuestionField
-            name={DEMOGRAPHIC_EDUCATION}
-            n={6}
-            question="What is the highest degree or level of education you have completed?"
-            text={[
-              'CFC/Apprenticeship',
-              'Maturité/Baccalauréat',
-              'Bachelors Degree',
-              'Masters Degree',
-              'Ph.D or higher',
-              'Prefer not to say',
-            ]}
-            direction="column"
-            value={demographic?.education.toString() || ''}
-            validation={{ required: 'Education question is required' }}
-            errorClassName="error"
-          />
-          <LikertScaleQuestionField
-            name={DEMOGRAPHIC_PRIVACY}
-            n={4}
-            question="What is your self-opinion about privacy?"
-            text={[
-              'I am not familiar with it',
-              'I heard about it',
-              'I am familiar with it',
-              'Prefer not to say',
-            ]}
-            direction="column"
-            value={demographic?.privacy.toString() || ''}
-            validation={{ required: 'Privacy question is required' }}
-            errorClassName="error"
-          />
-          <LikertScaleQuestionField
-            name={DEMOGRAPHIC_TECHNOLOGY}
-            n={4}
-            question="What is your self-assessed proficiency with technology?"
-            text={[
-              'I need the help of a technical person',
-              'I manage it',
-              'I am very comfortable',
-              'Prefer not to say',
-            ]}
-            direction="column"
-            value={demographic?.technology.toString() || ''}
-            validation={{ required: 'Technology question is required' }}
-            errorClassName="error"
-          />
-          <FieldError name={DEMOGRAPHIC_AGE} className="error-message" />
-          <FieldError name={DEMOGRAPHIC_EDUCATION} className="error" />
-          <FieldError name={DEMOGRAPHIC_PRIVACY} className="error" />
-          <FieldError name={DEMOGRAPHIC_TECHNOLOGY} className="error" />
+          <Box>
+            <LikertScaleQuestionField
+              name={DEMOGRAPHIC_AGE}
+              n={6}
+              question="What is your age?"
+              text={[
+                '0-15 years old',
+                '15-30 years old',
+                '30-45 years old',
+                '45-60 years old',
+                '60+',
+                'Prefer not to say',
+              ]}
+              direction="column"
+              value={demographic?.age.toString() || ''}
+              validation={{
+                required: { value: true, message: 'Age question is required' },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError name={DEMOGRAPHIC_AGE} className="rw-field-error" />
+          </Box>
+          <Box>
+            <LikertScaleQuestionField
+              name={DEMOGRAPHIC_EDUCATION}
+              n={6}
+              question="What is the highest degree or level of education you have completed?"
+              text={[
+                'CFC/Apprenticeship',
+                'Maturité/Baccalauréat',
+                'Bachelors Degree',
+                'Masters Degree',
+                'Ph.D or higher',
+                'Prefer not to say',
+              ]}
+              direction="column"
+              value={demographic?.education.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Education question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={DEMOGRAPHIC_EDUCATION}
+              className="rw-field-error"
+            />
+          </Box>
+          <Box>
+            <LikertScaleQuestionField
+              name={DEMOGRAPHIC_PRIVACY}
+              n={4}
+              question="What is your self-opinion about privacy?"
+              text={[
+                'I am not familiar with it',
+                'I heard about it',
+                'I am familiar with it',
+                'Prefer not to say',
+              ]}
+              direction="column"
+              value={demographic?.privacy.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Privacy question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError name={DEMOGRAPHIC_PRIVACY} className="rw-field-error" />
+          </Box>
+          <Box>
+            <LikertScaleQuestionField
+              name={DEMOGRAPHIC_TECHNOLOGY}
+              n={4}
+              question="What is your self-assessed proficiency with technology?"
+              text={[
+                'I need the help of a technical person',
+                'I manage it',
+                'I am very comfortable',
+                'Prefer not to say',
+              ]}
+              direction="column"
+              value={demographic?.technology.toString() || ''}
+              validation={{
+                required: {
+                  value: true,
+                  message: 'Technology question is required',
+                },
+              }}
+              errorClassName="rw-input rw-input-error"
+            />
+            <FieldError
+              name={DEMOGRAPHIC_TECHNOLOGY}
+              className="rw-field-error"
+            />
+          </Box>
         </Stack>
         <Stack alignItems="end" mb={5}>
           <Button type="submit">Next</Button>
