@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Container, Stack, Text } from '@chakra-ui/react'
+import { Box, Container, Progress, Stack, Text } from '@chakra-ui/react'
 import {
   MILESTONE_SURVEY,
   NUMBER_OF_IMAGE,
@@ -71,6 +71,13 @@ const GroupBPage = () => {
               media.
             </Text>
             <Text textAlign="justify"> Please answer some questions.</Text>
+            <Box w="100%">
+              <Progress
+                colorScheme="gray"
+                value={(step * 100) / NUMBER_OF_IMAGE}
+                size="sm"
+              />
+            </Box>
           </Stack>
         </Container>
         <WordImageCell imageNumber={step} />

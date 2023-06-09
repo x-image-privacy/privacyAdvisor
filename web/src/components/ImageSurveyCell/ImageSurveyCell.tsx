@@ -225,8 +225,9 @@ const ImageSurveyComponent = ({
               question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
               name={PRIVATE_ELEMENTS_QUESTION_GROUP_A}
               validation={{
-                required: {
-                  value: true,
+                required: true,
+                pattern: {
+                  value: /''/,
                   message: 'Private elements question is required',
                 },
               }}
