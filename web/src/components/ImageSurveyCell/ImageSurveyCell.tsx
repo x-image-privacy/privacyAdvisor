@@ -12,6 +12,7 @@ import {
   PUBLIC_ELEMENTS_QUESTION_GROUP_A,
 } from 'web/config/constants'
 
+import { validate } from '@redwoodjs/api'
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellFailureProps, CellSuccessProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -116,14 +117,21 @@ const ImageSurveyComponent = ({
   })
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
-    const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
-
-    // The data returns an object with tags and input, we need a single string with the tags.
-    // https://stackoverflow.com/questions/52936112/react-js-need-to-split-the-state-object-being-retrieved
     const publicElement = data[PUBLIC_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
 
     const privateElement =
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
+
+    validate(publicElement, 'tags', {
+      length: { min: 2, max: 200 },
+    })
+    validate(privateElement, 'tags', {
+      length: { min: 2, max: 200, message: 'Private elements cannot be empty' },
+    })
+    const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
+
+    // The data returns an object with tags and input, we need a single string with the tags.
+    // https://stackoverflow.com/questions/52936112/react-js-need-to-split-the-state-object-being-retrieved
 
     if (imageSurvey && imageSurvey.id) {
       await update({
