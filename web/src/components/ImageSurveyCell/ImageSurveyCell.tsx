@@ -123,7 +123,7 @@ const ImageSurveyComponent = ({
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
 
     validate(publicElement, 'tags', {
-      length: { min: 2, max: 200 },
+      length: { min: 2, max: 200, message: 'Private elements cannot be empty' },
     })
     validate(privateElement, 'tags', {
       length: { min: 2, max: 200, message: 'Private elements cannot be empty' },

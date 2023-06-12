@@ -14,6 +14,7 @@ import {
   JUSTIFY_VISUALISATION_GROUP_B,
 } from 'web/config/constants'
 
+import { validate } from '@redwoodjs/api'
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
@@ -142,6 +143,13 @@ const WordImageSurveyComponent = ({
 
     const privateElement =
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
+
+    validate(publicElement, 'tags', {
+      length: { min: 2, max: 200, message: 'Private elements cannot be empty' },
+    })
+    validate(privateElement, 'tags', {
+      length: { min: 2, max: 200, message: 'Private elements cannot be empty' },
+    })
 
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       await update({
