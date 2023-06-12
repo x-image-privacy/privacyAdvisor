@@ -14,7 +14,6 @@ import {
   JUSTIFY_VISUALISATION_GROUP_B,
 } from 'web/config/constants'
 
-import { validate } from '@redwoodjs/api'
 import { FieldError, Form, SubmitHandler } from '@redwoodjs/forms'
 import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
@@ -144,13 +143,6 @@ const WordImageSurveyComponent = ({
     const privateElement =
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_B].tags.join(' ')
 
-    validate(publicElement, 'tags', {
-      length: { min: 2, max: 200, message: 'Private elements cannot be empty' },
-    })
-    validate(privateElement, 'tags', {
-      length: { min: 2, max: 200, message: 'Private elements cannot be empty' },
-    })
-
     if (imageSurvey && imageSurvey.id && imageSurvey.hasInterface == true) {
       await update({
         variables: {
@@ -231,10 +223,8 @@ const WordImageSurveyComponent = ({
               question="Which elements do you consider as public in this image? (3 words)"
               name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
               validation={{
-                required: {
-                  value: true,
-                  message: 'Public elements question is required',
-                },
+                validate: (value: { tags: string[]; input: string }) =>
+                  value.tags.length > 0,
               }}
               errorClassName="rw-input rw-input-error"
             />
@@ -253,10 +243,8 @@ const WordImageSurveyComponent = ({
               question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
               name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
               validation={{
-                required: {
-                  value: true,
-                  message: 'Private elements question is required',
-                },
+                validate: (value: { tags: string[]; input: string }) =>
+                  value.tags.length > 0,
               }}
               errorClassName="rw-input rw-input-error"
             />
