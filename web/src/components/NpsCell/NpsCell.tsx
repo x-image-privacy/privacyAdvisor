@@ -249,7 +249,7 @@ const NpsSurveyComponent = ({
           </Box>
           <Box>
             <OpenEndedQuestionField
-              question="Tell us a bit more about why you chosee this rating"
+              question="Tell us a bit more about why you chose this rating"
               name={NPS_OPEN_QUESTION}
               placeholder="Answer here..."
               value={npsSurvey?.nps?.justification || ''}

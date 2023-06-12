@@ -227,7 +227,7 @@ const ImageSurveyComponent = ({
               validation={{
                 required: true,
                 pattern: {
-                  value: /''/,
+                  value: /' '/,
                   message: 'Private elements question is required',
                 },
               }}
