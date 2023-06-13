@@ -223,10 +223,8 @@ const WordImageSurveyComponent = ({
               question="Which elements do you consider as public in this image? (3 words)"
               name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
               validation={{
-                required: {
-                  value: true,
-                  message: 'Public elements question is required',
-                },
+                validate: (value: { tags: string[]; input: string }) =>
+                  value.tags.length > 0,
               }}
               errorClassName="rw-input rw-input-error"
             />
@@ -245,10 +243,8 @@ const WordImageSurveyComponent = ({
               question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
               name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
               validation={{
-                required: {
-                  value: true,
-                  message: 'Private elements question is required',
-                },
+                validate: (value: { tags: string[]; input: string }) =>
+                  value.tags.length > 0,
               }}
               errorClassName="rw-input rw-input-error"
             />
@@ -261,7 +257,7 @@ const WordImageSurveyComponent = ({
             <LikertScaleQuestionField
               name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
               n={5}
-              question="Is the word cloud helps you review your evaluation?"
+              question="Is the word cloud help you review your evaluation?"
               leftHand="Yes"
               rightHand="No"
               direction="row"

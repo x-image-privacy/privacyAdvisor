@@ -41,6 +41,13 @@ const OpenEndedInputTag = (
     [onChange, value]
   )
 
+  const validation = (input: string) => {
+    if (input == ' ' || input == '') {
+      return false
+    }
+    return true
+  }
+
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.isDefaultPrevented()) return
@@ -50,18 +57,20 @@ const OpenEndedInputTag = (
       const { selectionStart, selectionEnd } = currentTarget
 
       if (addKeys.indexOf(key) > -1 && currentTarget.value) {
-        const newValue = {
-          ...value,
-          tags: [...value.tags, currentTarget.value],
-        }
+        if (validation(currentTarget.value)) {
+          const newValue = {
+            ...value,
+            tags: [...value.tags, currentTarget.value],
+          }
 
-        if (!event.isDefaultPrevented()) {
-          currentTarget.value = ''
-          newValue.input = ''
+          if (!event.isDefaultPrevented()) {
+            currentTarget.value = ''
+            newValue.input = ''
 
-          onChange(newValue)
+            onChange(newValue)
+          }
+          event.preventDefault()
         }
-        event.preventDefault()
       } else if (
         key === 'Backspace' &&
         value.tags.length > 0 &&
