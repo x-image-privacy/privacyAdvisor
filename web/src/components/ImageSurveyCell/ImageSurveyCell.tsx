@@ -116,15 +116,14 @@ const ImageSurveyComponent = ({
   })
 
   const onSubmit: SubmitHandler<PlainImageSurveyValues> = async (data) => {
+    // The data returns an object with tags and input, we need a single string with the tags.
+    // https://stackoverflow.com/questions/52936112/react-js-need-to-split-the-state-object-being-retrieved
     const publicElement = data[PUBLIC_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
 
     const privateElement =
       data[PRIVATE_ELEMENTS_QUESTION_GROUP_A].tags.join(' ')
 
     const privateRank = parseInt(data[IS_PRIVATE_QUESTION_GROUP_A])
-
-    // The data returns an object with tags and input, we need a single string with the tags.
-    // https://stackoverflow.com/questions/52936112/react-js-need-to-split-the-state-object-being-retrieved
 
     if (imageSurvey && imageSurvey.id) {
       await update({
