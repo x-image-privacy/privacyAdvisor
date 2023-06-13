@@ -1,3 +1,25 @@
+import { img1 } from './word_img1'
+import { img10 } from './word_img10'
+import { img11 } from './word_img11'
+import { img12 } from './word_img12'
+import { img13 } from './word_img13'
+import { img14 } from './word_img14'
+import { img15 } from './word_img15'
+import { img16 } from './word_img16'
+import { img17 } from './word_img17'
+import { img18 } from './word_img18'
+import { img19 } from './word_img19'
+import { img2 } from './word_img2'
+import { img20 } from './word_img20'
+import { img21 } from './word_img21'
+import { img3 } from './word_img3'
+import { img4 } from './word_img4'
+import { img5 } from './word_img5'
+import { img6 } from './word_img6'
+import { img7 } from './word_img7'
+import { img8 } from './word_img8'
+import { img9 } from './word_img9'
+
 export type Rectangle = {
   x: number
   y: number
@@ -12,45 +34,32 @@ export type Word = {
   rect?: Rectangle
 }
 
-export const defaultWords1: { category: string; words: Word[] }[] = [
-  {
-    category: '1',
-    words: [
-      { id: 'word-1', text: ' Big word ', coef: 0.99 },
-      { id: 'word-2', text: 'hello', coef: 0.8 },
-      { id: 'word-4', text: 'caramba', coef: 0.97 },
-    ],
-  },
-  {
-    category: '2',
-    words: [
-      { id: 'word-1', text: ' Big word ', coef: 0.99 },
-      { id: 'word-2', text: 'hello', coef: 0.8 },
-      { id: 'word-4', text: 'caramba', coef: 0.97 },
-      { id: 'word-3', text: 'all', coef: 0.94 },
-      { id: 'word-5', text: 'Piniata', coef: 0.6 },
-      { id: 'word-6', text: 'Taxi', coef: 0.93 },
-      { id: 'word-7', text: 'papa', coef: 0.94 },
-      { id: 'word-8', text: 'chicita', coef: 0.66 },
-      { id: 'word-9', text: 'hellicopter', coef: 0.92 },
-      { id: 'word-10', text: 'chiold', coef: 0.75 },
-      { id: 'word-11', text: 'text', coef: 0.81 },
-      { id: 'word-12', text: 'document', coef: 0.77 },
-      { id: 'word-13', text: 'text', coef: 0.89 },
-      { id: 'word-14', text: 'finger', coef: 0.91 },
-      { id: 'word-15', text: 'girl', coef: 0.88 },
-    ],
-  },
-  {
-    category: '3',
-    words: [
-      { id: 'word-1', text: ' Big word ', coef: 0.6 },
-      { id: 'word-2', text: 'hello world', coef: 0.8 },
-      { id: 'word-4', text: 'caramba', coef: 0.97 },
-      { id: 'word-3', text: 'all', coef: 0.74 },
-      { id: 'word-13', text: 'grand-pa', coef: 0.89 },
-      { id: 'word-14', text: 'finger', coef: 0.91 },
-      { id: 'word-15', text: 'coffin', coef: 0.8 },
-    ],
-  },
-]
+export const getTheWords = (
+  index: number
+): { category: string; words: Word[] }[] => {
+  const words = [
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+    img7,
+    img8,
+    img9,
+    img10,
+    img11,
+    img12,
+    img13,
+    img14,
+    img15,
+    img16,
+    img17,
+    img18,
+    img19,
+    img20,
+    img21,
+  ]
+
+  return words[index]
+}

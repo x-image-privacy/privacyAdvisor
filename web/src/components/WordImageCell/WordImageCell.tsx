@@ -1,10 +1,9 @@
 import { Box, Image } from '@chakra-ui/react'
 import Wordcloud from '@x-image-privacy/wordcloud'
 import type { FindWordImageByImageNumber } from 'types/graphql'
+import { getTheWords } from 'web/public/word-data/word-cloud-data'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-
-import { defaultWords1 } from './../../../public/word-data/word-cloud-data'
 
 export const QUERY = gql`
   query FindWordImageByImageNumber($imageNumber: Int!) {
@@ -12,6 +11,7 @@ export const QUERY = gql`
       id
       imageLocation
       dataLocation
+      imageNumber
     }
   }
 `
@@ -27,13 +27,15 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({
   image,
 }: CellSuccessProps<FindWordImageByImageNumber>) => {
+  console.log(image.imageNumber)
+  console.log(getTheWords(image.imageNumber))
   return (
     <Box p={2} display={{ lg: 'flex' }}>
       <Box flexShrink={0}>
         <Image src={image.imageLocation} width={{ md: '100%' }} />
       </Box>
       <Box mt={{ base: 4, md: 0 }} ml={{ md: 4 }}>
-        <Wordcloud data={defaultWords1} />
+        <Wordcloud data={getTheWords(image.imageNumber - 1)} />
       </Box>
     </Box>
   )
