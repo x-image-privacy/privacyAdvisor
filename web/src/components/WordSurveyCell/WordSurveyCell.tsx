@@ -257,7 +257,7 @@ const WordImageSurveyComponent = ({
             <LikertScaleQuestionField
               name={GLOBAL_LIKERT_SCALE_QUESTION_GROUP_B}
               n={5}
-              question="Is the word cloud help you review your evaluation?"
+              question="Is this word cloud helpful when reviewing your initial evaluation?"
               leftHand="Yes"
               rightHand="No"
               direction="row"
