@@ -27,8 +27,6 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({
   image,
 }: CellSuccessProps<FindWordImageByImageNumber>) => {
-  console.log(image.imageNumber)
-  console.log(getTheWords(image.imageNumber))
   return (
     <Box p={2} display={{ lg: 'flex' }}>
       <Box flexShrink={0}>
