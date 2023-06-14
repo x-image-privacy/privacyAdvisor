@@ -66,7 +66,7 @@ const GroupAPage = () => {
               You are shown an image with question on this image.
             </Text>
             <Text textAlign="center">
-              Consider that you are publishing this image on a public social
+              Consider that you are publishing this image on public social
               media.
             </Text>
             <Text textAlign="center"> Please answer some questions.</Text>

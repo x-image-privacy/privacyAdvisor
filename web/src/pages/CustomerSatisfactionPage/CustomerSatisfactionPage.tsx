@@ -57,7 +57,7 @@ const CustomerSatisfactionPage = () => {
                 <Text textAlign="justify">
                   Consider an interface with the image and the word cloud from
                   the previous question. You use this interface before
-                  publishing an image on a public social media.
+                  publishing an image on public social media.
                 </Text>
                 <Text textAlign="justify">
                   Please answer some questions about this interface.

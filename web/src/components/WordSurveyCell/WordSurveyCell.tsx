@@ -220,7 +220,7 @@ const WordImageSurveyComponent = ({
                 tags: imageSurvey?.publicElem?.split(' ') || ([] as string[]),
                 input: '',
               }}
-              question="Which elements do you consider as public in this image? (3 words)"
+              question="Which elements do you consider as public in this image? (3 words max)"
               name={PUBLIC_ELEMENTS_QUESTION_GROUP_B}
               validation={{
                 validate: (value: { tags: string[]; input: string }) =>
@@ -240,7 +240,7 @@ const WordImageSurveyComponent = ({
                 tags: imageSurvey?.privateElem?.split(' ') || ([] as string[]),
                 input: '',
               }}
-              question="Which elements would you feel uncomfortable disclosing in this image? (3 words)"
+              question="Which elements would you feel uncomfortable disclosing in this image? (3 words max)"
               name={PRIVATE_ELEMENTS_QUESTION_GROUP_B}
               validation={{
                 validate: (value: { tags: string[]; input: string }) =>

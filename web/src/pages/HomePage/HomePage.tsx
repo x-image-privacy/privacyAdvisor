@@ -46,7 +46,7 @@ const HomePage = () => {
           <Text textAlign="center">
             Thank you for taking the time to participate in this study
           </Text>
-          <Text>This survey takes about 20 minutes.</Text>
+          <Text>This survey takes about 30 minutes.</Text>
           <Text textAlign="center">
             You will have several questions about images. Consider that you are
             publishing these images on a public social media.

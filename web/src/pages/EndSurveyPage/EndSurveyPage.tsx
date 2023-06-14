@@ -19,8 +19,8 @@ const EndSurveyPage = () => {
         <Stack direction="column" gap={4} alignItems="center">
           <Text textAlign="justify">
             This study has been completed. If you would like to be in with a
-            chance of winning one of the prizes, please enter your email address
-            here:
+            chance of winning one of the prizes (Sat's beers, Gina's pizza,
+            ...), please enter your email address here:
           </Text>
 
           <PrizeCell id={currentUser?.id as number} />
