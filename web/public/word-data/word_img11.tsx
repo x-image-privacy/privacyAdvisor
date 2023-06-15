@@ -2,53 +2,55 @@ import { Word } from './word-cloud-data'
 
 export const img11: { category: string; words: Word[] }[] = [
   {
-    category: 'identity',
+    category: 'job',
+    words: [{ id: 'word-1', text: 'administration', coef: 1.0 }],
+  },
+  {
+    category: 'social status',
     words: [
-      { id: 'word-1', text: 'woman', coef: 1.0 },
-      { id: 'word-2', text: 'people', coef: 0.9624 },
-      { id: 'word-3', text: 'man', coef: 0.8944 },
-      { id: 'word-4', text: 'group', coef: 0.8328 },
-      { id: 'word-5', text: 'girl', coef: 0.7959 },
-      { id: 'word-6', text: 'adult', coef: 0.7802 },
-      { id: 'word-7', text: 'youth', coef: 0.6121 },
+      { id: 'word-1', text: 'leader', coef: 0.9992 },
+      { id: 'word-2', text: 'authority', coef: 0.6672 },
     ],
   },
   {
-    category: 'other',
+    category: 'political opinion',
     words: [
-      { id: 'word-1', text: 'many', coef: 0.874 },
-      { id: 'word-2', text: 'chair', coef: 0.6556 },
-      { id: 'word-3', text: 'cards', coef: 0.9813 },
-      { id: 'word-4', text: 'table', coef: 0.9813 },
-      { id: 'word-5', text: 'paper', coef: 0.9813 },
+      { id: 'word-1', text: 'politician', coef: 0.9908 },
+      { id: 'word-2', text: 'democracy', coef: 0.9457 },
+      { id: 'word-3', text: 'presidential', coef: 0.9273 },
+      { id: 'word-4', text: 'parliament', coef: 0.7909 },
+      { id: 'word-5', text: 'diplomacy', coef: 0.7571 },
+      { id: 'word-6', text: 'legislature', coef: 0.6242 },
+      { id: 'word-7', text: 'candidate', coef: 0.5626 },
+      { id: 'word-8', text: 'law', coef: 0.5275 },
+      { id: 'word-9', text: 'public forum', coef: 0.9531 },
     ],
   },
   {
     category: 'activities',
     words: [
-      { id: 'word-1', text: 'competition', coef: 0.8546 },
-      { id: 'word-2', text: 'race', coef: 0.7145 },
-      { id: 'word-3', text: 'interaction', coef: 0.6932 },
-      { id: 'word-4', text: 'spectator', coef: 0.5643 },
-      { id: 'word-5', text: 'sit', coef: 0.5008 },
-      { id: 'word-6', text: 'cooperation', coef: 0.5 },
-      { id: 'word-7', text: 'game', coef: 0.9813 },
-      { id: 'word-8', text: 'guess', coef: 0.9813 },
+      { id: 'word-1', text: 'meeting', coef: 0.9766 },
+      { id: 'word-2', text: 'cooperation', coef: 0.5 },
+    ],
+  },
+  {
+    category: 'other',
+    words: [{ id: 'word-1', text: 'chair', coef: 0.9613 }],
+  },
+  {
+    category: 'identity',
+    words: [
+      { id: 'word-1', text: 'man', coef: 0.8783 },
+      { id: 'word-2', text: 'two', coef: 0.8415 },
+      { id: 'word-3', text: 'adult', coef: 0.7471 },
+      { id: 'word-4', text: 'International', coef: 0.6902 },
     ],
   },
   {
     category: 'location',
     words: [
-      { id: 'word-1', text: 'convention', coef: 0.7424 },
-      { id: 'word-2', text: 'room', coef: 0.6832 },
-      { id: 'word-3', text: 'indoors', coef: 0.6304 },
-    ],
-  },
-  {
-    category: 'emotions',
-    words: [
-      { id: 'word-1', text: 'fun', coef: 0.5209 },
-      { id: 'word-2', text: 'concentration', coef: 0.5145 },
+      { id: 'word-1', text: 'press conference', coef: 0.8499 },
+      { id: 'word-2', text: 'indoors', coef: 0.702 },
     ],
   },
 ]
