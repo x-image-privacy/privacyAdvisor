@@ -46,12 +46,6 @@ const GroupBPage = () => {
     setStep((s) => s + 1)
   }
 
-  const handlePreviousStep = () => {
-    if (step > 1) {
-      setStep((s) => s - 1)
-    }
-  }
-
   useEffect(() => {
     isMilestone(PAGE_GROUP_B, currentUser?.milestone as string)
   })
@@ -62,12 +56,12 @@ const GroupBPage = () => {
         <Container maxW="xl">
           <Stack gap={4} alignItems="center">
             <Text textAlign="justify">
-              You are shown an image with multiple word clouds. The words in
-              this word cloud were obtained using AI. They are used to describe
-              the image. The words have been grouped by concepts.
+              You are shown the same images with multiple word clouds. The words
+              in this word cloud were obtained using AI. They are used to
+              describe the image. The words have been grouped by concepts.
             </Text>
             <Text textAlign="justify">
-              Consider that you are publishing this image on a public social
+              Consider that you are publishing this image on public social
               media.
             </Text>
             <Text textAlign="justify"> Please answer some questions.</Text>
@@ -85,7 +79,6 @@ const GroupBPage = () => {
           userId={currentUser?.id as number}
           imageId={step}
           onFinished={handleNextStep}
-          onPrevious={handlePreviousStep}
         />
       </Stack>
     </Container>

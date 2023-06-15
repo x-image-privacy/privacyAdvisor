@@ -47,11 +47,6 @@ const GroupAPage = () => {
     // increment step
     setStep((s) => s + 1)
   }
-  const handlePreviousStep = () => {
-    if (step > 1) {
-      setStep((s) => s - 1)
-    }
-  }
 
   useEffect(() => {
     isMilestone(PAGE_GROUP_A, currentUser?.milestone as string)
@@ -66,7 +61,7 @@ const GroupAPage = () => {
               You are shown an image with question on this image.
             </Text>
             <Text textAlign="center">
-              Consider that you are publishing this image on a public social
+              Consider that you are publishing this image on public social
               media.
             </Text>
             <Text textAlign="center"> Please answer some questions.</Text>
@@ -85,7 +80,6 @@ const GroupAPage = () => {
           userId={currentUser?.id as number}
           imageId={step}
           onFinished={handleNextStep}
-          onPrevious={handlePreviousStep}
         />
       </Stack>
     </Container>

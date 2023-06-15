@@ -5,46 +5,59 @@ export const img10: { category: string; words: Word[] }[] = [
     category: 'identity',
     words: [
       { id: 'word-1', text: 'people', coef: 1.0 },
-      { id: 'word-2', text: 'woman', coef: 0.9977 },
-      { id: 'word-3', text: 'adult', coef: 0.976 },
-      { id: 'word-4', text: 'two', coef: 0.9431 },
-      { id: 'word-5', text: 'family', coef: 0.8858 },
-    ],
-  },
-  {
-    category: 'emotions',
-    words: [
-      { id: 'word-1', text: 'fun', coef: 0.9833 },
-      { id: 'word-2', text: 'facial expression', coef: 0.9587 },
-      { id: 'word-3', text: 'enjoyment', coef: 0.9028 },
-      { id: 'word-4', text: 'smile', coef: 0.881 },
-      { id: 'word-5', text: 'joy', coef: 0.7898 },
+      { id: 'word-2', text: 'woman', coef: 0.9762 },
+      { id: 'word-3', text: 'man', coef: 0.9647 },
+      { id: 'word-4', text: 'adult', coef: 0.9381 },
+      { id: 'word-5', text: 'wig', coef: 0.9318 },
+      { id: 'word-6', text: 'tattoo', coef: 0.9283 },
     ],
   },
   {
     category: 'activities',
     words: [
-      { id: 'word-1', text: 'music', coef: 0.9391 },
-      { id: 'word-2', text: 'group together', coef: 0.7701 },
-      { id: 'word-3', text: 'dancing', coef: 0.7689 },
-      { id: 'word-4', text: 'party', coef: 0.7643 },
-      { id: 'word-5', text: 'celebration', coef: 0.6652 },
-      { id: 'word-6', text: 'pose', coef: 0.5 },
+      { id: 'word-1', text: 'festival', coef: 0.9974 },
+      { id: 'word-2', text: 'costume', coef: 0.9724 },
+      { id: 'word-3', text: 'party', coef: 0.9396 },
+      { id: 'word-4', text: 'performance', coef: 0.9237 },
+      { id: 'word-5', text: 'public show', coef: 0.8879 },
+      { id: 'word-6', text: 'event', coef: 0.8325 },
     ],
   },
   {
-    category: 'location',
+    category: 'job',
+    words: [{ id: 'word-1', text: 'model', coef: 0.9634 }],
+  },
+  {
+    category: 'emotions',
     words: [
-      { id: 'word-1', text: 'bar', coef: 0.9103 },
-      { id: 'word-2', text: 'restaurant', coef: 0.8977 },
-      { id: 'word-3', text: 'indoors', coef: 0.86 },
-      { id: 'word-4', text: 'club', coef: 0.846 },
-      { id: 'word-5', text: 'summer', coef: 0.8311 },
-      { id: 'word-6', text: 'evening', coef: 0.7876 },
+      { id: 'word-1', text: 'strange', coef: 0.9621 },
+      { id: 'word-2', text: 'fun', coef: 0.912 },
     ],
   },
   {
     category: 'wealth',
-    words: [{ id: 'word-1', text: 'dress', coef: 0.7821 }],
+    words: [
+      { id: 'word-1', text: 'fashion', coef: 0.9317 },
+      { id: 'word-2', text: 'wear', coef: 0.9032 },
+    ],
+  },
+  {
+    category: 'location',
+    words: [{ id: 'word-1', text: 'exhibition', coef: 0.8968 }],
+  },
+  {
+    category: 'sexual orientation',
+    words: [
+      { id: 'word-1', text: 'bikini', coef: 0.7951 },
+      { id: 'word-2', text: 'nude', coef: 0.7632 },
+    ],
+  },
+  {
+    category: 'other',
+    words: [
+      { id: 'word-1', text: 'superhero', coef: 0.7681 },
+      { id: 'word-2', text: 'anime', coef: 0.979 },
+      { id: 'word-3', text: 'comic', coef: 0.5 },
+    ],
   },
 ]
