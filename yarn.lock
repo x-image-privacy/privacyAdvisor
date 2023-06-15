@@ -9331,11 +9331,11 @@ __metadata:
 
 "@x-image-privacy/wordcloud@https://github.com/x-image-privacy/word-cloud#main":
   version: 0.0.0
-  resolution: "@x-image-privacy/wordcloud@https://github.com/x-image-privacy/word-cloud.git#commit=dd56b02773c01668a1929b4835372e54d991ddb1"
+  resolution: "@x-image-privacy/wordcloud@https://github.com/x-image-privacy/word-cloud.git#commit=20566f74b26801b3acdda2a8f40114f280a77a49"
   dependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 662b299a54e70044c4c9fa19dd51ff9749d0a6e0365ed89c47f4b188adae125a290b77b2fb58f18660789cab123caea1353b05729b1ce43fc1452487c03d24b4
+  checksum: 5afee197d59c747e8e290608ffbc70ede6b967a350a67863244f0af358e55cad50a3c896053f47eeead2f65018b67ee47449c2b8d85eb0f43af99382cedbc8a7
   languageName: node
   linkType: hard
 

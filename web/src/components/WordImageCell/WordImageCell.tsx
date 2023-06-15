@@ -28,9 +28,9 @@ export const Success = ({
   image,
 }: CellSuccessProps<FindWordImageByImageNumber>) => {
   return (
-    <Box p={2} display={{ '3xl': 'flex' }}>
+    <Box p={2} display={{ xl: 'flex' }}>
       <Box flexShrink={0}>
-        <Image src={image.imageLocation} width={{ md: '100%' }} />
+        <Image src={image.imageLocation} width={{ md: '80%' }} />
       </Box>
       <Box mt={{ base: 4, md: 0 }} m={{ md: 2 }}>
         <Wordcloud data={getTheWords(image.imageNumber - 1)} />
