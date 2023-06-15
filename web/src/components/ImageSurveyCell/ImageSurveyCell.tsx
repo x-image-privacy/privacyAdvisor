@@ -24,7 +24,6 @@ type ImageSurveyProps = {
   imageId: number
   userId: number
   onFinished: () => void
-  onPrevious: () => void
 }
 
 export const QUERY = gql`
@@ -95,7 +94,6 @@ const ImageSurveyComponent = ({
   imageSurvey,
   userId,
   imageId,
-  onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdImage & ImageSurveyProps) => {
   const [create, { loading: loadingCreate, error: errorCreate }] = useMutation<
@@ -235,11 +233,7 @@ const ImageSurveyComponent = ({
           </Box>
         </Stack>
 
-        <SubmitButtons
-          onPrevious={onPrevious}
-          isLoading={loadingCreate || loadingUpdate}
-          name="Next"
-        />
+        <SubmitButtons isLoading={loadingCreate || loadingUpdate} name="Next" />
       </Flex>
     </Form>
   )

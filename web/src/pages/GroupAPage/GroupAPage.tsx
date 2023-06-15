@@ -47,11 +47,6 @@ const GroupAPage = () => {
     // increment step
     setStep((s) => s + 1)
   }
-  const handlePreviousStep = () => {
-    if (step > 1) {
-      setStep((s) => s - 1)
-    }
-  }
 
   useEffect(() => {
     isMilestone(PAGE_GROUP_A, currentUser?.milestone as string)
@@ -85,7 +80,6 @@ const GroupAPage = () => {
           userId={currentUser?.id as number}
           imageId={step}
           onFinished={handleNextStep}
-          onPrevious={handlePreviousStep}
         />
       </Stack>
     </Container>

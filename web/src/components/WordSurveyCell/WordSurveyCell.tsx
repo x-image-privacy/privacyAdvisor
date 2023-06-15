@@ -27,7 +27,6 @@ type WordImageSurveyProps = {
   imageId: number
   userId: number
   onFinished: () => void
-  onPrevious: () => void
 }
 
 export const QUERY = gql`
@@ -113,7 +112,6 @@ const WordImageSurveyComponent = ({
   imageSurvey,
   userId,
   imageId,
-  onPrevious,
   onFinished,
 }: FindImageSurveyByUserAndImageIdWord & WordImageSurveyProps) => {
   const [create, { loading: loadingCreate, error: errorCreate }] = useMutation<
@@ -295,11 +293,7 @@ const WordImageSurveyComponent = ({
             />
           </Box>
         </Stack>
-        <SubmitButtons
-          onPrevious={onPrevious}
-          isLoading={loadingCreate || loadingUpdate}
-          name="Next"
-        />
+        <SubmitButtons isLoading={loadingCreate || loadingUpdate} name="Next" />
       </Flex>
     </Form>
   )
